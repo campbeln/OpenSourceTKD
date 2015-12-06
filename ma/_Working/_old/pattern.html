@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html ng-app="ngCn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+    <!-- script type="text/javascript" src="angular.preinit.js"></script -->
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="patterndata.js"></script>
+    <script>
+        //# 
+        var cn = cn || {};
+        var ngCn = angular.module("ngCn", ['ngSanitize']);
+
+
+        //# 
+        cn.groupByCount = function(oPatternCounts) {
+            var h_sRow, iCount, i, oRV;
+            
+            //# If the passed oPatternCounts is valid with data
+            if (oPatternCounts && oPatternCounts.length > 0 && oPatternCounts.names) {
+                oRV = {};
+
+                //# Traverse the oPatternCounts
+                for (i = 0; i < oPatternCounts.length; i++) {
+                    //# Collect the hashed version of the current oPatternCounts then collect the current iCount
+                    h_sRow = cn.dataToHash(oPatternCounts.names, oPatternCounts[i]);
+                    iCount = h_sRow.count;
+
+                    //# Optionally create the entry in our oRV, then .push in the h_sRow
+                    oRV[iCount] = oRV[iCount] || [];
+                    oRV[iCount].push(h_sRow);
+                }
+            }
+
+            return oRV;
+        };
+
+
+        //# 
+        cn.dataToHash = function(a_sNames, a_sRow) {
+            var i,
+                h_sRV = undefined
+            ;
+            
+            //# If the passed data is valid, reset our h_sRV and populate it with the data as a hash
+            //if (a_sNames instanceof Array && a_sRow instanceof Array && a_sNames.length == a_sRow.length) {
+                h_sRV = {};
+                for (i = 0; i < a_sNames.length; i++) {
+                    h_sRV[a_sNames[i]] = a_sRow[i];
+                }
+            //}
+
+            return h_sRV;
+        };
+
+
+        //# 
+        cn.getColumnAsArray = function (ah_sRows, sColumnName, bIncludeNulls) {
+            var i, value,
+                a_sRV = []
+            ;
+            
+            //# Traverse the passed ah_sRows
+            for (i = 0; i < ah_sRows.length; i++) {
+                value = ah_sRows[i][sColumnName];
+
+                //# If the current value isn't NULL, append it into our $a_oReturn value
+                if (bIncludeNulls || value !== null) {
+                    a_sRV.push(value);
+                }
+            }
+
+            return a_sRV;
+        };
+
+
+        //# 
+        cn.javaScriptDataFn = function (sType, sJSData) {
+            var sReturn = '',
+                sJS = ('function(R,C,V{{arg}}){' +
+                            'var r=parseInt(R,10)||-1,' +
+                                'c=parseInt(C,10)||-1,' +
+                                'n=(C+"").toLowerCase(),' +
+                                '{{var}}' +
+                                'v=[]' +
+                            ';' +
+                            'v.names=d["names"];' +
+                            'R=(R+"").toLowerCase();' +
+                            'if(r>-1){' +
+                                'if(c>-1){' +
+                                    'v=d[r][c];' +
+                                '}' +
+                                'else if(C===undefined){' +
+                                    'v.push(d[r]);' +
+                                '}' +
+                                'else if(n){' +
+                                    'v=d[r][d["names"].indexOf(n)];' +
+                                '}' +
+                            '}' +
+                            'else if(R===undefined){' +
+                                'v=d;' +
+                            '}' +
+                            'else if(R=="?"){' +
+                                'V=(V+"").toLowerCase();' +
+                                'c=d["names"].indexOf(n);' +
+                                'for(var i=0;i<d.length;i++){' +
+                                    'if((d[i][c]+"").toLowerCase()==V){' +
+                                        'v.push(d[i]);' +
+                                    '}' +
+                                '}' +
+                            '}' +
+                            'return v;' +
+                        '}'
+                    )
+            ;
+
+            //# 
+            switch (sType.trim().toLowerCase()) {
+                case 'callcentral':
+                    sReturn = 'function(R,C,V){return this.$find(R,C,V,' + sJSData + ')}';
+                    break;
+                case 'central':
+                    sReturn = '$find:' + sJS.replace(new RegExp('{{arg}}', 'g'), ',d');
+                    sReturn = sReturn.replace(new RegExp('{{var}}', 'g'), '');
+                    break;
+                case 'inline':
+                    sReturn = sJS.replace(new RegExp('{{arg}}', 'g'), '');
+                    sReturn = sReturn.replace(new RegExp('{{var}}', 'g'), 'd=' + sJSData + ',');
+                    break;
+            }
+
+            return sReturn;
+        };
+        //console.log(cn.javaScriptDataFn('central', ''));
+
+
+        //# 
+        cn.formatTechnique = function (ah_sRows, sArmLeg) {
+            var a_sTemp, sTwin, i,
+                sReturn = "",
+                iLength = ah_sRows.length,
+                sArmLeg = (sArmLeg.toLowerCase() === "arm" ? "arm" : "leg"),
+                sTechnique = sArmLeg + 'technique',
+                sType = sArmLeg + 'techniquetype',
+                sTool = sArmLeg + 'tool',
+                sTo = sArmLeg + 'to',
+                sDiagramDirection = sArmLeg + 'diagramdirection',
+                sLR = sArmLeg + 'lr',
+                sSection = sArmLeg + 'section',
+                sSectionInferred = sArmLeg + 'sectioninferred',
+                sLineOfAttack = sArmLeg + 'lineofattack',
+                sIsArmToolTwin = (sArmLeg === "arm" ? "isarmtooltwin" : null)
+            ;
+
+            //# Traverse the passed ah_sRows, appending each entry onto our sReturn value (handling the last entry seperate to avoid the last </br>)
+            for (i = 0; i < iLength; i++) {
+                //# Reset the a_sTemp for this loop, filling it with the present data
+                a_sTemp = [];
+                if (ah_sRows[i][sLR]) {
+                    a_sTemp.push(ah_sRows[i][sLR]);
+                }
+
+                if (ah_sRows[i][sSection]) {
+                    if (ah_sRows[i][sSectionInferred]) {
+                        a_sTemp.push('<span>' + ah_sRows[i][sSection] + '</span>');
+                    }
+                    else {
+                        a_sTemp.push(ah_sRows[i][sSection]);
+                    }
+                }
+
+                if (ah_sRows[i][sTechnique]) {
+                    if ((ah_sRows[i][sType] + "").trim().toLowerCase() == 'action') {
+                        a_sTemp.push(ah_sRows[i][sTechnique]);
+                    }
+                    else {
+                        a_sTemp.push("<strong>" + cn.formatTechniqueText(ah_sRows[i][sTechnique]) + "</strong>");
+                    }
+                }
+
+                if (ah_sRows[i][sTool] || ah_sRows[i][sLineOfAttack]) {
+                    sTwin = (ah_sRows[i][sIsArmToolTwin] ? 'Twin ' : '');
+
+                    a_sTemp.push(cn.formatDirection(sTwin + ah_sRows[i][sTool], ah_sRows[i][sLineOfAttack], true));
+                }
+
+                if (ah_sRows[i][sTo] || ah_sRows[i][sDiagramDirection]) {
+                    a_sTemp.push(cn.formatDirection(ah_sRows[i][sTo], ah_sRows[i][sDiagramDirection], false));
+                }
+
+                //# If we have data to render, append it onto our sReturn value
+                if (a_sTemp.length > 0) {
+                    sReturn += "<div>" + a_sTemp.join(" ") + "</div>" + (i < iLength - 1 ? "\n<br/>" : "");
+                }
+            }
+
+            return sReturn;
+        };
+
+
+        //# 
+        cn.formatTechniqueText = function (sTechnique) {
+            //# Replace {}'s with <span/> so the text is properly formatted
+            return sTechnique.replace(new RegExp('{', 'g'), '<span>').replace(new RegExp('}', 'g'), '</span>');
+        };
+
+
+        //# 
+        cn.formatBodyMovement = function (ah_sRows) {
+            var i, a_sTemp,
+                sMotion = 'motion',
+                sBodyMovement = 'bodymovement',
+                sTo = 'eyesto',
+                sDiagramDirection = 'eyesdiagramdirection',
+                iLength = ah_sRows.length,
+                sReturn = ""
+            ;
+            
+            //# Traverse the passed ah_sRows, appending each entry onto our sReturn value (handling the last entry differently to avoid the last </br>)
+            for (i = 0; i < iLength; i++) {
+                //# Reset the a_sTemp for this loop, filling it with the present data
+                a_sTemp = [];
+                if (ah_sRows[i][sMotion]) { a_sTemp.push(ah_sRows[i][sMotion]); }
+                if (ah_sRows[i][sBodyMovement]) { a_sTemp.push(ah_sRows[i][sBodyMovement]); }
+                if (ah_sRows[i][sTo] || ah_sRows[i][sDiagramDirection]) {
+                    a_sTemp.push(cn.formatDirection(ah_sRows[i][sTo], ah_sRows[i][sDiagramDirection], false));
+                }
+
+                //# If we have data to render, append it onto our sReturn value
+                if (a_sTemp.length > 0) {
+                    sReturn += "<div>" + a_sTemp.join(" ") + "</div>" + (i < iLength - 1 ? "\n<br/>" : "");
+                }
+            }
+
+            return sReturn;
+        };
+
+
+        //# 
+        cn.formatDirection = function (sPrefix, sSuffix, bUseSquare) {
+            var sReturn = (sPrefix ? sPrefix : "");
+
+            //# 
+            if (sSuffix != "") {
+                if (sSuffix.substr(0, 1) == '~') { sSuffix = '<span>' + sSuffix + '</span>'; }
+                sReturn = (sReturn ? sReturn + "; " + sSuffix : sSuffix);
+            }
+
+            if (bUseSquare) {
+                return (sReturn ? "[" + sReturn + "]" : "");
+            }
+            else {
+                return (sReturn ? "(" + sReturn + ")" : "");
+            }
+        };
+
+
+        //# 
+        cn.formatLine = function (ah_sRows, sColumnName, bIncludeNulls) {
+            var sRV = "",
+                a_sColumn = cn.getColumnAsArray(ah_sRows, sColumnName, bIncludeNulls)
+            ;
+            
+            if (a_sColumn && a_sColumn.length > 1 || (a_sColumn.length == 1 && a_sColumn[0])) {
+                sRV = "<div>" + a_sColumn.join("</div><br/><div>") + "</div>";
+            }
+
+            return sRV;
+        };
+        
+
+        //# define Controller
+        ngCn.controller('PatternController', function ($scope, $sce) {
+            $scope.PatternID = location.hash.substr(1);
+            $scope.Pattern = cn.dataToHash(patterns.patterns().names, patterns.patterns("?", "ID", $scope.PatternID)[0]);
+            $scope.GroupedCounts = cn.groupByCount(patterns.patternCounts("?", "PatternID", $scope.PatternID));
+            $scope.cn = cn;
+
+
+            //$scope.html = function(html_code) {
+            //    return $sce.trustAsHtml(html_code);
+            //};
+
+            $scope.test = "<div>Go damnit!</div>";
+
+            //# Initialize the controller
+            $scope.init = function () { };
+        }); //# ngCn.controller('PatternController'...
+
+
+        //# 
+        $(document).ready(function () {
+            // $("table.patterns tr:even").addClass("even");
+            // $("table.patterns tr:odd").addClass("odd");
+        });
+    </script>
+
+    <!--[if lte IE 8]> <link rel="stylesheet" type="text/css" href="/css/main.lte_ie8.css"> <![endif]-->
+    <style>
+        .rotate270 > DIV {
+            -moz-transform: rotate(270deg); /*FF*/
+            -moz-transform-origin: left bottom;
+            -o-transform: rotate(270deg); /*Opera*/
+            -o-transform-origin: left bottom;
+            -webkit-transform: rotate(270deg); /*Safari, Chrome*/
+            -webkit-transform-origin: left bottom;
+            -ms-transform: rotate(270deg); /*IE9*/
+            -ms-transform-origin: left bottom;
+            transform: rotate(270deg); /*CSS3 default*/
+            transform-origin: left bottom;
+            background-color: transparent;
+            white-space: nowrap;
+            zoom: 1;
+            position: absolute;
+        }
+
+        /* Generic Table Styles */
+        TABLE {
+            border-width: 0px;
+            border-spacing: 0px;
+            border-collapse: collapse;
+            background-color: white;
+            font-family: Calibri, Arial;
+        }
+
+            TABLE THEAD TH {
+                padding-right: 5px;
+                padding-left: 5px;
+            }
+
+            TABLE TD,
+            TABLE TH {
+                padding: 3px;
+                font-weight: normal;
+            }
+
+
+        /* Patterns Table Styles */
+        .patterns {
+            margin: 50px 0 0 50px;
+            position: relative;
+        }
+
+            .patterns THEAD {
+                font-size: 80%;
+                font-style: italic;
+                color: gray;
+                text-align: left;
+                border-bottom: 1px solid black !important;
+            }
+
+                .patterns THEAD .face {
+                    font-size: 150%;
+                    line-height: 10px;
+                }
+
+            .patterns TD {
+                font-style: italic;
+                color: gray;
+            }
+
+                .patterns TD DIV {
+                    display: inline;
+                    white-space: nowrap;
+                }
+
+            .patterns CAPTION DIV {
+                top: 520px;
+                width: 580px;
+                font-family: Calibri, Arial, Helvetica, sans-serif;
+                text-align: right;
+            }
+
+            .patterns CAPTION STRONG {
+                font-size: 200%;
+            }
+
+
+            .patterns .count,
+            .patterns .facing,
+            .patterns .primary,
+            .patterns STRONG {
+                font-style: normal;
+                font-weight: normal;
+                color: black;
+            }
+
+            .patterns .count,
+            .patterns .number,
+            .patterns .facing {
+                text-align: center;
+            }
+
+            .patterns .addedtext,
+            .patterns SPAN {
+                color: #C0504D;
+                border-bottom: dashed 1px #C0504D;
+            }
+
+            .patterns .junbi {
+                font-weight: bold;
+                font-style: normal !important;
+                color: black !important;
+            }
+
+            .patterns .even {
+                border-bottom: 1px solid #E6E6E6;
+            }
+
+            .patterns .odd {
+                background-color: #E6E6E6;
+                border-bottom: 1px solid #E6E6E6;
+            }
+
+        /* Stance Chart Styles */
+        .stancechart {
+        }
+
+            .stancechart TD,
+            .stancechart TH {
+                border-width: 1px;
+                border-style: inset;
+                border-color: black;
+                text-align: center;
+            }
+
+            .stancechart THEAD {
+                background-color: #5A6879;
+                color: white;
+            }
+
+                .stancechart THEAD TH {
+                    font-weight: bold;
+                }
+
+                .stancechart THEAD P {
+                    margin-top: 0;
+                    padding-top: 0;
+                    font-size: 80%;
+                }
+
+            .stancechart TBODY TH {
+                font-style: italic;
+            }
+
+            .stancechart TFOOT TH {
+                font-size: 80%;
+                text-align: left !important;
+            }
+
+            .stancechart .attention {
+                font-weight: bold;
+            }
+
+            .stancechart .realtive {
+                font-style: normal;
+            }
+
+            .stancechart .parent {
+                font-style: normal;
+                font-weight: bold;
+            }
+
+            .stancechart .orphans .parent {
+                background-color: white;
+            }
+
+            .stancechart .parallel .parent {
+                background-color: #D99594;
+            }
+
+            .stancechart .parallel TH {
+                background-color: #F2DBDB;
+            }
+
+            .stancechart .sitting .parent {
+                background-color: #FABF8F;
+            }
+
+            .stancechart .sitting TH {
+                background-color: #FBD4B4;
+            }
+
+            .stancechart .bending .parent {
+                background-color: #C2D69B;
+            }
+
+            .stancechart .bending TH {
+                background-color: #D6E3BC;
+            }
+
+            .stancechart .walking .parent {
+                background-color: #B2A1C7;
+            }
+
+            .stancechart .walking TH {
+                background-color: #CCC0D9;
+            }
+
+            .stancechart .l .parent {
+                background-color: #8DB3E2;
+            }
+
+            .stancechart .l TH {
+                background-color: #C6D9F1;
+            }
+    </style>
+</head>
+<body>
+
+    <table id="Pattern" class="patterns" ng-controller="PatternController">
+        <caption class="rotate270">
+            <div>
+                <strong>{{Pattern.name}}</strong>
+                <br /><!-- div>{{Pattern.AKA}}</div -->
+                <div>{{Pattern.guplevel}} Pattern; {{Pattern.belt}}; {{Pattern.movementcount}} Movements</div>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                <th>
+                    <strong>Verbal</strong>
+                    <br />Count
+                </th>
+                <th>
+                    Motion [Method] &nbsp; <strong>Body Movement</strong>
+                    <br />(Eyes To; Diagram Direction)
+                </th>
+                <th>
+                    Feet In
+                    <br />Motion
+                </th>
+                <th>
+                    Leg &nbsp; Section &nbsp; <strong>Stance/Leg Technique</strong> &nbsp; [Attacking Tool; Line]
+                    <br />(Stance/Technique To; Diagram Direction)
+                </th>
+                <th>
+                    Arm &nbsp; Section &nbsp; <strong>Arm Technique</strong> &nbsp; [Attacking Tool; Line]
+                    <br />(Technique To; Diagram Direction)
+                </th>
+                <th class="primary">
+                    <strong class="face">☺</strong>
+                    <br />ing
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="count in GroupedCounts">
+                <td ng-class="{{count[0].counted ? 'count' : 'number'}}">{{count[0].count <= 0 || count[0].count >= 999 ? "&bullet;" : count[0].count}}</td>
+                <td ng-bind-html="cn.formatBodyMovement(count)"></td>
+                <td ng-bind-html="cn.formatLine(count, 'feetinmotion', false)"></td>
+                <td ng-bind-html="cn.formatTechnique(count, 'leg')"></td>
+                <td ng-bind-html="cn.formatTechnique(count, 'arm')"></td>
+                <td class='facing' ng-bind-html="cn.getColumnAsArray(count, 'facing', false).join('<br />')"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

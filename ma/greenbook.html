@@ -1,0 +1,2294 @@
+﻿<html ng-app="ngCn" ng-controller="BookController" ng-init="init()">
+    <head>
+        <title>Student Manual</title>
+        
+        <meta charset="utf-8" />
+        
+        <link ng-css="{ script: true, live: true, commented: true }" rel="stylesheet" type="text/css" href="css/site.css">
+
+        
+        <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+        <!-- script type="text/javascript" src="angular.preinit.js"></script -->
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script>
+            //# 
+            var cn = window.cn || {
+                    data: {}
+                },
+                ngCn = angular.module("ngCn", ['ngSanitize', 'cnDirectiveFactory', 'ngCss'])
+            ;
+        </script>
+        <script type="text/javascript" src="js/angular-sanitize.min.js"></script>
+        <script type="text/javascript" src="js/cnNg.module.cnDirectiveFactory.js"></script>
+        <script type="text/javascript" src="js/cnNg.module.ngCss.js"></script>
+        <script type="text/javascript" src="js/cnNg.directives.js"></script>
+        <script type="text/javascript" src="js/cnNg.filters.js"></script>
+        <script type="text/javascript" src="js/cn.data.patterns.js"></script>
+        <!--<script type="text/javascript" src="js/tkddata.js.php?var=cn.patterns&version=0.8a"></script>-->
+        <script type="text/javascript">
+            //# 
+            cn.positionH0s = function () {
+                //# Delay for 100ms to allow the $h0's to properly size
+                setTimeout(function () {
+                    //# Traverse .each of the h0's
+                    $("H1.h0").each(function () {
+                        var $h0 = $(this),
+                            $parent = $h0.parent(),
+                            $spacer = $("<div/>"),
+                            $records = $h0.siblings("TABLE.records"),
+                            width = $h0.width(),
+                            height = ($h0.height() * 1.2)
+                            ;
+
+                        //# Set the .css of both the $spacer (to make room for the $h0) and the $h0
+                        $spacer.css({
+                            "float": "left",
+                            height: width + "px",
+                            width: height + "px"
+                        });
+                        $h0.css({
+                                top: width + "px",
+                                //position: "relative",
+                                //display: "inline-block"
+                            })
+                            .wrap($spacer)
+                        ;
+
+                        //# 
+                        if ($records[0]) {
+                            $records.css({
+                                width: ($parent.width() - height - 5) + "px"
+                            });
+                        }
+                    });
+                }, 100);
+            }; //# cn.positionH0s
+
+            //# 
+            cn.toc = function() {
+                var $this, sID,
+                    $toc = $("#toc")
+                ;
+                
+                $("h1, h2, h3").not("[no-toc]").each(function(i) {
+                    $this = $(this);
+                    sID = "title" + i;
+                    
+                    $this.attr("id", sID);
+                    $toc.append("<a href='#" + sID + "' class='" + $this[0].tagName.toLowerCase() + "'>" +
+                        $this.html() +
+                    "</a>");
+                });                
+            };
+
+            //# 
+            $(document).ready(function () {
+                //# 
+                cn.positionH0s();
+                cn.toc();
+            });
+
+
+            //# define Controller
+            ngCn.controller('BookController', function ($scope) {
+                $scope.show = {
+                    ukeTori: true,
+                    retiredPatterns: {
+                        descriptions: true,
+                        patternOptions: true,
+                        elect: true
+                    }
+                };
+                $scope.cn = cn;
+                $scope.Text = {
+                    ColorName: "Green",
+                    SchoolName: "Fusion Martial Arts",
+                    SchoolUrl: "fusionmartialarts.com.au",
+                    Grading: {
+                        Knows: "A student who is ready to grade will be expected to know the following:",
+                        Completes: "Students will be expected to complete the following before the day of the grading:",
+                        Demonstrates: "Students will be expected to be able to properly demonstrate the following:",
+                        UmpireSyllabus: "Umpire Syllabus (optional):",
+                    },
+                    H2: {
+                        KupPatternExercisesDrills: "Kup Pattern, Exercises & Drills",
+                        DanPatternExercisesDrills: "Dan Pattern, Exercises & Drills",
+                        KnowledgeTheoryInDepth: "Knowledge & Theory In-Depth"
+                    },
+                    LI: {
+                        KupAllPriorKnowledge: "All prior knowledge / theory learned in previous Kups.",
+                        DanAllPriorKnowledge: "All prior knowledge / theory learned in previous Ranks.",
+
+                        KupAllPriorPatterns: "All prior exercises and patterns learned in previous Kups.",
+                        DanAllPriorPatterns: "All prior exercises and patterns learned in previous Ranks. All previous patterns will be performed.",
+
+                        PatternSuffix: "as well as its diagram, meaning/interpretation and number of movements; performed in your own time.",
+                        PatternsSuffix: "as well as their diagrams, meanings/interpretations and number of movements; performed in your own time.",
+
+                        UmpireJudging: "Corner and special events judging.",
+                        UmpireReferee: "Officiating in a tournament as a Referee.",
+                        UmpireClass: function (x) { return "Umpire Class ‘" + x.toUpperCase() + "’ Certificate Course."; },
+
+                        AttendedSeminar: function (x, y) { return "Attended an official International Instructor’s Course/Seminar as a " + x.toLowerCase() + (y === true ? " Kup." : " Degree."); },
+                        AttendedIIClasses: function (x) { return "Attended " + x + " or more regular classes headed by an International Instructor."; },
+                        AttendedMasterClasses: function (x) { return "Attended " + x + " or more regular classes headed by a Master Instructor."; },
+                        TournamentParticipation: function (x) { return "Participation in " + x + " or more tournaments."; },
+                        DemonstrationParticipation: function (x) { return "Participation in " + x + " or more demonstrations."; },
+
+                        Thesis: function (x) { return x + ",000+ word thesis on any aspect of Taekwon-Do (this essay will be due 4 weeks prior to the grading)."; },
+                        ActiveTraining: function (x, y) { return x + " years actively training as a " + y.toLowerCase() + " Degree (attendance credits reducing this time between gradings may apply for Black Belt Classes, Tournaments, Seminars and Demonstrations)."; },
+                        IIGradingPermission: "Permission from the International Governing Authority for promotion."
+                    }
+                };
+                $scope.url = "img/fusion.png";
+
+                $scope.stances = cn.patterns.stances();
+                
+                //# Initialize the controller
+                $scope.init = function () {};
+
+            }); //# ngCn.controller('BookController'...
+        </script>
+        
+        <script type="text/ng-template" id="Stance.html">
+            <div>                
+                <!--<div class="imagebox right" style="width: 15%; clear: right; margin: 20px 0 5px 5px;">
+                    <img src="img/stances/{{imgsrc2}}.png" class="theme" ng-show="imgsrc2" />
+                    <img src="img/stances/{{imgsrc}}.png" class="theme" />
+                </div>-->
+
+                <!--<img src="img/stances/{{imgsrc}}.png" class="theme" style="float: right; margin: 20px 0 5px 5px;" cn-dom-ready="resize" />-->
+
+                <h2>{{name}} <span ng-bind-html="NameDescription"></span></h2>
+                
+                <p>
+                    <h6>Weight Distribution:</h6> <span ng-bind-html="weight"></span> <span ng-bind-html="WeightDescription"></span>
+                </p>
+                <p>
+                    <h6>Length:</h6> <span ng-bind-html="length"></span> <span ng-bind-html="LengthDescription"></span>
+                </p>
+                <p>
+                    <h6>Width:</h6> <span ng-bind-html="width"></span> <span ng-bind-html="WidthDescription"></span>
+                </p>
+                <p>
+                    <h6>Characterization:</h6> <span ng-bind-html="characterization"></span><span ng-bind-html="CharacterizationDescription"></span>
+                    <ul ng-show="characterizationpoints">
+                        <li ng-repeat="char in characterizationpoints" ng-bind-html="char"></li>
+                    </ul>
+                </p>
+                <p>
+                    <h6>Arms:</h6> <span ng-bind-html="arms"></span>
+                    <ul ng-show="armpoints">
+                        <li ng-repeat="arm in armpoints" ng-bind-html="arm"></li>
+                    </ul>
+                </p>
+                <p>
+                    <h6>Facing:</h6> {{FacingText}}
+                </p>
+                <p ng-bind-html="description | htmlify"></p>
+            </div>
+        </script>
+        
+        <script type="text/ng-template" id="GradingSheet.html">
+            <table class="header">
+                <tbody>
+                    <tr>
+                        <th rowspan="2" ng-bind-html="Disclaimer"></th>
+                        <th>Promotion Date</th>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">Patterns / Exercises</th>
+                        <th colspan="2">Fundamental Movement</th>
+                        <th colspan="2">Power</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="description" ng-bind-html="Patterns[0] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="FundamentalMovements[0] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[0] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Patterns[1] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="FundamentalMovements[1] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[1] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Patterns[2] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="FundamentalMovements[2] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[2] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Patterns[3] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="FundamentalMovements[3] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[3] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Patterns[4] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="FundamentalMovements[4] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[4] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="hidden" colspan="2"></td>
+                        <td class="description" ng-bind-html="FundamentalMovements[5] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[5] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="hidden" colspan="2"></td>
+                        <td class="description" ng-bind-html="FundamentalMovements[6] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[6] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="hidden" colspan="2"></td>
+                        <td class="description" ng-bind-html="FundamentalMovements[7] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description" ng-bind-html="Power[7] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+                
+            <table ng-show="Kup > -7">
+                <thead>
+                    <tr>
+                        <th colspan="2">Sparring</th>
+                        <th colspan="2" class="{{classThesis}}">{{Kup > 0 ? "Class Presentation" : "Thesis"}}</th>
+                        <th>Theory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="description" ng-bind-html="Sparring[0] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description {{classThesis}}">Completed</td>
+                        <td class="score {{classThesis}}">&nbsp;</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Sparring[1] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description {{classThesis}}">Uncompleted</td>
+                        <td class="score {{classThesis}}">&nbsp;</td>
+                        <th class="highlight lg">Total Score</th>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Sparring[2] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <th colspan="2" class="{{classUmpire}}">Umpire Syllabus</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Sparring[3] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description {{classUmpire}}">Completed</td>
+                        <td class="score {{classUmpire}}">&nbsp;</td>
+                        <th class="highlight lg">Average</th>
+                    </tr>
+                    <tr>
+                        <td class="description" ng-bind-html="Sparring[4] | htmlify"></td>
+                        <td class="score">&nbsp;</td>
+                        <td class="description {{classUmpire}}">Uncompleted</td>
+                        <td class="score {{classUmpire}}">&nbsp;</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+                
+            <table ng-show="Kup > -7">
+                <thead>
+                    <tr>
+                        <th colspan="3">Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3" class="comments">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th>Examiner’s Name & Rank</th>
+                        <td colspan="2"><span>( &nbsp; &nbsp; &nbsp; ) Dan</span></td>
+                    </tr>
+                    <tr>
+                        <th>Examiner’s Signature</th>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p ng-show="Kup == -7" ng-bind-html="Comment"></p>
+        </script>
+    </head>
+    <body>
+        <div class="title">
+            <img ng-src="{{url}}" class="theme" style="width: 30%;"/>
+            <h1 no-toc>The {{Text.ColorName}} Book - Student Handbook</h1>
+            <span class="version neektest">Version 4.5 (October 2015)</span>
+            <div class="noprint">
+                HTML Color Code: <input type="text" ng-model="css.mainColor" />
+                <br/>Name Of Color: <input type="text" ng-model="Text.ColorName" />
+                <br/>Logo URL: <input type="text" ng-model="url" />
+                <br/>School Name: <input type="text" ng-model="Text.SchoolName" /> URL: <input type="text" ng-model="Text.SchoolUrl" />
+            </div>
+
+            <h2 no-toc>Contact</h2>
+            <p>
+                {{Text.SchoolName}} – <a href="http://{{Text.SchoolUrl}}">{{Text.SchoolUrl}}</a>
+            </p>
+            <p>
+                Instructor Catherine – M: 0415 628 951 E: <a href="mainto:catherine@fusionmartialarts.com.au">catherine@fusionmartialarts.com.au</a> <img src="img/twitter.png"/> : @CatherineMcMast
+            </p>
+            <p>
+                Instructor Nick – M: 0412 083 183 E: <a href="mainto:nick@fusionmartialarts.com.au">nick@fusionmartialarts.com.au</a> <img src="img/twitter.png"/> : @campbeln
+            </p>
+
+            <h2 no-toc>Acknowledgments</h2>
+            <p>
+                {{Text.SchoolName}} would like to express our sincere gratitude and thanks to Senior Master Jamie Moore 8th Degree black belt, who’s Authentic Taekwon-Do Grading Syllabus (Sixth Edition, July 2007) provided the basis for this book. Without this inspiration, our student handbook would look very different. We would like to also express our appreciation to Sabum Scott Bower 6th Degree black belt, Shane Flavell 4th Degree black belt and Matthew Wood 4th  Degree black belt for their contributions to the Authentic Taekwon-Do Grading Syllabus.
+            </p>
+            <p>
+                Further, {{Text.SchoolName}} would like to thank Boo-Sabum Nicholas Campbell 3rd Degree black belt (author, researcher) and Guy Pedashenko 2nd Degree black belt (figure drawings) for their contributions.
+            </p>
+            <p>
+                Some of the information contained in this handbook has been derived from General Choi Hong Hi’s Encyclopaedia of Taekwon-Do.
+            </p>
+            
+            <h2 no-toc>Copyright Notice</h2>
+            © 2011-2015 Nicholas Campbell (III Dan). Licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-By-SA)</a>. Edited By C. McMaster (III Dan), S. Bower (VI Dan). <em>This work may be copied, distributed, transmitted and/or adapted (even for commercial use) provided this copyright notice is retained in full.</em> See <a href="http://www.fusionmartialarts.com.au/freeware/">FusionMartialArts.com.au/freeware/</a> for more information and acknowledgements. Thank you to all who came before, from all of us who follow. Taekwon.
+        </div>
+        
+        <div class="toc" id="toc">
+            <h1 no-toc>Table Of Contents</h1>
+        </div>
+        
+        <div>
+            <div class="imagebox right" style="width: 15%;">
+                <img src="img/tkd.hangul.png" />
+                Taekwon-Do in Korean Hangul
+                <em>By Nuno Nogueira<br/>(Wikipedia cc-by-sa-2.5)</em>
+            </div>
+
+            <h1>What is Taekwon-Do?</h1>
+            <p>
+                Taekwon-Do (태권도) is a Korean system of self-defence. 태 (tae, <i>tay</i>) can be translated as “to strike or break with foot”; 권 (kwon) can be translated as “to strike or break with fist”; and 도 (do) can be translated as “art” or “way”. Therefore, Taekwon-Do can be loosely translated as “the art of hand and foot fighting”. Taekwon-Do is pronounced “tay-KWON-dough”.
+            </p>
+            <p>
+                In addition to physical aspects of the art, students of Taekwon-Do also learn to develop mental and social capabilities such as respect for themselves and others, integrity, perseverance, self-control and personal resolve. It is this mental conditioning and philosophy that separates the true practitioners from those who are only concerned with mastering the fighting aspects of the art.
+            </p>
+            <p>
+                At {{Text.SchoolName}}, we rely on the Chang-Hon Pattern System and the ITF Taekwon-Do syllabus as the basis of our training and gradings. In our pursuit of being a champion of freedom and justice (a tenant of Taekwon-Do meaning intellectually curious), we also look beyond Taekwon-Do to study techniques and strategies from other sources to enhance our training, knowledge and skill-set. To date we have drawn information from modern sports science, Bujinkan Bodo Taijutsu (Ninjutsu), Wing-Chun (Kung-Fu), and Jiu-Jitsu (both traditional and BJJ). We are also always open to instructor exchanges with other disciplines in order to share and expand our understanding and techniques; something that is unfortunately rare among other arts and schools.
+            </p>
+
+            <h2>What Are The Belts / Levels?</h2>
+            <p>
+                There are ten Kup (colored belt) levels, each with its own belt:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Belt Color</th>
+                        <th>Belt Color Represents</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="nowrap">10th Kup</td>
+                        <td class="nowrap">White Belt</td>
+                        <td rowspan="2">White signifies innocence, as that of a beginning student who has no previous knowledge of Taekwon-Do.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">9th Kup</td>
+                        <td class="nowrap">White Belt / Yellow Tip</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">8th Kup</td>
+                        <td class="nowrap">Yellow Belt</td>
+                        <td rowspan="2">Yellow signifies the earth from which the Taekwon-Do tree sprouts and takes root as the Taekwon-Do foundation is being laid.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">7th Kup</td>
+                        <td class="nowrap">Yellow Belt / Green Tip</td>
+                    </tr>
+
+                    <tr>
+                        <td class="nowrap">6th Kup</td>
+                        <td class="nowrap">Green Belt</td>
+                        <td rowspan="2">Green signifies the Taekwon-Do tree’s growth as the Taekwon-Do skill begins to develop.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">5th Kup</td>
+                        <td class="nowrap">Green Belt / Blue Tip</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">4th Kup</td>
+                        <td class="nowrap">Blue Belt</td>
+                        <td rowspan="2">Blue signifies the sky and the heavens, towards which the Taekwon-Do tree matures into a towering tree as training progresses.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">3rd Kup</td>
+                        <td class="nowrap">Blue Belt / Red Tip</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">2nd Kup</td>
+                        <td class="nowrap">Red Belt</td>
+                        <td rowspan="2">Red signifies danger, cautioning the student to exercise control and warning the opponent to stay away.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">1st Kup</td>
+                        <td class="nowrap">Red Belt / Black Tip</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                10th Kup (white belt) is the lowest and 1st Kup (red belt / black tip) is the highest.
+            </p>
+
+            <h2>What About Black Belts?</h2>
+            <p>
+                In Taekwon-Do, there are nine degrees of black belt; 1st degree being the lowest and 9th degree the highest. These nine levels are further broken down into four groups:
+            </p>
+            <ul>
+                <li>1st – 3rd Degree: Boo-Sabum (<i>boo-SA-boom</i>), Assistant Instructor or National Instructor.</li>
+                <li>4th – 6th Degree: Sabum (<i>SA-boom</i>), International Instructor.</li>
+                <li>7th – 8th Degree: Sa-Hyun (<i>SA-he-yun</i>), Master Instructor.</li>
+                <li>9th Degree: Sa-Seong (<i>SA-see-ong</i>), Grandmaster.</li>
+            </ul>
+            <p>
+                The suffix “Nim Kke” (<i>NIM-gay</i>) which means Sir/Ma’am, is often added to the black belt titles listed above. Junior black belt holders under the age of 13½ years are referred to as Cho Dan Bo (<i>CHO-dan-bow</i>). Black belt holders that are not instructing are referred to as Cho Dan (<i>CHO-dan</i>).
+            </p>
+            
+            
+            <h1 class="PAGEBREAK">Information For Students</h1>
+            <p>
+                As a student, it is important to remember that your conduct both inside and outside of the do-jang reflects upon your instructor, your school and Taekwon-Do. It is therefore very important that you never misuse Taekwon-Do.
+            </p>
+
+            <h2>Terminology</h2>
+            <p>
+                There are a number of terms used throughout this manual that have a specific meaning:
+            </p>
+            <ul>
+                <li>“May” - Advises that you are allowed to do the described action if you wish.</li>
+                <li>“Should”, “Might” - Advises that in most situations the described action will be undertaken.</li>
+                <li>“Must”, “Will” - Advises that in all situations the described action will be undertaken.</li>
+            </ul>
+
+            <h2>What Is The Correct Taekwon-Do Uniform?</h2>
+            <p>
+                A dobok (<i>DOUGH-bok</i>) is the official training uniform for Taekwon-Do. Students should wear white ITF doboks together with the appropriate colored belt. The dobok has the ITF badge on left side of jacket and students should also have the {{Text.SchoolName}} badge on the right side. The back of the jacket shows the ITF tree. Belt tips should be 10mm wide, made of cotton material and located approximately 5cm from the end of the belt.
+            </p>
+            <p>
+                Dobok’s worn by black belts differ slightly from Kup students as the jacket is trimmed in black around the bottom. The dobok’s of international instructors also have a line of black trim that runs down the arm and leg of the uniform. {{Text.SchoolName}} instructors and black belts may occasionally wear an unofficial black ITF dobok for demonstrations or to indicate when the class’s repertoire will be focused on skills that fall outside of the ITF Taekwon-Do syllabus.
+            </p>
+            <p>
+                Doboks should not be worn outside of the do-jang unless you are travelling to or from training, a grading or on special occasions as directed by the instructor.
+            </p>
+            <p>
+                New students that do not have a dobok should wear loose fitting clothing to allow for a full range of motion of the arms, legs and body. A loose fitting t-shirt and a thin pair of sweatpants are advisable and white or otherwise light colors are preferred. Please note that this clothing will likely get dirty and may become torn (doboks are reinforced to help survive the rigors of training).
+            </p>
+
+            <h3>How Do You Tie A Belt?</h3>
+            <p>
+                There is a story about a snake that some instructors use to help younger students in Taekwon-Do remember how to tie their belts correctly. While intended to teach children, adults can use the story as well to help them remember the proper tying technique:
+            </p>
+            <blockquote>
+                Grab the head of the snake (the side of the belt without the colored tip) with your left hand. Never let go of the snake’s head, else it will bite! With your right hand, wrap the body of the snake clockwise around your waist. Since you must hold onto the head, you need to put the snake’s body over the top of its neck (else it will fall off your waist!). Wrap the snake’s tail over its neck and under its body so that its tail is tickling your belly. Make sure the snake’s neck and tail are the same length (being careful not to let the snake bite when you measure!). Since you cannot hold the head of the snake all through class, we will need to choke the snake so it cannot bite. Wrap the tail over and around the neck while switching the snake’s head to your right hand and its tail to your left. Pull the snake tight with both hands (horizontal to the floor). Ggah! Aack! Blahh… Congratulations! Now the snake cannot bite you and you have now properly tied your belt!
+            </blockquote>
+            <p>
+                If your belt is long, you may need to wrap it around your waist more than once. The ends of the belt should be long, but not below your knees. The colored tip (or your name/rank for black belts) should end up on your left side.
+            </p>
+            
+
+            <h2 class="PAGEBREAK">What Is A Do-Jang?</h2>
+            <p>
+                A do-jang (<i>DOUGH-jang</i>) is the training hall where the student comes to learn the art of Taekwon-Do. A suitable do-jang requires a well-trained black belt instructor as well as appropriate facilities and equipment. General rules and regulations that apply to everyone within a do-jang include:
+            </p>
+            <ul>
+                <li>Individuals must be respectful to themselves, to others and to the do-jang. Refrain from swearing, disruption of the class, risking damage to the hall, abusing equipment, etc.</li>
+                <li>The do-jang must be returned to the same (or better) condition it was in prior to class (tables and chairs repositioned, equipment stored, trash removed, floors cleaned, etc.).</li>
+                <li>Food, drinks (other than water or sports drinks) and smoking are not allowed in the do-jang.</li>
+            </ul>
+            <p>
+                An integral part of the training is an observance of certain traditions and behaviours. These protocols do not represent any religious symbolism; rather they serve to pay respect to the oriental cultural origins of Taekwon-Do. Within the do-jang as a student, you should conform to the following protocols:
+            </p>
+            <ul>
+                <li>The only thing you obey above your instructor is your own body. If you have a question or concern, it must be raised respectfully at an appropriate time. If an exercise or technique is painful or otherwise feels uncomfortable, cease the activity imminently and inform your instructor as soon as possible. No technique or instruction should be painful.</li>
+                <li>Out of respect, both you and your dobok should be clean and tidy. For safety reasons, nails must be cut short and hair should be short or tied back. You should not wear perfume, make-up, watches or jewellery. Rings that cannot be removed should be taped up.</li>
+                <li>New students and visitors should be introduced to the instructor. Students must treat newcomers with courtesy, provide seating and provide advice or assistance as necessary.</li>
+                <li>When called to the front of class, students must stand, bow, move to the outside of the formation (by walking along the backs of students within their line) and then to the front of class. Do not walk directly in front of your line as you could be struck by a fellow student executing a technique.</li>
+                <li>No one is allowed to teach without the instructor’s permission. The exception to this rule is when you are the senior student and your instructor is not in attendance for the beginning of class. In this case, it is your responsibility as the senior student to act as the instructor and start class on time.</li>
+                <li>Students must report all injuries to the instructor.</li>
+                <li>An official ITF dobok should be worn during class.</li>
+                <li>Students entering or leaving the do-jang must bow to the front of the hall to pay respect.</li>
+                <li>When individually greeting a fellow student, students should bow at a proper distance (approximately “handshake” distance). The most senior belts should be greeted first.</li>
+                <li>At the beginning of class, students must bow to the instructor, who also bows to the class.</li>
+                <li>The class should recite the oath prior to training.</li>
+                <li>Students are not allowed to leave training without the instructor’s permission.</li>
+                <li>Students should meditate for one minute cross-legged after training to calm their minds and to visualize the lessons learned.</li>
+                <li>At the end of class, students must bow to the instructor, who also bows to the class.</li>
+            </ul>
+            <p>
+                Class protocol is learned gradually; do not expect to remember everything after reading this manual or even after attending a few training sessions. Your fellow students will be happy to assist you.
+            </p>
+            
+
+            <h2 class="PAGEBREAK">How Do You Bow?</h2>
+            <p>
+                To paraphrase the founder of Taekwon-Do General Choi Hong Hi, we are all students of Taekwon-Do. As such, respect is paid equally to all practitioners of Taekwon-Do. 9th Dan Grandmasters who have dedicated their lives to the study and practice of Taekwon-Do bow to the same height/angle as a white belt that started today. To perform a respectful bow, the following protocol is observed:
+            </p>
+            <ul>
+                <li>Bowing should always be done from a stationary position, should be executed reasonably slowly yet will generally be completed beginning to end in around 5 seconds.</li>
+                <li>
+                    Bowing starts from the “charyot” (<i>chair-E-ut</i>, meaning attention) position. If you are greeting a fellow student individually, you should be approximately “handshake distance” apart.
+                    <ul>
+                        <li>Charyot Position: Facing your fellow student, stand up straight while bringing your heals together with your toes angled outward at approximately 45°. Your hands should be at your side, elbows slightly bent and fists lightly clenched.</li>
+                    </ul>
+                </li>
+                <li>The senior belt will initiate the bow by either saying “kyong ye” (<i>koo-KNEE</i>, meaning bow) or by simply bowing themselves. Bow approximately 15° from your waist towards your fellow student while maintaining eye contact.</li>
+                <li>During the bow, both students should share a mutual greeting of “Taekwon” (<i>tay-KWON</i>). This is done as a common greeting as well as a sign of mutual respect.</li>
+                <li>The junior belt should wait for the senior belt to rise before rising themselves.</li>
+            </ul>
+
+            <h2>What Is The Student Oath?</h2>
+            <p>
+                The student oath and its tenants briefly summarize the philosophy that drives Taekwon-Do. The student oath should be recited as follows:
+            </p>
+            <ul>
+                <li>I shall observe the tenets of Taekwon-Do.</li>
+                <li>I shall respect the instructor and seniors.</li>
+                <li>I shall never misuse Taekwon-Do.</li>
+                <li>I shall be a champion of freedom and justice.</li>
+                <li>I shall build a more peaceful world.</li>
+                <li class="subbullet">The tenants: Courtesy, Integrity, Perseverance, Self-Control and Indomitable Spirit.</li>
+            </ul>
+            
+            <h2>Patterns/Tuls (aka: Form, Hyeong, Poomsae, Kata, etc.)</h2>
+            <p>
+                The Chang-Hon Pattern System, on which {{Text.SchoolName}} relies, was developed by General Choi Hong-Hi and is named after his pseudonym “Blue Cottage”. The 24 officially recognized patterns (tuls) correspond to 24 hours in a day; a continuously repeated cycle that in turn represents one's lifetime. “The life of a human being perhaps 100 years, can be considered as a day when compared with eternity”. In addition to the 24 officially recognized patterns, there are two retired patterns (Ko-Dang and U-Nam) as well as three exercises (4-Directional Punch, 4-Directional Block and 4-Directional Thrust) that complete the pattern system. These exercises are known as a form, hyeong, poomsae or kata in other branches of Taekwon-Do and other martial arts.
+            </p>
+            <p>
+                Students at each Kup level will learn a specific pattern and/or pattern-like exercises. After achieving a Black Belt, students learn up to 3 new patterns for each Dan level.
+            </p>
+
+            <h2 no-toc>Questions?</h2>            
+            <p>
+                If you ever have any questions, do not hesitate to ask your fellow students or your instructor.
+            </p>
+        </div>
+        
+        <div>
+            <h1>Vital Spots</h1>
+            <p>
+                Presented below is an overview of many (though not all) of the body’s vital spots:
+            </p>
+            <div class="imagebox full">
+                <img src="img/vitalspots.png" class="theme"/>
+            </div>
+            <p>
+                Each vital spot is matched with at least one attacking tool. The exposed area of the vital spot as well as optimum angle of attack are the major determining factors in identifying an appropriate attacking tool.
+            </p>
+            <p>
+                For example, the most appropriate attacking tool for the Solar Plexus is the Straight Fingertip Thrust due to the small size and vertical orientation of the target at the optimum angle of attack (directly in front of the attacker). A Full Fist Punch would not be an optimum attacking tool due to the size differential between the target and the attacking surface of the fist. A Side Back-Fist Strike would not be an optimum attacking tool due to the angle of attack (90° to the attacker). This is not to say that either the Full Fist Punch or the Side Back-Fist Strike would be ineffective when striking the Solar Plexus, just that their effectiveness is limited due to a mismatch of surface areas or angles of attack. In both cases it would be more effective to target another vital spot with the technique.
+            </p>
+        </div>
+        
+        <div>
+            <h1 class="h0">Grading Syllabus</h1>
+
+            <h1 no-toc>What To Expect</h1>
+            <p>
+                Gradings are generally conducted every 3-4 months. As often as possible, a grading panel that includes external instructor(s) is brought in to assess the students’ abilities. The use of external instructors is best for all involved as students’ abilities are evaluated more objectively and instructors are able to receive feedback on their training regimen and outcomes. A special fee is required for gradings in addition to your training fees to cover the additional costs of the grading (wooden boards, belts, the grading panel, venue hire, etc.).
+            </p>
+            <p>
+                At a grading, students will be asked to demonstrate the pattern and/or exercises for their current Kup. Students should also expect to be asked to properly demonstrate the patterns and/or exercises required of their previous Kups. Students will also be asked questions based on all of their learned knowledge/theory and can also expect questions pertaining to the application of techniques learned from their patterns. To aid in study, some example theory questions have been included below for reference.
+            </p>
+            <p>
+                While it is the responsibility of your instructor to fully prepare you for your next grading, it is also your responsibility as a student to ensure that you fully understand and can properly demonstrate the knowledge, techniques and abilities required of you to the grading panel.
+            </p>
+
+            <h2 data-toc="false">Gradings Are Not A Profit-Center</h2>
+            <p>
+                Students are only put forward for gradings when both they and their instructor are confident in their abilities and knowledge of the syllabus.  The first three to four gradings can occur in rather quick succession while subsequent gradings have a tendency to be further apart. The reason for this is to build a new student’s confidence in the art, to capitalise on their enthusiasm and to ensure the basics are being properly learned.
+            </p>
+
+            <h2>Wooden Boards</h2>
+            <p>
+                Board breaks are not required, but a reasonable demonstration of your abilities to the grading panel is. Students who are unable to break boards due to realities outside of their control must speak with their instructor before a grading to determine an alternate.
+            </p>
+            <p>
+                Able adult students will be required to break pine boards that measure 290*290*19mm as required within the grading syllabus. Able adolescent students under the age of 13½ years may be required to break pine boards that measure 290*290*15mm. Due to the difficulty of obtaining pine boards 15mm thick, students my substitute a pine board measuring 200*290*19mm (with the 290mm side cut across the grain) for their own grading preparations.
+            </p>
+            <p>
+                Board breaks, in addition to being a good show for the spectators of a grading, are utilized by the grading panel to help assess your abilities to exert power effectively into a given target. The characteristics of wooden boards vary greatly based on quality and seasoning of the pine boards. This reality is known to the grading panel and every effort is made to ensure the wooden boards in use are suitable for grading purposes. However, due to this natural variability a missed break does not necessarily doom your grading, as the panel can still assess your abilities based on the recoil of the board holder(s) as well as your own reaction.
+            </p>
+        </div>
+        
+        <div>
+            <h1>10th Kup Students (White Belt)</h1>
+            <p>
+                The white belt signifies the innocence of a beginning student who has no previous knowledge of Taekwon-Do. 
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>The correct pronunciation of Taekwon-Do; <i>tay-KWON-dough</i>.</li>
+                <li>What Taekwon-Do loosely translates to; The art of hand and foot fighting.</li>
+                <li>The name and rank of the Founder of Taekwon-Do; General Choi Hong Hi, 9th Degree Grandmaster.</li>
+                <li>Dates Taekwon-Do and the ITF were founded; Taekwon-Do: 11 April 1955, ITF: 22 March 1966.</li>
+                <li>Details about the correct doboks worn by all ITF students;  White, ITF badge on front left, ITF Tree on rear.</li>
+                <li>Meaning of the white belt; Innocence, no previous knowledge of Taekwon-Do.</li>
+                <li>Why 3-Step Sparring is executed with the footwork “Outside, Inside, Outside” or “Inside, Outside, Inside”; To maintain proper distance.</li>
+                <li>Details about the belt system, Dan classifications and the colors of the belts; White, Yellow, Green, Blue, Red, Black. 10 Kup levels and 9 Dan levels.</li>
+                <li>The total number of patterns (tuls) in Taekwon-Do as well as what that number represents; 24, representing the hours in a day and by that an entire lifetime. Two additional patterns have been retired/forgotten.</li>
+                <li>The science behind Taekwon-Do; Sine wave and reaction force.</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>Saju-Jirugi, 4-Directional Punch; Performed in your own time.</li>
+                <li>Saju-Makgi, 4-Directional Block; Performed in your own time.</li>
+                <li>Solo 3-Step Sparring; Performed without a partner in your own time.</li>
+                <li>Parallel Stance Punching; Performed with half a sine wave (“Up/Down”).</li>
+                <li>Sitting Stance Punching; Performed with full sine wave (“Down… Up/Down”).</li>
+                <li>Front Leg Raising Kick.</li>
+                <li>Front Snap Kick (from walking stance).</li>
+                <li>1-Leg Bending Stance Type B.</li>
+            </ul>
+
+            <h2>Gold Stars (Partial Rank)</h2>
+            <p>
+                For our younger students, {{Text.SchoolName}} uses Gold Stars as a partial rank system below 9th Kup. There are 3 drills of 10 or more movements, 5 distinct skills plus theory to learn before being able to grade to 9th Kup. Younger students can find these requirements daunting so the Gold Stars break up these requirements into 4 sections:
+            </p>
+            <ul>
+                <li><h6>Requirements for 1st Star:</h6> Solo 3-Step Sparring, Parallel Stance Punching and Sitting Stance Punching.</li>
+                <li><h6>Requirements for 2nd Star:</h6> Saju-Jurugi, Front Leg Raising and 1-Leg Bending Stance Type B.</li>
+                <li><h6>Requirements for 3rd Star:</h6> Saju-Makgi and Front Snap Kick (Walking Stance).</li>
+                <li><h6>Requirements for 4th <i>Won-Hee</i> Star:</h6> Theory and consistent proper in-class behavior.</li>
+            </ul>
+            <p>
+                Gold Stars do not require a grading fee and are awarded after a successful in class demonstration of your acquired skills. Once you have received all 4 Gold Stars you are then eligible to grade to 9th Kup at the next grading where you will be required to demonstrate all of your learned skills to the grading panel.
+            </p>
+
+            <cn-diagram data-key="j" data-name="<br/>Saju-Jirugi & Saju-Makgi"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                There is no pattern (tul) for 10th Kup students to learn before grading, but students are expected to learn two exercises; Saju-Jirugi (<i>SA-jew JER-ree-gee</i>, 4-Directional Punch) and Saju-Makgi (<i>SA-jew MA-key</i>, 4-Directional Block). 10th Kup students also learn a drill called 3-Step Sparring. This drill requires students to move their feet in a specific way, described as “Outside, Inside, Outside”. The purpose of this movement is to maintain equal distance between the two students throughout the drill.
+            </p>
+
+
+            <h2 class="PAGEBREAK">{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>The Science Behind Taekwon-Do</h3>
+            <p>
+                <img src="img/scale.png" style="width: 20%; float: left;"/>
+                As a 10th Kup you will be exposed to the science behind Taekwon-Do; sine wave and reaction force. Sine wave is verbalized and physically performed as “Down… Up/Down”. Utilization of the sine wave allows us to employ our body’s mass in motion as an additive force to the executing technique. You can see this force in action when you step on analog scale like the one to the right. As you step on, your weight momentarily reads as higher than it actually is because you are exerting a downward force with the help of gravity that for a moment makes it seem as though you are heavier than you are.
+            </p>
+            <p>
+                Reaction force acts as a counter-balance, which allows more muscles to be engaged in the execution of the technique rather than in maintaining the body’s balance. For an adult, each leg represents approximately 10% of your body mass while each arm accounts for approximately 5-6%. When this body mass is moved during a technique, the body must maintain balance and counteract any torsion (twisting) caused by the movement. With the use of reaction force, the act of counter-balancing is vastly simplified.
+            </p>
+
+            <h3>Taekwon-Do’s Important Dates</h3>
+            <p>
+                Taekwon-Do was founded on 11 April 1955 by General Choi Hong Hi, 9th Degree Black Belt and Grandmaster. The International Taekwon-Do Federation (ITF) was founded on 22 March 1966 to promote and encourage the growth of Taekwon-Do.
+            </p>
+
+            <ul data-questions="{PAGEBREAK: true}">
+                <li>What does Saju-Jirugi mean? How many movements? What is its diagram? Is this a pattern?</li>
+                <li>What does Saju-Makgi mean? How many movements? What is its diagram? Is this a pattern?</li>
+                <li>What does the color of the white belt represent?</li>
+                <li>How do you say “Taekwon-Do” correctly? What does it mean?</li>
+                <li>Who founded Taekwon-Do? What was his rank?</li>
+                <li>On what date was Taekwon-Do founded? On what date was the ITF founded?</li>
+                <li>Describe the details of an official training uniform (dobok).</li>
+                <li>What are the belt colors in Taekwon-Do? What are the Dan ranks?</li>
+                <li>How many patterns are there in Taekwon-Do? What does that number represent?</li>
+                <li>What is the science behind Taekwon-Do? Why do we use sine-wave and reaction force?</li>
+                <li>What is the difference between a Low Block and a Low Knife-Hand Block?</li>
+                <li>What is a primary technique executed from 1-Leg Bending Stance Type B?</li>
+                <li>Show/describe a Charyot/Attention Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right Attention Stance?</li>
+                <li>Show/describe a Parallel Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right Parallel Stance?</li>
+                <li>Show/describe a Walking Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right Walking Stance?</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h1>Requirements for 9th Kup</h1>
+            
+            <div cn-grading-sheet='{
+                    Kup: 9,
+                    Patterns: ["Saju-Jurugi", "Saju-Makgi"],
+                    FundamentalMovements: ["Parallel Stance Punching", "Sitting Stance Punching", "Front Leg Raising Kick", "Front Snap Kick (Walking Stance)", "1-Leg Bending Stance Type B"],
+                    Power: null,
+                    Sparring: ["3-Step Sparring (Solo)"]
+                }'
+            ></div>
+        </div>
+        
+        <div>
+            <h1>9th Kup Students (White Belt / Yellow Tip)</h1>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>The Student Oath and the Tenants of Taekwon-Do; See above or bolded text below.</li>
+                <li>The key features of a Do-Jang as well as the rules, regulations and protocols students are to observe within a Do-Jang; A well-trained instructor with appropriate facilities and equipment. Pay respect to the oriental cultural origins of Taekwon-Do through the protocol described above (respect, no swearing/running/food, etc.).</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Chong-Ji Tul, {{Text.LI.PatternSuffix}} Diagram: a “plus sign”. Meaning: “heaven and earth, story of creation”. 19 movements.</li>
+                <li>3-Step Sparring; Performed with a partner in your own time.</li>
+                <li>Side Leg Raising Kick.</li>
+                <li>Side Piercing Kick (from sitting stance).</li>
+                <li>1-Leg Bending Stance Type A.</li>
+            </ul>
+
+            <cn-diagram data-key="cj"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 9th Kup students to learn before grading is called Chon-Ji (<i>CHONG-gee</i>). Chon-Ji literally translates to “the Heaven the Earth”.  In the orient, it is interpreted as the creation of the world or the beginning of history (like the old testament, the big-bang or dreamtime). Therefore, it is the initial pattern beginners learn. This pattern consists of 2 similar parts – one to represent Heaven and the other the Earth.
+            </p>
+            
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>Student Oath Expanded & Explained</h3>
+            <p>
+                The student oath and its tenants briefly summarize the philosophy that drives Taekwon-Do. Below the oath is expanded upon in order to give insight to the ideals contained behind the words.
+            </p>
+            <p>
+                <em>I shall observe the tenets of Taekwon-Do.</em> Acknowledge, observe and attempt to live according to Taekwon-Do’s tenants:
+                <ul>
+                    <li><h6>Courtesy.</h6> Endeavour to show courtesy to all, to respect yourself and others and to maintain appropriate etiquette and manners.</li>
+                    <li><h6>Integrity.</h6> Beyond its common definition, integrity in the context of Taekwon-Do calls on students to not only identify right from wrong but to actively engage the concepts. Have the integrity to stand for what is right and have the conscience and humility to feel guilt and admit when you have done wrong.</li>
+                    <li><h6>Perseverance.</h6> To have the resolve to persevere time and again until you have achieved your intended result.</li>
+                    <li><h6>Self-Control.</h6> Be in control of your thoughts and physical actions.</li>
+                    <li><h6>Indomitable Spirit.</h6> Stand up for what you believe in, no matter the odds. Give 100% to every endeavour you undertake.</li>
+                </ul>
+            </p>
+            <p>
+                <em>I shall respect the instructor and seniors.</em> Students should give respect to their instructors and senior belts. In return those students senior to you should also so respect to everyone in order to earn this respect.
+            </p>
+            <p>
+                <em>I shall never misuse Taekwon-Do.</em> The lessons learned in Taekwon-Do must never be used in an unjust manor. As a student, your conduct both inside and outside the do-jang reflects upon your instructor, your school and Taekwon-Do as a whole. Any actions you undertake that violate the student oath or its tenants reflect upon us all and therefore we must all strive to represent the best that Taekwon-Do has to offer.
+            </p>
+            
+
+            <p class="PAGEBREAK">
+                <em>I shall be a champion of freedom and justice.</em> Far from calling on you to leap tall buildings with a single bound, being a champion of freedom and justice calls upon students to be open to new thoughts, ideas and ideologies; to challenge your own beliefs and understandings; to endeavour to understand how others live and why they do things differently; to attempt to overcome misconceptions before conflicts arise; to understand the whole story before rendering judgement; and to always remain intellectually curious. Allow others to have the freedom they deserve. With the acceptance and execution of this belief, you bring justice to the world and in turn become a champion of freedom and justice.
+            </p>
+            <p>
+                <em>I shall build a more peaceful world.</em> This point embodies the application of being a champion of freedom and justice. Attempt to conduct your daily life in a more peaceful manner. Refrain from provoking aggression in others. When conflict occurs, use the ideals of being a champion of freedom and justice to help resolve the issue.
+            </p>
+
+            <ul cn-sample-theory-questions>
+                <li>What is the interpretation of Chon-Ji (what does it mean)? What is its diagram? How many movements? Is this a pattern?</li>
+                <li>Can you tell me more about the interpretation of Chon-Ji?</li>
+                <li>What is a do-jang? What is required for a suitable do-jang? What are the general rules and regulations? What are the protocols?</li>
+                <li>Demonstrate a proper Taekwon-Do bow. Do junior students bow lower than senior students? Why/why not?</li>
+                <li>Please recite the Student Oath.</li>
+                <li>What does it mean to be a “champion of freedom and justice”?</li>
+                <li>Which sequence of foot placement is correct for 3-Step Sparring: “Outside, Inside, Outside” or “Inside, Outside, Inside”? Why is this foot placement important?</li>
+                <li>What is a primary technique executed from 1-Leg Bending Stance Type A?</li>
+                <li>How is backward motion utilized in a Side Kick? What is the attacking tool(s)? Where is your target/opponent positioned?</li>
+                <li>How is backward motion utilized in a Front Snap Kick? What is the attacking tool? Where is your target/opponent positioned?</li>
+                <li>Why do we re-chamber the leg after a kick before stepping down?</li>
+                <li>Describe an L-Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right L-Stance?</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h1>Requirements for 8th Kup</h1>
+            
+            <div cn-grading-sheet='{
+                    Kup: 8,
+                    Patterns: ["Chon-Ji"],
+                    FundamentalMovements: ["Side Leg Raising Kick", "Side Piercing Kick (Sitting Stance)", "1-Leg Bending Stance Type A"],
+                    Power: null,
+                    Sparring: ["3-Step Sparring"]
+                }'
+            ></div>
+        </div>
+        
+        <div>
+            <h1>8th Kup Students (Yellow Belt)</h1>
+            <p>
+                The yellow belt signifies the earth from which the Taekwon-Do tree sprouts and takes root as the Taekwon-Do foundation is being laid.
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Understand the Korean words used in class, and be able to use the words designated in the <span class="th">{{Text.ColorName}} Headed</span> table below; Count to 10, training hall, uniform and words used for rank (grade, degree, instructor, etc.).</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Dan-Gun Tul, as well as its diagram, meaning/interpretation and number of movements; Performed in your own time. Diagram: a “capital I”. Meaning: “legendary founder of Korea in 2333 BC”. 21 movements.</li>
+                <li>Free Sparring; Performed with a partner in your own time.</li>
+                <li>Stationary Turning Kick.</li>
+                <li>Back Kick from L-Stance (to the rear).</li>
+            </ul>
+            
+            <cn-diagram data-key="dg"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 8th Kup students to learn before grading is called Dan-Gun. Dan-Gun is named after the holy Dan Gun, the legendary founder of Korea in the year 2333 BC.
+            </p>
+            
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>Korean Words To Know & Learn</h3>
+            <p>
+                At this stage of your Taekwon-Do development you are expected to start to learn and understand the Korean words and commands used by your instructors. You should be able to use the words presented in the <span class="th">{{Text.ColorName}} Headed</span> table below, and understand the words presented in the <span class="th alt">Grey Headed</span> table.
+            </p>
+            <div class="col2">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Korean</th>
+                            <th>Pronunciation</th>
+                            <th>English</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hana</td>
+                            <td><i>HHAA-na</i></td>
+                            <td>One</td>
+                        </tr>
+                        <tr>
+                            <td>Dool</td>
+                            <td><i>DO</i></td>
+                            <td>Two</td>
+                        </tr>
+                        <tr>
+                            <td>Set</td>
+                            <td><i>SAY</i></td>
+                            <td>Three</td>
+                        </tr>
+                        <tr>
+                            <td>Net</td>
+                            <td><i>NEA</i></td>
+                            <td>Four</td>
+                        </tr>
+                        <tr>
+                            <td>Dasot</td>
+                            <td><i>DA-sot</i></td>
+                            <td>Five</td>
+                        </tr>
+                        <tr>
+                            <td>Yasot</td>
+                            <td><i>YA-sot</i></td>
+                            <td>Six</td>
+                        </tr>
+                        <tr>
+                            <td>Ilgop</td>
+                            <td><i>EEL-gop</i></td>
+                            <td>Seven</td>
+                        </tr>
+                        <tr>
+                            <td>Yodul</td>
+                            <td><i>YO-dul</i></td>
+                            <td>Eight</td>
+                        </tr>
+                        <tr>
+                            <td>Ahop</td>
+                            <td><i>AGH-hop</i></td>
+                            <td>Nine</td>
+                        </tr>
+                        <tr>
+                            <td>Yol</td>
+                            <td><i>YOL</i></td>
+                            <td>Ten</td>
+                        </tr>
+                        <tr>
+                            <td>Dobok</td>
+                            <td><i>DOUGH-bok</i></td>
+                            <td>Uniform</td>
+                        </tr>
+                        <tr>
+                            <td>Do-jang</td>
+                            <td><i>DOUGH-jang</i></td>
+                            <td>Training Hall</td>
+                        </tr>
+                        <tr>
+                            <td>Kup <i>or</i> Gup</td>
+                            <td><i>GUP</i></td>
+                            <td>Grade</td>
+                        </tr>
+                        <tr>
+                            <td>Dan</td>
+                            <td><i>DAN</i></td>
+                            <td>Degree</td>
+                        </tr>
+                        <tr>
+                            <td>Tul</td>
+                            <td><i>TUL</i></td>
+                            <td>Pattern</td>
+                        </tr>
+                        <tr>
+                            <td>Cho Dan Bo</td>
+                            <td><i>CHO-dan-bo</i></td>
+                            <td>Junior Black Belt</td>
+                        </tr>
+                        <tr>
+                            <td>Cho Dan</td>
+                            <td><i>CHO-dan</i></td>
+                            <td>Black Belt</td>
+                        </tr>
+                        <tr>
+                            <td>Boo-Sabum</td>
+                            <td><i>boo-SA-boom</i></td>
+                            <td>Assistant Instructor</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <table class="alt">
+                    <thead>
+                        <tr>
+                            <th>Korean</th>
+                            <th>Pronunciation</th>
+                            <th>English</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Charyot</td>
+                            <td><i>chair-E-ut</i></td>
+                            <td>Attention</td>
+                        </tr>
+                        <tr>
+                            <td>Kyong-Ye</td>
+                            <td><i>koo-KNEE</i></td>
+                            <td>Bow, Salute</td>
+                        </tr>
+                        <tr>
+                            <td>Junbi</td>
+                            <td><i>JUNE-bee</i></td>
+                            <td>Ready Position</td>
+                        </tr>
+                        <tr>
+                            <td>Baro</td>
+                            <td><i>BAR-row</i></td>
+                            <td>Return To Ready</td>
+                        </tr>
+                        <tr>
+                            <td>Ki-hup</td>
+                            <td><i>KEY-hup</i></td>
+                            <td>Yell, Shout</td>
+                        </tr>
+                        <tr>
+                            <td>Sijak</td>
+                            <td><i>SEE-jaak</i></td>
+                            <td>Begin</td>
+                        </tr>
+                        <tr>
+                            <td>Tui-Tora</td>
+                            <td><i>TEE-ru TOUR-ra</i></td>
+                            <td>Turn Around</td>
+                        </tr>
+                        <tr>
+                            <td>Swiyo</td>
+                            <td><i>SHOW</i></td>
+                            <td>At Ease</td>
+                        </tr>
+                        <tr>
+                            <td>Anj-Oh</td>
+                            <td><i>AN-jo</i></td>
+                            <td>Sit, Kneel</td>
+                        </tr>
+                        <tr>
+                            <td>Ee-Sang</td>
+                            <td><i></i></td>
+                            <td>Finished</td>
+                        </tr>
+                        <tr>
+                            <td>Guman</td>
+                            <td><i></i></td>
+                            <td>Stop</td>
+                        </tr>
+                        <tr>
+                            <td>Kur-Ki-Yer-Tae-Hae</td>
+                            <td><i>cookie-it-TAY-hey</i></td>
+                            <td>Face the flag</td>
+                        </tr>
+                        <tr>
+                            <td>Ko-Map Sum-Nee-Da</td>
+                            <td><i>ko-map-SUM-knee-da</i></td>
+                            <td>Thank You</td>
+                        </tr>
+                        <tr>
+                            <td>Sa-Seong</td>
+                            <td><i></i></td>
+                            <td>Grandmaster</td>
+                        </tr>
+                        <tr>
+                            <td>Sa-Hyun</td>
+                            <td><i></i></td>
+                            <td>Master Instructor</td>
+                        </tr>
+                        <tr>
+                            <td>Sabum</td>
+                            <td><i>SA-boom</i></td>
+                            <td>International Instructor</td>
+                        </tr>
+                        <tr>
+                            <td>Nim Kke</td>
+                            <td><i>NIM-gay</i></td>
+                            <td>Sir/Ma’am</td>
+                        </tr>
+                        <tr>
+                            <td>Koo ryung op see</td>
+                            <td><i>CORE-re-oh-OPT-chay</i></td>
+                            <td>In your own time</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+
+            <ul cn-sample-theory-questions="{PAGEBREAK: true}">
+                <li>What is the interpretation of (who was) Dan-Gun? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Dan-Gun?</li>
+                <li>What does the color of the yellow belt represent?</li>
+                <li>Please count to 10 in Korean.</li>
+                <li>How do you measure up for 3-Step Sparring that involves only hand techniques? That involves a kick? That involves a knife-hand strike? Why are these measurements different?</li>
+                <li>How is backward motion utilized in a Turning Kick? What is the attacking tool(s)? Where is your target/opponent positioned?</li>
+                <li>What Dan ranks does Boo-Sabum refer to? What Dan ranks does Sabum refer to? Which Korean term would you use to refer to your Instructor?</li>
+                <li>Describe what it means to perform at Pattern Speed.  When do we use Pattern Speed?</li>
+                <li>Describe how to perform a Continuous Motion. Demonstrate where Continuous Motion is used in your pattern.</li>
+                <li>How many mid-section punches are there in Dan Gun?</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h1>Requirements for 7th Kup</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: 7,
+                    Patterns: ["Dan-Gun"],
+                    FundamentalMovements: ["Turning Kick (Stationary)", "Back Kick (L-Stance)"],
+                    Power: null,
+                    Sparring: ["3-Step Sparring", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+        
+        <div>
+            <h1>7th Kup Students (Yellow Belt / Green Tip)</h1>
+            <p>
+                Students who have the opportunity should participate in a Tournament in sparring, patterns, special techniques, power breaking, team or special events. Participation in a Tournament is encouraged as it will give you an additional reason to focus on thoroughly learning your patterns, to improve upon your sparring knowledge and expertise as well as give you exposure to how other students from around your region are learning and executing their Taekwon-Do training.
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Understanding of the 5 physical compositions of Taekwon-Do; Fundamental movements, dallyon, patterns, sparring, self-defence.</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Do-San Tul, {{Text.LI.PatternSuffix}} Diagram: a “capital S”. Meaning: “Ahn Chang-Ho, furthered education of Korea and its independence”. 24 movements, representing his entire life.</li>
+                <li>2-Step Sparring; Performed with a partner in your own time.</li>
+                <li>Front Snap Kick and Side Kick kicking combinations (starting with both the left and right leg).</li>
+            </ul>
+            <p>{{Text.Grading.UmpireSyllabus}}</p>
+            <ul>
+                <li>Participation in a tournament in sparring, patterns, special techniques or other events.</li>
+            </ul>
+            
+            <cn-diagram data-key="ds"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 7th Kup students to learn before grading is called Do-San (<i>DOUGH-san</i>). Do-San is the pseudonym of the patriot Ahn Chang-Ho (1876-1938).  The movements represent his entire life, which he dedicated to furthering the education of Korea and its independence movement.
+            </p>
+            
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>The Five Physical Compositions Of Taekwon-Do</h3>
+            <p>
+                “Five parts of the Physical Composition of Taekwon-Do” can be more easily thought of as “what are the five main ways we use/train our bodies in Taekwon-Do”.
+            </p>
+            <p>
+                <em>Fundamental Movements:</em> Beginning with Low Block, Walking Stance and Forefist Punch, there are more than 3,000 fundamental movements employed in Taekwon-Do (something the General was very proud of). Collectively employing all parts of the body, each fundamental movement should be executed with balance, coordination and proper technique to completion while utilizing the Theory of Power throughout the motion. When executed in succession, each fundamental movement can be likened to a musical note. The result should be a flowing melody rather than a series of sharp, disjointed noises.
+                <br/>General Choi observed that as students progressed, they tended to neglect the practice of fundamental movements. He encouraged regular practice of each fundamental movement to help students attain the goal of mastering each technique, so that they would be at the ready when needed.
+            </p>
+            <p>
+                <em>Dallyon:</em> The term "dallyon" (<i>DAL-e-on</i>) is the Korean word for "equipment maintenance". In Taekwon-Do, this term is used euphemistically to refer to the training and conditioning of our bodies:
+                <ul>
+                    <li><h6>Stretching</h6> and flexibility is essential in any physical activity. It is doubly important in Taekwon-Do to assist the mobility of joints and improve the overall range of motion.</li>
+                    <li><h6>Aerobic Exercise</h6> (or <em>Running</em>) results in increased endurance, muscle tone, agility, and weight control. All of these factors are important in Taekwon-Do as stamina and overall health are crucial in sparring, exercising and the possibility of self-defence.</li>
+                    <li><h6>Strength Training</h6> (or <em>Weight Training</em>) tones the muscles, improves speed/quickness, improves joint stability and helps ease the pain of problem joints. Strong muscles and joints create strong techniques.</li>
+                    <li><h6>Forging</h6> (conditioning) is the toughening of our attacking and blocking tools (such as hands and feet) via the formation of skin calluses, hardening bones and cartilages and controlled injury.</li>
+                </ul>
+            </p>
+            <p>
+                <em>Patterns:</em> The Chang-Hon patterns system used by Taekwon-Do was developed by General Choi Hong-Hi and is named after his pseudonym. With a few exceptions (Chon-Ji among them), the patterns are each named for an important individual from Korean history. In many cases, a pattern's diagram and/or number of movements are also representative of the individual or Korean history.
+                <br/>Each pattern is a choreographed sequence of fundamental movements in a hypothetical fight against one or more opponents. New fundamental movements are introduced as the student progresses through the pattern system. The goal is to perform every fundamental movement with precision and elegance from a solid and graceful stance resulting in a harmonious, perfectly-controlled movement that employs the Theory of Power. If we think of each fundamental movement as a musical note, then we can think of each pattern as a melody. The goal of every artist (whether musical or martial) is to have their work flow beautifully.
+            </p>
+            <p>
+                <em>Sparring:</em> The use of sparring in training provides an avenue of practical application of the techniques and strategies learned in class. From the offensive perspective students are able to hone skills such as adjusting their distance to a target, timing and anticipation of a moving target as well as getting a better idea of the effectiveness and reaction to an executed technique. From the defensive perspective students gain knowledge of required reaction time, learn to move to gain/regain advantage as well as learn the skill of anticipating an attack effectively and consistently. Sparring also helps to build courage, self-control, self-confidence as well as develop tactics and technique combinations that students can call upon should the need ever arise. There are two major forms of sparring:
+                <ul>
+                    <li><h6>Step and Prearranged Sparring</h6> is planned by the participants in advance with defined rules such as the techniques to be used, the number of steps/attacks/counter attacks, the target, etc. The primary goals of step and prearranged sparring are to teach students accuracy and control of their techniques (as contact is generally not allowed), understand the purpose and application of techniques, develop a sense of interaction with an opponent through distancing and stances, develop reflex speed and instant responses to attacks.</li>
+                    <li><h6>Free Sparring</h6> is essentially open combat, although there are still rules in place in order to protect students. Techniques are not executed with full destructive force. Physical contact of the attacking tools may or may not be permitted (especially if protective equipment is not being worn). Due to potentially devastating injuries, students are prohibited from using elbow, knee, or head techniques as well as attacks below the belt. Despite their devastating effects these techniques are still practiced in training, as once mastered they will be available for use in genuinely dangerous situations. Other rules may be stated by your instructor or agreed upon between the participants (such as hands-only, legs-only, etc.).</li>
+                </ul>
+            </p>
+            <p>
+                <em>Self Defence:</em> Taekwon-Do offers a range of self-defensive techniques that can be employed in a variety of situations. Ranging from attack deflection to locks/grabs, throws and counter attacks with varying levels of destructive force, Taekwon-Do provides a graduating array of responses. As a student, it is important to remember that your conduct both inside and outside the do-jang reflects upon your instructor, your school and Taekwon-Do. It is therefore very important that you never misuse Taekwon-Do.
+            </p>
+
+            
+            <ul cn-sample-theory-questions="{PAGEBREAK: true}">
+                <li>What is the interpretation of (who was) Do-San? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Do-San? What does Do-San literally translate to?</li>
+                <li>What are the 5 parts of the Physical Composition of Taekwon-Do (or: what are the 5 main ways we use/train our bodies in Taekwon-Do)?</li>
+                <li>Approximately how many fundamental movements are there in Taekwon-Do?</li>
+                <li>What does dallyon mean? What are the 4 parts?</li>
+                <li>Why do we do patterns?</li>
+                <li>What are the different forms of sparring?</li>
+                <li>What are some of the events in a Taekwon-Do tournament?</li>
+                <li>Describe a Sitting Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right Sitting Stance?</li>
+                <li>Describe how to perform a Fast Motion. Demonstrate where Fast Motion is used in your pattern.</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h1>Requirements for 6th Kup</h1>
+            
+            <div cn-grading-sheet='{
+                    Kup: 6,
+                    Patterns: ["Do-San"],
+                    FundamentalMovements: ["Front Snap Kick +\nSide Piercing Kick (Combo)"],
+                    Power: null,
+                    Sparring: ["2-Step Sparring", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+        
+        <div>
+            <h1>6th Kup Students (Green Belt)</h1>
+            <p>
+                The green belt signifies the Taekwon-Do tree’s growth as the Taekwon-Do skill begins to develop.
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Thorough understanding of the concept of courtesy; polite, sense of justice, etiquette, respect... (see below).</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Won-Hyo Tul, {{Text.LI.PatternSuffix}} Diagram: a “capital I”. Meaning: “monk, Buddhism, Silla Dynasty, 686 AD”. 28 movements.</li>
+                <li>Turning Kick and Back Kick kicking combinations (starting with both the left and right leg).</li>
+                <li>Front Snap Kick through 1 pine board.</li>
+            </ul>
+            
+            <cn-diagram data-key="wh"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 6th Kup students to learn before grading is called Won-Hyo (<i>wa-ON-he-oh</i>). Won-Hyo was the noted monk who introduced Buddhism to the Silla Dynasty in the year 686 AD.
+            </p>
+
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>A Deeper Understanding Of Courtesy</h3>
+            <ol>
+                <li>To promote the spirit of mutual concessions.</li>
+                <li>To be ashamed of one’s vices, and to have <s>contempt</s> concern for the vices of others.</li>
+                <li>To be polite to one another.</li>
+                <li>To encourage the sense of justice and humanity.</li>
+                <li>To distinguish instructor from student, senior from junior and elder from younger.</li>
+                <li>To behave according to etiquette.</li>
+                <li>To respect others possessions.</li>
+                <li>To handle matters with fairness and sincerity.</li>
+                <li>To refrain from giving or accepting any gift when in doubt.</li>
+            </ol>
+
+            <ul cn-sample-theory-questions>
+                <li>What is the interpretation of (who was) Won-Hyo? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Won-Hyo?</li>
+                <li>What does the color of the green belt represent?</li>
+                <li>How would you describe the concept of courtesy?</li>
+                <li>Why do we utilize board breaks in Taekwon-Do gradings?</li>
+                <li>How is backward motion utilized in a Back Kick? What is the attacking tool(s)? Where is your target/opponent positioned?</li>
+                <li>Describe a Fixed Stance (length, width, weight distribution, knees and toe angles). How do you know if it’s a left or a right Fixed Stance?</li>
+                <li>Describe a Close Ready Stance Type A, Type B, Type C and Type D.</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h1>Requirements for 5th Kup</h1>
+            
+            <div cn-grading-sheet='{
+                    Kup: 5,
+                    Patterns: ["Won-Hyo"],
+                    FundamentalMovements: ["Turning Kick +\nBack Kick (Combo)"],
+                    Power: ["Front Snap Kick (1 Board)"],
+                    Sparring: ["2-Step Sparring", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>5th Kup Students (Green Belt / Blue Tip)</h1>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Thorough understanding of the concept of integrity; Stand up for what is right, admit when you have done wrong, be open to new ideas... (see below).</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Yul-Gok Tul, {{Text.LI.PatternSuffix}} Diagram: scholar (or an “airplane”) with a “v” on the baseline. Meaning: “Yi I, Confucius of Korea”. 38 movements representing his birthplace on the 38-degree latitude.</li>
+                <li>1-Step Sparring; Performed with a partner in your own time.</li>
+                <li>Back Kick and Reverse Turning Kick kicking combinations (starting with both the left and right leg).</li>
+                <li>Side Kick through 1 pine board.</li>
+            </ul>
+            
+            <cn-diagram data-key="yg"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 5th Kup students to learn before grading is called Yul-Gok (<i>YOU’LL-gok</i>). Yul-Gok is the pseudonym of a great philosopher and scholar Yi I (<i>YEE-e</i>, 1536-1584) nicknamed the “Confucius of Korea”. The 38 movements of this pattern refer to his birthplace on the 38-degree latitude and the diagram represents scholar due to its modelling on the Chinese character for scholar 士.
+            </p>
+
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>A Deeper Understanding Of Integrity</h3>
+            <p>
+                According to Wikipedia.org (<a href="http://en.wikipedia.org/wiki/Integrity">http://en.wikipedia.org/wiki/Integrity</a>):
+            </p>
+            <blockquote>
+                Integrity is a concept of consistency of actions, values, methods, measures, principles, expectations, and outcomes. In ethics, integrity is regarded as the honesty and truthfulness or accuracy of one's actions. Integrity can be regarded as the opposite of hypocrisy, in that it regards internal consistency as a virtue, and suggests that parties holding apparently conflicting values should account for the discrepancy or alter their beliefs.
+                <br/>The word "integrity" stems from the Latin adjective integer (whole, complete). In this context, integrity is the inner sense of "wholeness" deriving from qualities such as honesty and consistency of character. As such, one may judge that others "have integrity" to the extent that they act according to the values, beliefs and principles they claim to hold.
+            </blockquote>
+            <p>
+                Integrity in the context of Taekwon-Do calls on students to not only identify right from wrong but to actively engage the concepts. Have the integrity to stand for what is right and have the conscience and humility to feel guilt and admit when you have done wrong.
+            </p>
+            <p>
+                In order to actively pursue integrity for yourself, you should also engage the concepts of an indomitable spirit as well as being a champion of freedom and justice; stand up for what you believe in no matter the odds. Give 100% to every endeavour you undertake. Be open to new thoughts, ideas and ideologies. Challenge your own beliefs and understandings. Endeavour to understand how others live and why they do things differently. Attempt to overcome misconceptions before conflicts arise. Understand the whole story before rendering judgement. Always remain intellectually curious and allow others to have the freedom they deserve.
+            </p>
+            
+
+            <ul cn-sample-theory-questions="{PAGEBREAK: true}">
+                <li>What is the interpretation of (who was) Yul-Gok? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Yul-Gok?</li>
+                <li>How would you describe the concept of integrity? What is an example of poor integrity?</li>
+                <li>Which form of sparring is said to be most like a real self-defence situation?</li>
+                <li>How is backward motion utilized in a Reverse Turning Kick? What is the attacking tool(s)? Where is your target/opponent positioned?</li>
+                <li>Describe an X-Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right X-Stance? How do you know if it’s a stepping or jumping X-Stance?</li>
+                <li>Describe how to perform a Connecting Motion. Demonstrate where Connecting Motion is used in your pattern.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Requirements for 4th Kup</h1>
+            
+            <div cn-grading-sheet='{
+                    Kup: 4,
+                    Patterns: ["Yul-Gok"],
+                    FundamentalMovements: ["Back Kick +\nReverse Turning Kick (Combo)"],
+                    Power: ["Side Piercing Kick (1 Board)"],
+                    Sparring: ["1-Step Sparring", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>4th Kup Students (Blue Belt)</h1>
+            <p>
+                The blue belt signifies the sky and the heavens, towards which the Taekwon-Do tree matures into a towering tree as training in Taekwon-Do progresses.
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Thorough understanding of the five disciplines; Travel, mountain climbing, cold showers & baths, public service and etiquette.</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Joong-Gun Tul, {{Text.LI.PatternSuffix}} Diagram: a “capital I”. Meaning: “Ahn Joong-Gun, assassinated first Japanese Governor-General of Korea”. 32 movements represent his age at execution in Lui-Shung prison.</li>
+                <li>Semi-Free Sparring; Performed with a partner in your own time.</li>
+                <li>Jumping Front Snap Kick and Jumping Side Kick kicking combinations (starting with both the left and right leg).</li>
+                <li>Turning Kick through 1 pine board.</li>
+                <li>Knife-Hand Strike through 1 pine board.</li>
+            </ul>
+
+            <cn-diagram data-key="jg"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 4th Kup students to learn before grading is called Joong-Gun (<i>JUNNE-goon</i>). Joong-Gun is named after the patriot Ahn Joong-Gun who assassinated Hiro-Bumi Ito, the first Japanese Governor-General of Korea, known as the man who played a leading part of the Korea-Japan merger. There are 32 movements in this pattern to represent Mr Ahn’s age when he was executed at Lui-Shung prison (1910).
+            </p>
+
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>The Five Disciplines Of Taekwon-Do</h3>
+            <ol>
+                <li><h6>Travel</h6> in order to gain insights into history by experiencing the location of important events first-hand. Seek out, study and attempt to learn from historical or otherwise notable sites and monuments in order to learn about your culture, and therefore yourself as well as to learn about other cultures.</li>
+                <li>
+                    <h6>Mountain Climbing</h6> to help develop leg muscles and to earn a sense of achievement. The feeling of victory and triumph one can feel when achieving a mountain’s summit is illustrated in a well-known Korean poem:
+                    <blockquote>
+                        No matter how high the mountain is, it can be compared to a small tomb under the heaven. There is no reason why man cannot succeed if he desires to climb it. All too often, however, one claims it is too high to climb without even making an attempt.
+                    </blockquote>
+                </li>
+                <li><h6>Cold Showers and Baths</h6> are said to build “tenacity and pride”. Diverse groups throughout history have used cold bathing; American Indians, Scandinavians, Russians, Japanese practitioners of Shinto, the ancient Greeks and even the Spartans (who felt that hot water bathing was for the weak). Said to improve circulation, to strengthen immunity and improve energy and wellbeing, the 19th century saw a resurgence of cold bathing marketed as “hydrotherapy”. Modern sports science has discovered that cold bathing prevents or reduces inflammation from injuries that may have occurred during the workout. It can also help speed physical recovery, but it can be quite painful and even dangerous if not done in a measured and reasonable manor.</li>
+                <li><h6>Public Service</h6>. By contributing time and energy to the community (especially to the poor and disabled) a student learns charity, humility, comradery, tolerance and helps to build a sense of community.</li>
+                <li><h6>Etiquette</h6> is a form of respect and courtesy in Western and Eastern societies that should be observed by students both inside and outside the do-jang. While a black belt may outrank a white belt in the realm of Taekwon-Do, the white belt may be senior to that black belt in other respects (such as in age and/or station in life). A slight given to the white belt from the black belt is in actuality an insult to everyone involved.</li>
+            </ol>
+            
+            <ul cn-sample-theory-questions>
+                <li>What is the interpretation of (who was) Joong-Gun? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Joong-Gun?</li>
+                <li>What does the color of the blue belt represent?</li>
+                <li>What are the 5 disciplines of Taekwon-Do? Choose one of these disciplines and describe why it’s important.</li>
+                <li>How is Semi-Free Sparring different from our other step-sparring drills?</li>
+                <li>How do you turn a kick into a jumping kick?</li>
+                <li>How is backward motion utilized in a Reverse Turning Kick? What is the attacking tool(s)? Where is your target/opponent positioned?</li>
+                <li>How is backward motion utilized in a Knife-Hand Strike? What is the attacking tool(s)? Where is your target/opponent positioned?</li>
+                <li>Describe a Rear Foot Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right Rear Foot Stance?</li>
+                <li>Describe how to perform a Slow Motion. Demonstrate where Slow Motion is used in your pattern.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Requirements for 3rd Kup</h1>
+            
+            <div cn-grading-sheet='{
+                    Kup: 3,
+                    Patterns: ["Joong-Gun"],
+                    FundamentalMovements: ["Jumping Front Snap Kick +\nJumping Side Piercing Kick (Combo)"],
+                    Power: ["Turning Kick (1 Board)", "Knife-Hand Strike (1 Board)"],
+                    Sparring: ["Semi-Free Sparring", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>3rd Kup Students (Blue Belt / Red Tip)</h1>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Thorough understanding of a student’s responsibilities: Never tire of learning. Have respect for, sacrifice for, be loyal to, listen to and practice what you have learned from your instructor/Taekwon-Do. Set a good example inside and outside of class.</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Toi-Gye Tul, {{Text.LI.PatternSuffix}} Diagram: scholar (or an “airplane”). Meaning: “Yi-Hwang, neo-Confucianism scholar”.37 movements representing his birthplace on the 37-degree latitude.</li>
+                <li>Self Defence; Performed with a partner in your own time.</li>
+                <li>Jumping Turning Kick and Jumping Back Kick kicking combinations (starting with both the left and right leg).</li>
+                <li>Back Kick through 1 pine board.</li>
+                <li>Elbow Strike through 1 pine board.</li>
+            </ul>
+            <p>{{Text.Grading.UmpireSyllabus}}</p>
+            <ul>
+                <li>Participate in a tournament as a belt level above 6th Kup (green belt).</li>
+                <li>Have an understanding of Tournament regulations, rules and point system.</li>
+            </ul>
+
+            <cn-diagram data-key="tg"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 3rd Kup students to learn before grading is called Toi-Gye (<i>TOY-ghee</i>). Toi-Gye is the pseudonym of the noted scholar Yi-Hwang (<i>YEE-wang</i>, 16th Century A.D.), an authority on neo-Confucianism.  The 37 movements of the pattern refer to his birthplace on the 37-degree latitude.  The diagram represents scholar due to its modelling on the Chinese character for scholar 士.
+            </p>
+  
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>Student Responsibility</h3>
+            <ol>
+                <li>Never tire of learning. A good student can learn anywhere and anytime. This is the secret of knowledge.</li>
+                <li>A good student must be willing to sacrifice for his or her art and instructor. Many students feel their training is a commodity bought with monthly dues and are unwilling to take part in demonstrations, teaching and working around the do-jang. An instructor can afford to lose this type of student.</li>
+                <li>Always set a good example for lower ranking students, it is only natural they will attempt to emulate their seniors.</li>
+                <li>Always be loyal and never criticise the instructor, Taekwon-Do, or the teaching methods.</li>
+                <li>If an instructor teaches a technique, practice and attempt to utilise it.</li>
+                <li>Remember that a student’s conduct outside the do-jang reflects on the art and the instructor.</li>
+                <li>If a student adopts a technique from another do-jang and the instructor disapproves of it, the student must disregard it immediately or train at the other do-jang.</li>
+                <li>Never be disrespectful to the instructor. Though a student is allowed to disagree with the instructor, the student must follow instructions first and discuss the matter later.</li>
+                <li>A student must always be eager to learn and ask questions.</li>
+                <li>Never betray your instructor.</li>
+            </ol>
+            
+
+            <ul cn-sample-theory-questions="{PAGEBREAK: true}">
+                <li>What is the interpretation of (who was) Toi-Gye? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Toi-Gye?</li>
+                <li>How many student responsibilities are there? Please name the student responsibilities. Choose one student responsibility and discuss why it is important.</li>
+                <li>If you are a corner judge in a sparring tournament, how do you determine if a point has been scored?</li>
+                <li>How many judges are there in Special Techniques? What are their responsibilities?</li>
+                <li>What are some of the reasons a power break will be judged as a no-break?</li>
+                <li>What are the 5 aspects to judging in a Patterns Competition?</li>
+                <li>Describe how you execute an Upward Knee Kick from your pattern.</li>
+                <li>How is backward motion utilized in a Reverse Turning Kick? What is the attacking tool(s)? Where is your target/opponent positioned?</li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Requirements for 2nd Kup</h1>
+            
+            <div cn-grading-sheet='{
+                    Kup: 2,
+                    Patterns: ["Toi-Gye"],
+                    FundamentalMovements: ["Jumping Turning Kick +\nJumping Back Kick (Combo)"],
+                    Power: ["Back Kick  (1 Board)", "Elbow Strike (1 Board)"],
+                    Sparring: ["Self Defence", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>2nd Kup Students (Red Belt)</h1>
+            <p>
+                The red belt signifies danger, cautioning the student to exercise control and warning the opponent to stay away. In some systems of Taekwon-Do, a brown belt is utilized in place of the red belt. In many of these systems, the brown belt represents the bark on the Taekwon-Do tree as it begins to grow to maturity.
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Thorough understanding of the nine points to observe while performing patterns; See below.</li>
+                <li>Thorough understanding of the four stages of self-defence; Be aware, talk your way out, run and only after these fail do you defend yourself.</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Saju-Tulgi and Hwa-Rang Tul, {{Text.LI.PatternsSuffix}} Diagram: a “capital I”. Meaning: “youth group from Silla dynasty”. 29 movements represent the infantry division where taekwon-do matured.</li>
+                <li>Intermediate level Self Defence; Performed with a partner in your own time.</li>
+                <li>High Section Kicks (Turning Kick, Front Snap Kick, Side Kick, Downward (Axe) Kick, etc.).</li>
+                <li>Jumping Reverse Turning Kick through 1 pine board.</li>
+                <li>Flying Snap Kick through 1 pine board.</li>
+                <li>Foot Power Break using the student’s technique of choice (with instructor approval) through 2 pine boards.</li>
+                <li>Hand Power Break using the student’s technique of choice (with instructor approval) through 2 pine boards.</li>
+            </ul>
+            
+            <cn-diagram data-key="t"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                In addition to the pattern (tul) for 2nd Kup, students must also learn the last exercise; Saju-Tulgi (<i>SA-jew TUL-gee</i>, 4-Directional Thrust).
+            </p>
+            <cn-diagram data-key="hr"></cn-diagram>
+            <p>
+                The pattern (tul) for 2nd Kup students to learn before grading is called Hwa-Rang (<i>WHAR-rang</i>). Hwa-Rang is named after the Hwa-Rang youth group, which originated in the Silla Dynasty in the early 7th century.  The 29 movements refer to the 29th Infantry Division, where Taekwon-Do developed into maturity.
+            </p>
+            
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>The Nine Points To Be Observed While Performing Patterns</h3>
+            <ol>
+                <li>Patterns begin and end on the exact same spot, indicating the performer’s accuracy.</li>
+                <!-- li>A pattern should begin and end at the exact same spot. This will indicate the performer’s accuracy.</li -->
+                <li>Correct posture and facing should be maintained at all times.</li>
+                <li>Muscles of the body should be either tensed or relaxed at the proper critical moment in the exercise.</li>
+                <li>A pattern should be performed in rhythmic movements, with an absence of stiffness.</li>
+                <li>Movements should be accelerated or decelerate according to the instructions from the Encyclopaedia.</li>
+                <li>Each pattern should be perfected before moving on to the next.</li>
+                <li>Students should know the purpose of each movement.</li>
+                <li>Students should perform each movement with realism.</li>
+                <li>Attack and defence techniques should be equally distributed among left and right hands and feet.</li>
+            </ol>
+            
+
+            <h3 class="PAGEBREAK">The Four Stages Of Self-Defence</h3>
+            <ol>
+                <li><h6>Be aware of your surroundings, even if they are familiar.</h6> You can be confronted anywhere; in fact many times an attack will occur in a place you know well (at home, school, work, etc.). If you begin to worry about your safety or the safety of your companions, try to move to a safer location. Do your best to avoid the dark alley, the angry crowd, the seedy dance club, etc. Sadly, anyone can be victimized at any time in any location. While vigilance will serve you well, it will not save you 100% of the time.</li>
+                <li><h6>Talk your way out of it.</h6> Apologize, even if it wasn’t your fault. Buy the jerk a beer. Tell the aggressor that you do not want to fight. Hold your hands up in front of you in a “stop” position with your elbows in front of your body and maintain a safe distance to avoid a “sucker punch”. Do not take a formal stance, do not ki-hup. Never turn your back to the aggressor. Limit direct eye contact; use this to try to identify if they have any friends that may want to hurt you as well. Do anything you can to defuse and deescalate the situation.</li>
+                <li><h6>Run!</h6> If you can run away from the altercation while not leaving any of your companions behind in a dangerous situation, do it. You can call the restaurant/club/whatever later to settle the check or retrieve your belongings. If you are being mugged, always give them what they ask for. Never go with them to another location. Yell “Fire!” to attract help if necessary. Your wallet or purse isn’t worth getting hurt over (or worse). Toss it to the ground in the opposite direction of your escape route, and then run! Always report the incident to the local authorities.</li>
+                <li><h6>Defend yourself.</h6> Only after all of the steps above have failed and you or your companions are under physical threat do you utilize the techniques we learn in class. Defend yourself only to the degree you feel absolutely necessary to allow you to run to the nearest safe location to call the local authorities to report the incident. If you are afraid to contact the authorities, then that is a sign that you may have misused your Taekwon-Do training. Do not misuse your Taekwon-Do training!</li>
+            </ol>
+            <p>
+                In furthering these points, fear is a very useful emotion in the first three stages presented above. Fear will not serve you well in point four, however. If you ever feel the need to defend yourself or your companions, your fear has already failed you, so leave it behind. Instead focus your anger on your opponent, as they do not want to let you go home tonight. You will go home tonight. If you have to go through your opponent to do that then that is their choice, not yours. Use the least force possible to maintain your safety and the safety of your companions.
+            </p>
+
+            <ul cn-sample-theory-questions>
+                <li>What does Saju-Tulgi mean? How many movements? What is its diagram? Is this a pattern?</li>
+                <li>What is the interpretation of (what was) Hwa-Rang? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Hwa-Rang?</li>
+                <li>What does the color of the red belt represent? What does the color of the brown belt represent?</li>
+                <li>What are the 9 points to be observed while performing patterns? Choose one and discuss why it is important.</li>
+                <li>How do you turn a kick into a flying kick?</li>
+                <li>What breaks boards?</li>
+                <li>What are the 4 stages to self-defence? Why are they important?</li>
+                <li>How is backward motion utilized in a Downward (Axe) Kick? What is the attacking tool(s)? Where is your target/opponent positioned? How many ways can you execute this technique? What are the advantages/disadvantages of each version?</li>
+                <li>Describe a Vertical Stance (length, width, weight distribution, knees and foot angles). How do you know if it’s a left or a right Vertical Stance?</li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Requirements for 1st Kup</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: 1,
+                    Patterns: ["Saju-Tulgi", "Hwa-Rang"],
+                    FundamentalMovements: ["High Section Kicks"],
+                    Power: ["Jumping Reverse Turning Kick (1 Board)", "Flying Snap Kick (1 Board)", "Power Break, Foot (2 Boards)", "Power Break, Hand (2 Boards)"],
+                    Sparring: ["Self Defence (Intermediate)", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>1st Kup Students (Red Belt / Black Tip)</h1>
+            <p>
+                Black is the opposite to white; therefore the black belt signifies the maturity and proficiency in Taekwon-Do. It also indicates the wearer’s imperviousness to the darkness or fear.
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Able to name the three kingdoms of Korea; Koguryo, Silla, and Back Je.</li>
+                <li>Thorough understanding of the Hwa-Rang Warrior code; See below.</li>
+                <li>Thorough understanding of the Theory of Power; See below.</li>
+                <li>Be able to identify at least 4 vital spots for each section of the body (Low, Mid and High); See above.</li>
+                <li>Thorough understanding of the Training Secrets; See below.</li>
+            </ul>
+            <p>{{Text.Grading.Completes}}</p>
+            <ul>
+                <li>{{Text.LI.Thesis(1)}}</li>
+                <li>{{Text.LI.AttendedSeminar('1st', true)}}</li>
+                <li>{{Text.LI.TournamentParticipation(1)}}</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Choong-Moo Tul, {{Text.LI.PatternSuffix}} Diagram: a “capital I”. Meaning: “Admiral Yi Soon-Sin, invented first armoured battleship – the Kubukson”. 30 movements.</li>
+                <li>High Section Kicks (Turning Kick, Front Snap Kick, Side Kick, Downward (Axe) Kick, etc.).</li>
+                <li>Foot Power Break using the student’s technique of choice (with instructor approval) through 3 pine boards.</li>
+                <li>Hand Power Break using the student’s technique of choice (with instructor approval) through 3 pine boards.</li>
+                <li>Flying Kick over 5 people through 1 board.</li>
+                <li>Two additional breaking techniques nominated by the examiner on the day of the grading.</li>
+                <li>Participation in 3 demonstrations.</li>
+            </ul>
+            <p>{{Text.Grading.UmpireSyllabus}}</p>
+            <ul>
+                <li>{{Text.LI.UmpireJudging}}</li>
+                <li>Officiating in a tournament in some manor, shape or form.</li>
+            </ul>
+            
+            <cn-diagram data-key="cm"></cn-diagram>
+            <h2>{{Text.H2.KupPatternExercisesDrills}}</h2>
+            <p>
+                The pattern (tul) for 1st Kup students to learn before grading is called Choong-Moo (<i>CUNG-moo</i>). Choong-Moo was the given name to the great Admiral Yi Soon-Sin (<i>YEE SOON-sin</i>) of the Lee Dynasty. He was reputed to have invented the first armoured battleship named the Kobukson (<i>KOO-buck-son</i>), which was the precursor of the present day submarine in 1592 AD.  His regret¬table death is sym¬bolized in the end of this pattern with a reverse strike. Checked by the forced reservation of his loyalty to the king, Yi Sun-Sin was given no chance in his lifetime to show his unrestrained potential.
+            </p>
+            
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>The Three Kingdoms Of Korea</h3>
+            <p>
+                Koguryo, Silla and Back Je.
+            </p>
+ 
+
+            <h3 class="PAGEBREAK">Hwa-Rang Warrior Code</h3>
+            <ul>
+                <li>Be loyal to your King.</li>
+                <li>Be obedient to your parents.</li>
+                <li>Be honourable to your friends.</li>
+                <li>Never retreat in battle.</li>
+                <li>Make a just kill.</li>
+            </ul>
+
+            <h3>Theory Of Power (Or: What Taekwon-Do Uses To Generate Power)</h3>
+            <ul>
+                <li>Reaction Force</li>
+                <li>Concentration (of the striking force to the smallest point possible)</li>
+                <li>Breath Control</li>
+                <li>Equilibrium</li>
+                <li>Speed</li>
+                <li>Mass</li>
+            </ul>
+
+            <h3>Training Secrets</h3>
+            <ul>
+                <li>Study and thoroughly understand the theory of power.</li>
+                <li>Understand the purpose and method of each movement clearly.</li>
+                <li>Bringing together the movement of the eyes, hands, feet, and breath into a single coordinated action.</li>
+                <li>Selection of the appropriate attacking tool for each vital spot.</li>
+                <li>Familiarity with the correct angle and distance for attack and defence.</li>
+                <li>Keep both arms and legs bent slightly while movement is in motion.</li>
+                <li>All movements must begin with a backward motion (with very few exceptions), however once the movement is in motion it should not be stopped before reaching the target.</li>
+                <li>Usage of the sine wave during the movement via correct usage of the knee spring.</li>
+                <li>Sharp brief exhalation at the moment of each blow (with exception to movements utilizing Connecting Motion).</li>
+            </ul>
+            
+            <ul cn-sample-theory-questions>
+                <li>What is the interpretation of (who was) Choong-Moo? What is its diagram? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Choong-Moo?</li>
+                <li>What does the color of the black belt represent?</li>
+                <li>What are the 3 kingdoms of Korea?</li>
+                <li>What are the 5 points in the Hwa-Rang Warrior Code?</li>
+                <li>What are the 6 points of the Theory of Power (what does Taekwon-Do use to generate power)? Choose one and discuss why it is important.</li>
+                <li>What are the 9 Training Secrets? Choose one and discuss why it is important.</li>
+                <li>What is the most interesting thing you learned at your last seminar?</li>
+                <li>Why did you choose your essay topic? What did you learn while writing the essay?</li>
+                <li>Name 4 vital spots in the high-section. The mid-section. The low-section.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Requirements for Junior Black Belt (Under 18s)</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -1,
+                    Patterns: ["Choong-Moo"],
+                    FundamentalMovements: ["High Section Kicks"],
+                    Power: [
+                        "<s>Power Break, Foot (3 Boards)</s>",
+                        "<s>Power Break, Hand (3 Boards)</s>",
+                        "<s>Flying Side Piercing Kick over 5 people (1 Board)</s>",
+                        "<span>Optional Break</span>",
+                        "<span>Potential Nominated Break</span>",
+                        "<span>Potential Nominated Break</span>"
+                    ],
+                    Sparring: ["Self Defence (Advanced)", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>Requirements for 1st Degree Black Belt</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -1,
+                    Patterns: ["Choong-Moo"],
+                    FundamentalMovements: ["High Section Kicks"],
+                    Power: [
+                        "Power Break, Foot (3 Boards)",
+                        "Power Break, Hand (3 Boards)",
+                        "Flying Side Piercing Kick over 5 people (1 Board)",
+                        "<span>Nominated Break</span>",
+                        "<span>Nominated Break</span>"
+                    ],
+                    Sparring: ["Self Defence (Advanced)", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>
+                1st Degree Students (Black Belt)
+                <br/>+ Junior Black Belts
+            </h1>
+            <p>
+                Your time as a Kup student can be thought of as standing on the side of a road, while attaining your black belt typifies stepping onto that road to begin your journey. While many believe a black belt represents an expert level of understanding, in Taekwon-Do it represents a solid foundation of knowledge and techniques. In short, your learning has only just begun!
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorKnowledge}}</li>
+                <li>Understanding and purposes of the 6 types of sparring.</li>
+                <li>Understanding of the concepts of Uke and Tori.</li>
+                <li>Be able to identify at least 6 vital spots for each section of the body (Low, Mid and High).</li>
+            </ul>
+            <p>{{Text.Grading.Completes}}</p>
+            <ul>
+                <li>{{Text.LI.Thesis(2)}}</li>
+                <li>{{Text.LI.AttendedSeminar('1st')}}</li>
+                <li>{{Text.LI.TournamentParticipation(1)}}</li>
+                <li>{{Text.LI.DemonstrationParticipation(1)}}</li>
+                <li>{{Text.LI.ActiveTraining(1.5, '1st')}}.</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.KupAllPriorPatterns}}</li>
+                <li>Kwang-Gae Tul, Po-Eun Tul and Gae-Beak Tul {{Text.LI.PatternsSuffix}}</li>
+                <li>Sparring; Free Sparring for 5 rounds of 2 minutes each, Model Sparring and Foot Technique.</li>
+                <li>Foot Power Break using the student’s technique of choice (with instructor approval) through 4 pine boards.</li>
+                <li>Hand Power Break using the student’s technique of choice (with instructor approval) through 4 pine boards.</li>
+                <li>Flying Twisting Kick through 1 pine board.</li>
+                <li>Jumping Hooking Kick through 1 pine board.</li>
+                <li>Flying Kicks using the student’s techniques of choice (with instructor approval), 1 leg breaking through 2 targets of 1 pine board each (total of 2 boards).</li>
+                <li>Flying Kicks using the student’s techniques of choice (with instructor approval), both legs breaking through 1 target each of 1 pine board (total of 2 boards).</li>
+            </ul>
+            <p>{{Text.Grading.UmpireSyllabus}}</p>
+            <ul>
+                <li>{{Text.LI.UmpireJudging}}</li>
+                <li>{{Text.LI.UmpireReferee}}</li>
+                <li>{{Text.LI.UmpireClass('C')}}</li>
+            </ul>
+
+            <cn-diagram data-key="kg"></cn-diagram>
+            <h2>{{Text.H2.DanPatternExercisesDrills}}</h2>
+            <p>
+                The patterns (tuls) for 1st Degree students to learn before grading are Kwang-Gae (<i>KAWHEN-gay</i>), Po-Eun (<i>PO-un</i>) and Gae-Baek (<i>GAY-beck</i>). A trick to remembering the number of movements in the 1st Dan patterns is to think of the shape of an hourglass; 39-36-44. The left foot is returned to Junbi in Kwang-Gae, the left foot in Po-Eun and the right foot in Gae-Baek, or more succinctly:  Left-Left-Right.
+            </p>
+            <cn-diagram data-key="pe"></cn-diagram>
+            <p>
+                Kwang-Gae is named for Kwang-Gae-Toh-Wang, the 19th century King of the Koguryo Dynasty, who regained all the lost territories including the greater part of Manchuria. The diagram represents land due to its modelling on the Chinese character for land 土 and refers to the expansion and recovery of lost territory. The 39 movements refer to the first two digits of 391 AD, the year he came to the throne. 
+            </p>
+            <cn-diagram data-key="gb"></cn-diagram>
+            <p>
+                Po-Eun is the pseudonym of loyal subject Chong-Mong-Chu (1400) who was a famous poet and whose poem "I would not serve a second master though I might be crucified a hundred times" is known to every Korean. He was also a pioneer in the field of physics. The diagram represents his unerring loyalty to the king and country towards the end of the Koryo Dynasty.
+            </p>
+            <p>
+                Gae-Baek is named after a great general in the Baek-Je Dynasty (660AD). The diagram represents his severe and strict military discipline. 
+            </p>
+
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>Six Types of Sparring</h3>
+            <p>
+                The six types of sparring in Taekwon-Do fall under two major categories; pre-arranged sparring and free sparring.
+            </p>
+            <img src="img/sparring.png" class="full" />
+            <p>
+                In the Pre-Arranged Sparring category the structure, targets and/or techniques are defined at the outset of the drill. As such, the focus for learning is on the proper application of attacking and defensive techniques learned from patterns and fundamental movements against moving opponent(s) in varying situations. The purpose of this category of drills is to become familiar with the proper execution and utilisation of techniques that will eventually be added to your free sparring repertoire.
+            </p>
+            <p>
+                In the Free Sparring category the action is generally controlled within broad-based rules (no low kicks, no knees/elbows, hands only, legs only, etc.) but is otherwise up to the discretion of those involved. As such, the focus for learning is on reading your opponent(s) reactions, techniques and combinations and reacting dynamically all while maintaining proper distance.
+            </p>
+            <p>
+                Model and Pre-Arranged Free Sparring are intended to showcase Taekwon-Do techniques to an audience or grading panel. Both cater for full power techniques into opponent(s) aware of what techniques are being executed towards them. The primary role of the opponent(s) is to provide a precise target to allow the demonstrator(s) to showcase proper execution of techniques. Model Sparring focuses on a single demonstrator, while in Pre-Arranged Free Sparring the roles of opponent and demonstrator can change throughout the routine.
+            </p>
+
+            <h3>The Concepts of Uke & Tori</h3>
+            <p>
+                The concepts of Uke (<i>OU-kay</i>) and Tori (<i>TOUR-e</i>) from Japanese Martial Arts are not synonymous with attacker and defender because these roles are determined by who successfully completes an effective technique (Tori), not who initiates one (which could be either party depending on the drill). The attacker/defender relationship is often thought of as “my turn”/”your turn” whereas Uke and Tori have a defined partnership that sets much clearer roles, responsibilities, definitions and expectations which in turn improves student understanding, focus and participation in drill-work.
+            </p>
+            <p>
+                The Uke is responsible for setting the pace of the exercise and receiving the effective technique. If the Tori is not executing the drill as instructed or is otherwise reacting with haste rather than intent, it is their responsibility to slow the pace to allow the Tori time to react appropriately. In other words the Uke is in control. The Uke is also responsible for maintaining a precise target and to react to stimuli in a realistic manor. A key outcome for the Uke is gaining practical experience on how they are manipulated into compromising positions, how their balance is taken and the effectiveness of their ukemi (<i>U-chem-e</i>, tumbling) out of these compromising positions as well as the proper execution of the prescribed technique(s).
+            </p>
+            <p>
+                The Tori is responsible for the safety of their Uke. They should be aware of their Uke’s ukemi (tumbling) abilities, ensure open lanes of traffic before executing a throw and conscientious of their Uke’s flexibility and level of discomfort/pain when executing joint locks and strikes. The Uke invests a lot of trust in their Tori and that trust should never be abused. A key outcome for the Tori is gaining practical experience on the effectiveness of strikes, locks and movement via exploratory manipulation of their Uke.
+            </p>
+
+            <h3>Philosophy of Taekwon-Do</h3>
+            <p>
+                It is my firm belief that through Taekwon-Do, anyone can garner enough strength to become a guardian of justice, to challenge social disunity and, to cultivate the human spirit to the highest level attainable. It is in this spirit, I am dedicating the art of Taekwon-Do to the people of the world.  – General Choi Hong Hi
+            </p>
+            <p>
+                The Philosophy of Taekwon-Do is expressed throughout the art; from patterns inspired by the ideals and exploits of great men from Korean history, in the student oath and its tenants and through the conviction that an art of self-defence can bring about peace. The General set fort the following guidelines as the cornerstone of Taekwon-Do:
+            </p>
+            <ul>
+                <li>Be willing to go where the going may be tough and do the things that are worth doing even though they are difficult.</li>
+                <li>Be gentle to the weak and tough to the strong.</li>
+                <li>Be content with what you have in money and position but never in skills.</li>
+                <li>Always finish what you begin, be it large or small.</li>
+                <li>Be a willing teacher to anyone regardless of religion, race or ideology.</li>
+                <li>Never yield to repression or threat in the pursuit of a noble cause.</li>
+                <li>Teach attitude and skill with action rather than words.</li>
+                <li>Always be yourself even though your circumstances may change.</li>
+                <li>Be the eternal teacher who teaches with the body when young, with words when old, and by moral precept even after death.</li>
+            </ul>
+
+            <ul cn-sample-theory-questions>
+                <li>What is the interpretation of (who was) Kwang-Gae? Po-Eun? Gae-Baek? What are the diagrams? How many movements?</li>
+                <li>Can you tell me more about the interpretation of Kwang-Gae? Po-Eun? Gae-Baek?</li>
+                <li>Discuss the Philosophy of Taekwon-Do.</li>
+                <li>What are the 6 types of sparring? What are the different forms of Pre-arranged sparring? What are the different forms of Pre-arranged free sparring? What are the different forms of Free Sparring?</li>
+                <li>What is the central purpose of 3-Step Sparring? What scenario does 1-Step Sparring represent? What lesson is to be learned from Foot Technique Sparring?</li>
+                <li>What does it mean to be an Uke? What does it mean to be a Tori? Who is in control of the drill when working together as Uke and Tori?</li>
+                <li>What is the most interesting thing you learned at your last seminar?</li>
+                <li>Why did you choose your thesis topic? What did you learn while writing the thesis?</li>
+                <li>Name 6 vital spots in the high-section. The mid-section. The low-section.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Requirements for 2nd Degree Black Belt</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -2,
+                    Patterns: ["Kwang-Gae", "Po-Eun", "Gae-Beak"],
+                    FundamentalMovements: null,
+                    Power: [
+                        "Flying Twisting Kick (1 Board)",
+                        "Jumping Hook Kick (1 Board)",
+                        "Flying Kicks, 2 targets 1 leg\n(1 Board Each)",
+                        "Flying Kicks, 2 targets both legs\n(1 Board Each)",
+                        "Power Break, Foot (4 Boards)",
+                        "Power Break, Hand (4 Boards)"
+                    ],
+                    Sparring: ["Self Defence (Advanced)", "Free Sparring", "Model Sparring", "Foot Technique"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>2nd Degree Students (Black Belt)</h1>
+            <p>
+                Having survived the pitfalls of being a “baby black”, a 2nd degree tends to be a bit more humble; looking forward to higher ranks rather than looking backward to the colored belts. You no longer think of yourself as the oldest in Elementary School, you realise that you are among the youngest in Secondary School. The road is long and there is much to learn.
+            </p>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.DanAllPriorKnowledge}}</li>
+                <li>Understanding of the aspects of an Ideal Instructor.</li>
+                <li>Be able to identify at least 8 vital spots for each section of the body (Low, Mid and High).</li>
+            </ul>
+            <p>{{Text.Grading.Completes}}</p>
+            <ul>
+                <li>{{Text.LI.Thesis(3)}}</li>
+                <li>{{Text.LI.AttendedSeminar('2nd')}}</li>
+                <li>{{Text.LI.TournamentParticipation(3)}}</li>
+                <li>{{Text.LI.DemonstrationParticipation(3)}}</li>
+                <li>{{Text.LI.AttendedIIClasses(3)}}</li>
+                <li>{{Text.LI.AttendedMasterClasses(3)}}</li>
+                <li>{{Text.LI.ActiveTraining(2, '2nd')}}.</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.DanAllPriorPatterns}}</li>
+                <li>Eui-Am Tul, Choong-Jang Tul and Juche Tul plus (on student’s discretion) Ko-Dang Tul and/or U-Nam Tul {{Text.LI.PatternsSuffix}}</li>
+                <li>Advanced Self Defence (multiple attackers, weapons, releases, throws, joint manipulation, ukemi, etc.).</li>
+                <li>Sparring; Free Sparring for 5 rounds of 2 minutes each, Model Sparring and Foot Technique.</li>
+                <li>3-Target Flying Technique (2 breaks by foot, 1 break by hand); 1 pine board each.</li>
+                <li>3-Target Hand Technique (Reverse Knife-Hand, Back Fist, Fore Fist); 1 pine board each.</li>
+                <li>Flying Side Piercing Kick over two standing shoulders; 1 pine board.</li>
+                <li>Foot Power Break using the student’s technique of choice (with instructor approval) through 5 pine boards or Jumping/Flying Kick through 4 pine boards.</li>
+                <li>Up to 2 breaks nominated by the grading panel on the day.</li>
+            </ul>
+            <p>{{Text.Grading.UmpireSyllabus}}</p>
+            <ul>
+                <li>{{Text.LI.UmpireJudging}}</li>
+                <li>{{Text.LI.UmpireReferee}}</li>
+                <li>{{Text.LI.UmpireClass('C')}}</li>
+            </ul>
+
+            <cn-diagram data-key="ea"></cn-diagram>
+            <h2>{{Text.H2.DanPatternExercisesDrills}}</h2>
+            <p>
+                The patterns (tuls) for 2nd Degree students to learn before grading are Eui-Am (<i>WE-yum</i>), Choong-Jang (<i>cung-JANG</i>) and Juche (<i>JEW-chay</i>). Pattern counts are 45-52-45. The right foot is returned to Junbi in Eui-Am, the left foot in Choong-Jang and the right foot in Juche, or more succinctly:  Right-Left-Right or Really Long Road.
+            </p>
+            <cn-diagram data-key="cj2"></cn-diagram>
+            <p>
+                Students can also elect to learn Ko-Dang (<i>KO-dang</i>) and/or U-Nam (<i>YOU-nam</i>). Pattern counts are 39-42. The left foot is returned to Junbi in both Ko-Dang and U-Nam.
+            </p>
+            <cn-diagram data-key="jc"></cn-diagram>
+            <p>
+                Eui-Am is the pseudonym of Son Byong Hi, leader of the Korean independence movement on March 1, 1919. The 45 movements refer to his age when he changed the name of Dong Hak (Oriental culture) to Chondo Kyo (Heavenly way religion) in 1905. The diagram represents his Indomitable Spirit, displayed while dedicating himself to the prosperity of his nation.
+            </p>
+            <cn-diagram data-key="un"></cn-diagram>
+            <p>
+                Choong-Jang is the pseudonym given to General Kim Duk Ryang who lived during the Lee Dynasty, 14th century. This pattern ends with a left-hand attack to symbolise the tragedy of his death at 27 in prison before he was able to reach full maturity.
+            </p>
+            <cn-diagram data-key="kd"></cn-diagram>
+            <p>
+                Juche is the philosophical idea that man is the master of everything and decides everything, in other words, the idea that man is the master of the world and his own destiny.  It is said that the idea was rooted in Baekdu Mountain, which symbolises the spirit of the Korean people. The diagram represents the Baekdu Mountain.
+            </p>
+            <p>
+                U-Nam is the pseudonym of the first President of Korea, Dr. Syngman Rhee. U-Nam was removed from the curriculum due to nationwide protests in 1960 which forced President Rhee’s resignation and exile. Many movements used within U-Nam were reused in patterns developed later, namely Choong-Jang.
+            </p>
+            <p>
+                Ko-Dang is the pseudonym of the patriot Cho Man Sik. Known as the Ghandi of Korea he was a nationalist activist in Korea’s independence movement. The 39 movements of the pattern represent the number of times he was imprisoned.
+            </p>
+
+            <h3>U-Nam, Taekwon-Do's Lost Pattern</h3>
+            <p>
+                Thanks to research from Taekwon-Do historian Dr George Vitale (8th Degree) assisted by Grandmaster C.K. Choi (Chang Keun), Taekwon-Do's "lost pattern" has been reintroduced to the art. U-Nam is only featured in the Korean HanGul/Chinese HanJa first edition of the first book published about the art, “Taekwon-Do” (1959) by Gen. Choi Hong Hi.
+            </p>
+            <p>
+                U-Nam is the pseudonym of the first President of Korea, Dr Syngman Rhee. U-Nam was removed from the curriculum due to a fraudulent election in April 1960 that sparked nationwide protests against President Rhee’s autocratic rule and ultimately forced his resignation and exile. The second edition of the book published in 1960 excludes U-Nam.
+            </p>
+            <p>
+                In 1972, the book was ordered to be destroyed after Gen. Choi openly opposed the military dictatorship and was forced into exile. Only a few copies are known to still exist; Kim Soo-Ryun’s copy is on display at the Taekwondowon in MuJu Korea, Grandmaster Jung Woo-Jin’s personal copy and a digital copy made available by Master Vitale.
+            </p>
+            <p>
+                Along with Hwa-Rang, Choong-Moo, Ul-Ji and Sam-Il, U-Nam is one of the original five Hyungs (the original term for a pattern). The movements within U-Nam were largely reused in patterns developed later, namely Choong-Jang. Interestingly, movements 23, 33 and 34 refer to movements from Pyong-Ahn 4 (6, 30 and 32, respectively), a traditional pattern used in the 1950's by the Nine Kwans that would later join to form Taekwon-Do.
+            </p>
+            <p>
+                In August 2013, Mr Stephen Gell asked Grandmaster Rhee Ki Ha (FGMR) about U-Nam:
+            </p>
+            <blockquote>
+                U-Nam was one of the patterns used in the early developmental stages. At that time Syngman Rhee was the first President of South Korea and as Taekwon-Do was in this early developmental phase, our Founder General Choi Hong Hi wanted to gain the support of the South Korean President. U-Nam was the pen name of Syngman Rhee and as such, General Choi created pattern U-Nam. The pattern was replaced by Choong-Jang Tul after the President’s resignation in 1960. Choong-Jang Tul contains many similar and also upgraded movements from pattern U-Nam.
+            </blockquote>
+            <p>
+                Further research states that while Juche was being developed in the early 1980’s to replace Ko-Dang, General Choi stated that patterns in Taekwon-Do are only named after individuals important to Korean history who have passed away. This precluded Juche from being named after Kim Il-Sung (1912-1994) “Eternal President” of the Democratic People's Republic of Korea (DPRK, a.k.a. North Korea) or any other prominent official in good standing with the DPRK. With the rediscovery of U-Nam, we know that this was not always the case.
+            </p>
+
+            <h3>Ko-Dang Pattern’s Retirement</h3>
+            <p>
+                The retirement and replacement of Ko-Dang with Juche is a controversial topic. Named for the pseudonym of Cho Man Sik, Ko-Dang was one of the art’s original 20+1 patterns. The term Juche has a strong association with the communist ideology of the DPRK while Cho Man Sik was an early Soviet-supported political rival to Kim Il-Sung.
+            </p>
+            <p>
+                General Choi introduced Juche in 1983, developing the pattern to include a number of techniques that had been recently perfected (slow motion kicks, two direction kick, dodging kicks and flying hand attacks) while paying homage to Ko-Dang by retaining many of its movements. Ko-Dang was also considered relatively easy for a Dan-level pattern while Juche is generally considered to be one of the most difficult to perform. In a November 1999 interview, General Choi stated:
+            </p>
+            <blockquote>
+                As new techniques were developed they needed to be represented in the patterns. The pattern Ko-Dang was replaced simply because it represented the latest Korean history, basically last in first out.
+            </blockquote>
+            <p>
+                However, many observers point to a more practical motive.
+            </p>
+            <p>
+                Known as the Ghandi of Korea due to his non-violent resistance and leadership by example, Cho Man Sik was a nationalist activist in Korea’s independence movement. Originally backed by the Soviet’s to rule what would become North Korea, he lost support and was forced from power by Soviet-backed communists. Placed under house arrest in 1946, he later disappeared into the North Korean prison system. Unconfirmed reports state that he was executed in prison at the beginning of the Korean War. There is little doubt that Kim Il-Sung would be hesitant to extend financial support to Gen. Choi’s ITF with a pattern honoring such a rival.
+            </p>
+            <p>
+                In 2008, ITF-C (headed by GM Choi Jung Hwa) renamed Juche to Ko-Dang due to the association with the DPRK's communist ideology. This decision has led to some confusion as to which pattern is being referred to when speaking about Ko-Dang; the original 39 movement pattern or the renamed 45 movement pattern. Another group based in Canada, the ICTF, renamed Juche to the General's pen name Chang-Hon around the same time.
+            </p>
+
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h3>Prearranged Free Sparring</h3>
+            <p>
+                Prearranged Free Sparring’s intent is to demonstrate the art of Taekwon-Do in its most idealised form. Combatants use proper technique employing the appropriate attacking tool for the targeted vital spot to showcase the widest variety of Taekwon-Do.  Techniques are executed within the context of self-defence and should not replicate competitive Taekwon-Do techniques.
+            </p>
+            <p>
+                Generally speaking, Prearranged Free Sparring demonstrations should aim to last approximately 1 minute, which equates to approximately 30-40 techniques per combatant. As the intent is to demonstrate Taekwon-Do, techniques should be performed at around pattern speed (approx. 1.2 seconds per technique) allowing the audience to observe each attack and defence.
+            </p>
+            <p>
+                A supplemental form of sparring called Pattern Sparring (Off-Diagram) can be employed as the basis for a Prearranged Free Sparring demonstration. Pattern Sparring (Off-Diagram) utilises a pattern’s prescribed techniques while allowing freedom of directionality. One combatant performs the techniques of a given pattern while the other combatant(s) apply techniques that pair appropriately to those from the pattern (e.g. a pattern’s Low Block is used against a Low Front Snap Kick). This approach showcases your knowledge of applications of techniques from the chosen pattern while giving you a strong starting point to design your Prearranged Free Sparring demonstration.
+            </p>
+
+            <h3>Ideal Instructor</h3>
+            <p>
+                At this point, you should consider being a regular instructor or even a branch instructor. The act of standing at the front of a class challenges your knowledge and understanding of techniques, patterns and concepts in a much deeper way than standing in rank. Aspire towards becoming an ideal instructor. Aspire towards being humble and admitting mistakes when they occur (even in front of your own class). Be patient with your students and always show them the respect that you expect from them. Your students will train you to become a better black belt and toward higher ranks.
+            </p>
+            <ol>
+                <li>Strong moral and ethical standards.</li>
+                <li>Clear outlook and philosophy in life.</li>
+                <li>Responsible attitude as an Instructor.</li>
+                <li>Scientific mind in matters of technique.</li>
+                <li>Knowledge of the vital spots of human anatomy.</li>
+                <li>Unshakable integrity in political and financial dealings.</li>
+                <li>Dedication to spread the art of Taekwon-Do throughout the world.</li>
+                <li>One who gains confidence from his seniors, is trusted by his fellow Instructors and is respected by his juniors.</li>
+            </ol>
+
+            <h3 class="PAGEBREAK">Cross-Training</h3>
+            <p>
+                An additional avenue worth exploring to improve your own skills and understanding is to consider cross-training in another martial art or coordinated physical activity. From obvious choices such as BJJ, Judo, Aikido or Boxing to the less obvious of parkour/freerunning, gymnastics or even ballet, many insights can be gained from taking up a discipline that is seemingly far removed from Taekwon-Do. This pursuit of understanding from varying points of view has encouraged us at {{Text.SchoolName}} to include concepts outside of the traditional Taekwon-Do syllabus (such as Uke/Tori , The Four Stages Of Self-Defence, etc.).
+            </p>
+            <p>
+                Taekwon-Do has a weaker ground fighting syllabus than other arts such as BJJ. In Taekwon-Do we do not explore the concepts of joint manipulation or throws to the degree that Judo or the Bujinkan does. Taekwon-Do doesn’t discuss the concept of the center-line like Wing-Chun. Taekwon-Do does not consider the use of weapons (improvised or otherwise). Rolling, protection and recovery skills from gymnastics can be very useful if your balance is taken or disrupted by an opponent. Being exposed to these concepts can open new doors of understanding and application to your Taekwon-Do repertoire as well as provide first-hand experience of differing attacks and defensive strategies used by other arts.
+            </p>
+            <p>
+                Joining another discipline will be quite a personal challenge as you are a beginner again. Do not expect your Taekwon-Do skills to instantly translate. While you’ll be more physically coordinated than the average beginner you will still feel as though you are “all thumbs”. It will take a few months before you begin to feel even slightly competent in your new discipline.
+            </p>
+            <p>
+                Further, constantly remind yourself that you are in the new discipline to learn. You will have thoughts of “their doing it wrong”, “they aren’t doing it as efficiently as they could”, “they”, “them”, “their”. You will only begin to understand and internalize your new discipline once you start thinking in terms of “we”. Then one day a concept or technique will be demonstrated and you’ll have a dawning realization of something that you’ve always managed to do incorrectly in Taekwon-Do that now makes perfect sense. This is why you cross train!
+            </p>
+        </div>
+
+        <div>
+            <h1>Requirements for 3rd Degree Black Belt</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -3,
+                    Patterns: ["Eul-Am", "Choong-Jang", "Juche", "U-Nam<span>Optional Tul</span>", "Ko-Dang<span>Optional Tul</span>"],
+                    FundamentalMovements: null,
+                    Power: [
+                        "3-Target Flying Techniques,\n2 foot 1 hand (1 Board Each)",
+                        "Flying Side Piercing Kick over 2 standing shoulders (1 Board)",
+                        "3-Targets Special Techniques, Hand: Reverse Knife-Hand, Back Fist, Fore Fist (1 Board Each)",
+                        "Power Break, Foot (5 Boards) or\nJumping/Flying Kick (4 Boards)",
+                        "<span>Nominated Break</span>",
+                        "<span>Nominated Break</span>"
+                    ],
+                    Sparring: ["Self Defence (Advanced)", "Free Sparring", "Prearranged Free Sparring", "Model Sparring", "Foot Technique"]
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1>3rd Degree Students (Black Belt)</h1>
+            <p>{{Text.Grading.Knows}}</p>
+            <ul>
+                <li>{{Text.LI.DanAllPriorKnowledge}}</li>
+                <li>Thorough understanding of Moral Culture.</li>
+                <li>Thorough understanding of the Training Secrets.</li>
+                <li>Be able to identify at least 10 vital spots for each section of the body (Low, Mid and High).</li>
+            </ul>
+            <p>{{Text.Grading.Completes}}</p>
+            <ul>
+                <li>{{Text.LI.Thesis(3)}}</li>
+                <li>{{Text.LI.AttendedSeminar('3rd')}}</li>
+                <li>{{Text.LI.TournamentParticipation(3)}}</li>
+                <li>{{Text.LI.DemonstrationParticipation(3)}}</li>
+                <li>{{Text.LI.AttendedIIClasses(3)}}</li>
+                <li>{{Text.LI.AttendedMasterClasses(3)}}</li>
+                <li>{{Text.LI.ActiveTraining(3, '3rd')}}.</li>
+                <li>{{Text.LI.IIGradingPermission}}</li>
+            </ul>
+            <p>{{Text.Grading.Demonstrates}}</p>
+            <ul>
+                <li>{{Text.LI.DanAllPriorPatterns}}</li>
+                <li>Sam-Il Tul, Yoo-Sin Tul and Choi-Yong Tul {{Text.LI.PatternsSuffix}}</li>
+                <li>Advanced Self Defence (multiple attackers, weapons, releases, throws, joint manipulation, ukemi, etc.).</li>
+                <li>Sparring; Free Sparring for 5 rounds of 2 minutes each, Model Sparring and Foot Technique.</li>
+                <li>Step Sparring (3-, 2- and 1-Step, Semi-Free Sparring).</li>
+                <li>Back Fist; 2 pine boards.</li>
+                <li>Mid-Air Kick; 1 pine board.</li>
+                <li>Flying Reverse Turning Kick; 1 pine board.</li>
+                <li>Power Break using the student’s technique of choice (with instructor approval). This demonstration should showcase your abilities.</li>
+                <li>Up to 2 breaks nominated by the grading panel on the day.</li>
+                <li>Participation in 3 demonstrations.</li>
+            </ul>
+            <p>{{Text.Grading.UmpireSyllabus}}</p>
+            <ul>
+                <li>{{Text.LI.UmpireJudging}}</li>
+                <li>{{Text.LI.UmpireReferee}}</li>
+                <li>{{Text.LI.UmpireClass('B')}}</li>
+            </ul>
+
+            <cn-diagram data-key="si"></cn-diagram>
+            <h2>{{Text.H2.DanPatternExercisesDrills}}</h2>
+            <p>
+                The patterns (tuls) for 3rd Degree students to learn before grading are Sam-Il (<i>SAM-ill</i>), Yoo-Sin (<i>YOU-schin</i>) and Choi-Yong (<i>CHOI-young</i>). Pattern counts are 33-68-46. The left foot is returned to Junbi in Sam-Il, the right foot in Yoo-Sin and the right foot in Choi-Yong, or more succinctly: Left-Right-Right.
+            </p>
+            <cn-diagram data-key="ys"></cn-diagram>
+            <p>
+                Sam-Il denotes the historical date of the independence movement of Korea which began throughout the country on March 1, 1919. The 33 movements in the pattern stand for the 33 patriots who planned the movement.
+            </p>
+            <cn-diagram data-key="cy"></cn-diagram>
+            <p>
+                Yoo-Sin is named after General Kim Yoo Sin, a commanding general during the Silla Dynasty. The 68 movements refer to the last two figures of 668 A.D., the year Korea was united. The ready posture signifies a sword drawn on the right rather than left side, symbolizing Yoo Sin's mistake of following his Kings' orders to fight with foreign forces against his own nation.
+            </p>
+            <p>
+                Choi-Yong is named after General Choi Yong, premier and commander in chief of the armed forces during the 14th century Koryo Dynasty. Choi Yong was greatly respected for his loyalty, patriotism, and humility. He was executed by his subordinate commanders headed by general Yi Sung Gae, who later became the first King of the Lee Dynasty.
+            </p>
+
+            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            [work in progress]
+        </div>
+
+        <div>
+            <h1>Requirements for 4th Degree Black Belt</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -4,
+                    Patterns: ["Sam-Il", "Yoo-Sin", "Choi-Yong"],
+                    FundamentalMovements: ["X-Knife-Hand Raising Block", "Waving Kick", "Sweeping Kick", "Grasping Kick"],
+                    Power: [
+                        "Back Fist",
+                        "Mid-Air Kick",
+                        "Flying Reverse Turning Kick",
+                        "<i>Demonstration</i>",
+                        "<span>Nominated Break</span>"
+                    ],
+                    Sparring: ["Self Defence (Advanced)", "Step Sparring", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <!--<div>
+            <h1>4th Degree Students (Black Belt)</h1>
+            [work in progress]
+        </div>-->
+
+        <div>
+            <h1>Requirements for 5th Degree Black Belt</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -5,
+                    Patterns: ["Yon-Gae", "Ul-Ji", "Moon-Moo"],
+                    FundamentalMovements: ["Waist Block", "Long Fist Punch", "Reflex Kick"],
+                    Power: [
+                        "Overhead Kick",
+                        "Flying Turning Kick",
+                        "<i>Demonstration</i>",
+                        "<span>Nominated Break</span>"
+                    ],
+                    Sparring: ["Self Defence (Advanced)", "Step Sparring", "Free Sparring"]
+                }'
+            ></div>
+        </div>
+
+        <!--<div>
+            <h1>5th Degree Students (Black Belt)</h1>
+            [work in progress]
+        </div>-->
+
+        <div>
+            <h1>Requirements for 6th Degree Black Belt</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -6,
+                    Patterns: ["So-San", "Se-Jong"],
+                    FundamentalMovements: null,
+                    Power: null,
+                    Sparring: null
+                }'
+            ></div>
+        </div>
+
+        <!--<div>
+            <h1>6th Degree Students (Black Belt)</h1>
+            [work in progress]
+        </div>-->
+
+        <div>
+            <h1>Requirements for 7th Degree Black Belt</h1>
+
+            <div cn-grading-sheet='{
+                    Kup: -7,
+                    Patterns: ["Tong-Il"],
+                    FundamentalMovements: null,
+                    Power: null,
+                    Sparring: null,
+                    Disclaimer: "This is an unofficial record of Degree promotion. Officially, there is no test to the rank of Master. This is an honorary recognition by the International Certificate Authority and as such a test is generally not required.",
+                    Comment: "Although many systems of Taekwon-Do bestow the title of Master at various ranks before 7th Degree, practitioners of the Chang-Hon Pattern System will not learn the last Tul, Tong-Il until 6th Degree and are not considered proficient in that Tul until the practitioner has progressed to the rank of 7th Degree. It is only then that the true practitioner of Taekwon-Do, having learnt all 24 of the Tuls of the Art, could truly have mastered the Art of Taekwon-Do, therefore earning the title of “Master”."
+                }'
+            ></div>
+        </div>
+
+        <div>
+            <h1 class="h0">Class Presentations</h1>
+
+            <table class="records">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Date</th>
+                        <th style="width: 45%;">Topic</th>
+                        <th style="width: 25%;">Location</th>
+                        <th style="width: 15%;">Instructor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h1 class="h0">Seminars & II Courses</h1>
+
+            <table class="records">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Date</th>
+                        <th style="width: 45%;">Course</th>
+                        <th style="width: 25%;">Location</th>
+                        <th style="width: 15%;">Instructor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h1 class="h0">Tournaments</h1>
+
+            <table class="records">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Date</th>
+                        <th style="width: 50%;">Tournament Description/Location</th>
+                        <th style="width: 25%;">Competition</th>
+                        <th style="width: 10%;">Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h1 class="h0">Demonstrations</h1>
+
+            <table class="records">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Date</th>
+                        <th style="width: 60%;">Location</th>
+                        <th style="width: 25%;">Instructor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!--<div>
+            <div class="stance" ng-repeat="entry in stances track by $index" cn-stance='entry'></div>
+        </div>-->
+
+    </body>
+</html>

@@ -1,0 +1,52 @@
+.destroy {
+    display: none;
+}
+
+TABLE {
+    font-size: 70%;
+    line-height: 100%;
+    width: 98%;
+    margin: 15px auto 0 auto;
+}
+    TABLE TR:hover {
+        background: #FFBF66 !important;
+    }
+    TABLE TR.highlight {
+        background: #87CEFA !important;
+    }
+    TABLE TH {
+        padding: 5px;
+        font-weight: normal;
+        background: #FFBF66;
+    }
+        TABLE TH:last-child {
+            padding: 0;
+        }
+    TABLE TD {
+        padding: 5px 2px 5px 2px;
+        white-space: nowrap;
+    }
+
+    TABLE SELECT,
+    TABLE INPUT {
+        width: 30px;
+        border: 1px solid gray;
+    }
+        TABLE SELECT {
+            width: auto;
+        }
+        TABLE .FeetInMotion INPUT {
+            width: 70px;
+        }
+
+    TABLE TBODY TR:nth-of-type(odd) {
+        background-color: #dddddd;
+    }
+
+/* Old CSS left for future reference */
+/*
+SELECT[name^=MotionID_],
+SELECT[name^=BodyMovmentID_],
+SELECT[name^=LegTechniqueID_],
+SELECT[name^=ArmTechniqueID_] {}
+*/
