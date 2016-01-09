@@ -1,0 +1,441 @@
+<html ng-app="ngCn">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <link rel="stylesheet" type="text/css" href="css/editor.css" />
+
+        <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+        <!-- script type="text/javascript" src="angular.preinit.js"></script -->
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript">
+            //# Setup the required globals
+            var cn = window.cn || {
+                    data: {}
+                },
+                ngCn = angular.module("ngCn", [])
+            ;
+        </script>
+        <script type="text/javascript" src="js/cnNg.module.cnDirectiveFactory.js"></script>
+        <script type="text/javascript" src="js/cnNg.module.ngCss.js"></script>
+        <script type="text/javascript" src="js/cnNg.directives.js"></script>
+        <script type="text/javascript" src="js/cnNg.filters.js"></script>
+        <script type="text/javascript" src="js/cn.enums.js"></script>
+        <!--<script type="text/javascript" src="js/cn.data.patterns.js"></script>-->
+        <script type="text/javascript" src="js/tkddata.js.php?var=cn.patterns&version=1.1"></script>
+        <script type="text/javascript">
+            cn.warning = "Lose unsaved changes?";
+
+            window.onbeforeunload = function(event) {
+                if (cn.dirty) {
+                    //# Ensure we received the event, then optionally set it's .returnValue and return our message
+                    //#     NOTE: Whatever string is returned from this function is displayed as a message to the user. There is no other way to code the .onbeforeunload event.
+                    event = event || window.event;
+                    (event ? event.returnValue = cn.warning : null);
+                    return cn.warning;
+                }
+            };
+
+            cn.reloadScript = function(id) {
+                var element = document.getElementById(id),
+                    js = document.createElement("script")
+                ;
+
+                //# Setup the new js element
+                js.type = "text/javascript";
+                js.src = element.src;
+                js.id = id;
+
+                //# Remove the old and append the new js (or throw the error)
+                if (element && element.parentNode) {
+                    element.parentNode.removeChild(element);
+                    document.getElementsByTagName("head")[0].appendChild(js);
+                    return js;
+                } else {
+                    throw ("reloadScript: ElementID not found: '" + id + "'");
+                }
+            };
+
+            //# Setup the $alt popup and .dirty
+            cn.$alt = $("<div style='position: absolute; border: 1px solid black; padding: 3px; background-color: white; color: #FE9E19; font-size: 80%;' />").hide();
+            cn.dirty = false;
+
+            //# Post-DOM "constructor"
+            $(document).ready(function() {
+                $('body').append(cn.$alt);
+                $('#sql').hide();
+            });
+
+            //# Define Angular page .controller
+            ngCn.controller('EditorController', function ($scope, $filter, $timeout) {
+                $scope.Model = cn.patterns.patterncounts("{}");
+                $scope.Version = cn.patterns.$version;
+                $scope.DefaultCount = 10;
+                $scope.enums = cn.enums;
+                $scope.PatternID = null;
+                $scope.SQL = "";
+
+                $scope.LegTechniques = cn.patterns.legtechniques();
+                $scope.ArmTechniques = cn.patterns.armtechniques();
+                $scope.BodyMovements = cn.patterns.bodymovements();
+                $scope.Motions = cn.patterns.motions();
+                
+                //# Prunes the passed counts of unused properties (optionally resetting the boolean properties)
+                function pruneCounts(counts, resetBools) {
+                    //# Traverse the passed counts, deleting the unused properties
+                    for (var i = 0; i < counts.length; i++) {
+                        delete counts[i].motion;
+                        delete counts[i].bodymovement;
+                        delete counts[i].legtechnique;
+                        delete counts[i].leglineofattack;
+                        delete counts[i].armtechnique;
+                        delete counts[i].armlineofattack;
+                        delete counts[i].legtechniquetype;
+                        delete counts[i].armtechniquetype;
+
+                        //# If we are supposed to resetBools, do so now
+                        if (resetBools) {
+                            $scope.Model.counted = '1';
+                            $scope.Model.isarmtooltwin = '0';
+                        }
+                    }
+                }
+
+                //# Prepare the .Model
+                pruneCounts([$scope.Model], true);
+
+                //# Initialize the controller
+                $scope.init = function() {
+                    //# Load the .PatternCounts up with blank entries
+                    $scope.LoadPattern();
+                };
+
+                $scope.getEncyclopediaCount = function (oPattern, count) {
+                    //var a_sCount = $filter('filter')(oPattern.encyclopedia, { count: count }, true);
+                    //return (a_sCount.length > 0 ? a_sCount[0].text : "Error!");
+                };
+
+                //# 
+                $scope.LoadPattern = function () {
+                    if (cn.dirty) {
+                        cn.dirty = !confirm(cn.warning);
+                    }
+
+                    if (!cn.dirty) {
+                        //# Reset the value of the .SQL and .dirty
+                        $scope.SQL = "";
+                        cn.dirty = false;
+                        //$("#editor tbody tr").hide();
+
+                        //# If the user has selected a .PatternID
+                        if ($scope.PatternID) {
+                            //# Pull the .PatternID from patterns, then prune them
+                            $scope.PatternCounts = cn.patterns.patterncounts("?", "PatternID", $scope.PatternID);
+                            pruneCounts($scope.PatternCounts);
+                        }
+                        //# Else we need to setup a blank editor with the .DefaultCount of rows
+                        else {
+                            //# Load the .PatternCounts up with blank entries
+                            $scope.PatternCounts = [];
+                            for (var i = 0; i < $scope.DefaultCount; i++) {
+                                $scope.PatternCounts.push($.extend({}, $scope.Model));
+                            }
+                        }
+                    }
+                };
+
+                //# 
+                $scope.row = {
+                    dom: function(iIndex) {
+                        return $("#editor tbody tr:nth-of-type(" + (iIndex + 1) + ")")
+                    },
+                    
+                    highlight: function (iIndex, bClearOthers) {
+                        if (bClearOthers) {
+                            $("#editor tbody tr").removeClass("highlight");
+                        }
+                        
+                        $scope.row.dom(iIndex).toggleClass("highlight");
+                    },
+                
+                    add: function (iIndex) {
+                        var a_oCounts = ($scope.PatternCounts || []),
+                            bCopy = (iIndex > -1 && iIndex < a_oCounts.length),
+                            oRow = $.extend({}, (
+                                bCopy ?
+                                a_oCounts[iIndex] :
+                                $scope.Model
+                            ))
+                        ;
+                        
+                        //# 
+                        if (bCopy) {
+                            a_oCounts.splice(iIndex, 0, oRow);
+                            $scope.row.highlight(iIndex + 1);
+                        }
+                        else {
+                            a_oCounts.push(oRow);
+                        }
+                    }, //# add
+                    
+                    remove: function(iIndex){
+                        var oRow,
+                            a_oCounts = ($scope.PatternCounts || [])
+                        ;
+                        
+                        //# 
+                        if (iIndex > -1 && iIndex < a_oCounts.length) {
+                            oRow = a_oCounts[iIndex];
+                            if (window.confirm("Remove row " + oRow.count + (oRow.countorder ? oRow.countorder : "") + "?")) {
+                                $scope.row.dom(iIndex).removeClass("highlight");
+                                a_oCounts.splice(iIndex, 1);
+                            }
+                        }
+                    } //# remove
+                    
+                }; //# $scope.row
+
+                //# 
+                $scope.registerChange = function () {
+                    cn.dirty = true;
+                };
+
+                //# 
+                $scope.reloadScripts = function() {
+                    $(cn.reloadScript("data")).on("load", function () {
+                        $scope.enums = cn.enums;
+                        $timeout(function () { $scope.$apply(); });
+                    });
+                    $(cn.reloadScript("pattern")).on("load", function() {
+                        $scope.Version = cn.patterns.$version;
+                        $scope.LegTechniques = cn.patterns.legtechniques();
+                        $scope.ArmTechniques = cn.patterns.armtechniques();
+                        $scope.BodyMovements = cn.patterns.bodymovements();
+                        $scope.Motions = cn.patterns.motions();
+                        $timeout(function () { $scope.$apply(); });
+                    });
+                };
+
+                //# Dresses the element with the required DOM manipulations
+                $scope.dress = function (element) {
+                    var $dom = $(element);
+                    //$dom.show();
+
+                    //# .find any elements with a name starting with "FeetInMotion", hooking the .keyup to UCase the text
+                    $dom.find("[name^=FeetInMotion]").keyup(function () {
+                        $(this).val(
+                            $(this).val().replace(/([a-z])/, function (s) {
+                                return s.toUpperCase();
+                            })
+                        );
+                    });
+
+                    //# .find any elements with an alt attribute, hooking their mouse events to show the $alt popup
+                    $dom.find('[alt]')
+                        .on('mouseover', function (event) {
+                            cn.$alt
+                                    .html($(this).attr('alt'))
+                                    .css({ top: event.pageY + 15, left: event.pageX + 15 })
+                                    .show()
+                                ;
+                        })
+                        .on('mousemove', function (event) {
+                            cn.$alt.css({ top: event.pageY + 15, left: event.pageX + 15 });
+                        })
+                        .on('mouseout', function () {
+                            cn.$alt.hide();
+                        })
+                    ;
+                };
+                
+                //# 
+                $scope.GenSQL = function () {
+                    var row, column, value, firstLoop,
+                        sSQL = "INSERT INTO PatternCount (`" + Object.keys($scope.Model).join('`, `') + "`) VALUES\n"
+                    ;
+                    
+                    //# Traverse the rows in .PatternCounts
+                    for (row in $scope.PatternCounts) {
+                        row = $scope.PatternCounts[row];
+                        row.patternid = $scope.PatternID;
+
+                        //# If the user set a valid .count
+                        if (row.count !== null) {
+                            firstLoop = true;
+                            sSQL += "(";
+
+                            //# Traverse each column in the current row
+                            for (column in row) {
+                                column = row[column];
+                                value = parseInt(column, 10) || null;
+
+                                //# If the column is not a numeric field, process it as a string
+                                if (column != value) {
+                                    value = (column ? "'" + mysql_real_escape_string(column + '') + "'" : null);
+                                }
+
+                                //# Add this column's data to the sSQL
+                                sSQL += (firstLoop ? "" : ", ") + (value === null ? "NULL" : value);
+                                firstLoop = false;
+                            };
+
+                            //# 
+                            sSQL += "),\n";
+                        }
+                    }
+
+                    //# 
+                    $scope.SQL = sSQL.substr(0, sSQL.length - 2) + ";";
+                    $('#sql').show();
+                };
+
+                //# 
+                $scope.clear = function(sMode, oPatternCount) {
+                    switch (sMode.substr(0, 1).toLowerCase()) {
+                        case "m": {
+                            oPatternCount.motionid = oPatternCount.bodymovementid = oPatternCount.eyesto = oPatternCount.eyesdiagramdirection = oPatternCount.feetinmotion = "";
+                            break;
+                        }
+                        case "a": {
+                            oPatternCount.armlr = oPatternCount.armsection = oPatternCount.armtechniqueid = oPatternCount.armtool = oPatternCount.armto = oPatternCount.armdiagramdirection = oPatternCount.facing = "";
+                            oPatternCount.isarmtooltwin = 0;
+                            break;
+                        }
+                        case "l": {
+                            oPatternCount.leglr = oPatternCount.legsection = oPatternCount.legtechniqueid = oPatternCount.legtool = oPatternCount.legto = oPatternCount.legdiagramdirection = "";
+                            break;
+                        }
+                    }
+                };
+
+                //# 
+                function mysql_real_escape_string(str) {
+                    return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (c) {
+                        switch (c) {
+                            case "\0":
+                                return "\\0";
+                            case "\x08":
+                                return "\\b";
+                            case "\x09":
+                                return "\\t";
+                            case "\x1a":
+                                return "\\z";
+                            case "\n":
+                                return "\\n";
+                            case "\r":
+                                return "\\r";
+                            case "\"":
+                            case "'":
+                            case "\\":
+                            case "%":
+                                return "\\" + c;
+                        }
+                    });
+                }
+            }); //# ngCn.controller('EditorController'...
+        </script>
+    </head>
+    <body ng-controller="EditorController" ng-init="init()">
+        <form>
+            <input type="button" value='Reload Scripts (V: {{Version}})' ng-click="reloadScripts()" style="float: right;" />
+            
+            <select id='PatternID' ng-model="PatternID" ng-options="item.ID as item.Name for item in enums.a_oPatterns"></select>
+            <input type="button" value='Gen SQL' ng-click="GenSQL()" />
+            <br/><input type="button" value='Load Pattern' ng-click="LoadPattern()" />
+            <a href="pattern.html#{{PatternID}}" target="_new">View Pattern...</a>
+            
+            <textarea id="sql" style="width: 98%; height: 100px; margin: 10px 1% 0 1%; overflow: auto;" wrap="off">{{SQL}}</textarea>
+
+            <table id="editor">
+                <thead>
+                    <tr>
+                        <th><strong>Verbal</strong> Count</th>
+                        <th>Body Movement (Eyes To; Diagram Direction)</th>
+                        <th>Feet In Motion</th>
+                        <th>Leg &nbsp; Section &nbsp; <strong>Leg Technique</strong> (Stance To; Diagram Direction)</th>
+                        <th>Arm &nbsp; Section &nbsp; <strong>Arm Technique</strong> (Arm Technique To; Diagram Direction)</th>
+                        <th>☺ing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="a in PatternCounts track by $index" ng-dom-ready="dress">
+                        <!-- COUNT -->
+                        <td>
+                            <input type='text' data-type='int' name='Count' ng-model="a.count" title="Count (0-999)" ng-change="registerChange()">
+                            <input type='text' name='CountOrder' ng-model="a.countorder" title="Count Order (a-z)">
+                            <input type='checkbox' ng-model="a.counted" ng-true-value="1" ng-false-value="0" name='Counted' title="Counted?">
+
+                            <div style="width: 100%; text-align: center; font-size: 50%;">
+                                <button title="Highlight" ng-click="row.highlight($index, false)">*</button> 
+                                <button title="Highlight" ng-click="row.highlight($index, true)">!</button>
+                                <button title="Copy" ng-click="row.add($index)">+</button>
+                                <button title="Remove" ng-click="row.remove($index)">-</button>
+                            </div>
+                        </td>
+                        
+                        <!-- MOVEMENT -->
+                        <td>
+                            <select data-type="int" ng-model="a.motionid" name='MotionID' title="Movement" ng-options="item.id as item.name for item in Motions"><option value=""/></select>
+                            <select data-type="int" ng-model="a.bodymovementid" name='BodyMovementID' title="Body Movement" ng-options="item.id as item.name for item in BodyMovements"><option value=""/></select>
+
+                            <br />(
+                            <select name='EyesTo' ng-model="a.eyesto" title="Eyes To Direction" ng-options="item as item for item in enums.a_sDirection"></select> ;
+                            <select name='EyesDiagramDirection' ng-model="a.eyesdiagramdirection" title="Eyes To Diagram Direction" ng-options="item as item for item in enums.a_sDiagramDirection"></select>
+                            )
+
+                            <button ng-click="clear('move', a)" title="Clear Movement">x</button>
+                        </td>
+
+                        <!-- FEET -->
+                        <td class='FeetInMotion'>
+                            <input type='text' name='FeetInMotion' ng-model="a.feetinmotion" title="Feet In Motion">
+                        </td>
+
+                        <!-- LEG -->
+                        <td>
+                            <select name='LegLR' ng-model="a.leglr" title="Leg Left/Right" ng-options="item as item for item in enums.a_sLR"></select>
+                            <select name='LegSection' ng-model="a.legsection" title="Leg Technique Section" ng-options="item as item for item in enums.a_sSectionLeg"></select>
+                            <select data-type="int" ng-model="a.legtechniqueid" name='LegTechniqueID' title="Leg Technique" ng-options="item.id as item.name for item in LegTechniques"><option value=""/></select>
+
+                            <br />
+                            <select name='LegTool' ng-model="a.legtool" title="Leg Attacking Tool" ng-options="item as item for item in enums.a_sToolLeg"></select>
+                            (
+                            <select name='LegTo' ng-model="a.legto" title="Leg Technique Direction" ng-options="item as item for item in enums.a_sDirection"></select> ;
+                            <select name='LegDiagramDirection' ng-model="a.legdiagramdirection" title="Leg Technique Diagram Direction" ng-options="item as item for item in enums.a_sDiagramDirection"></select>
+                            )
+                            
+                            <button ng-click="clear('leg', a)" title="Clear Leg">x</button>
+                        </td>
+
+                        <!-- ARM -->
+                        <td>
+                            <select name='ArmLR' ng-model="a.armlr" title="Arm Left/Right" ng-options="item as item for item in enums.a_sLR"></select>
+                            <select name='ArmSection' ng-model="a.armsection" title="Arm Technique Section" ng-options="item as item for item in enums.a_sSectionArm"></select>
+                            <select data-type="int" name='ArmTechniqueID' ng-model="a.armtechniqueid" title="Arm Technique" ng-options="item.id as item.name for item in ArmTechniques"><option value=""/></select>
+
+                            <br />
+                            <select name='ArmTool' ng-model="a.armtool" title="Arm Attacking Tool" ng-options="item as item for item in enums.a_sToolArm"></select>
+                            <input type='checkbox' name='IsArmToolTwin' ng-model="a.isarmtooltwin" ng-true-value="1" ng-false-value="0" title="Is Twin Arm Technique?">
+                            (
+                            <select name='ArmTo' ng-model="a.armto" title="Arm Technique Direction" ng-options="item as item for item in enums.a_sDirection"></select> ;
+                            <select name='ArmDiagramDirection' ng-model="a.armdiagramdirection" title="Arm Technique Diagram Direction" ng-options="item as item for item in enums.a_sDiagramDirection"></select>
+                            )
+                            
+                            <button ng-click="clear('arm', a)" title="Clear Arm">x</button>
+                        </td>
+
+                        <!-- FACING -->
+                        <td class="facing">
+                            <select name='Facing' ng-model="a.facing" title="Shoulder Facing" ng-options="item as item for item in enums.a_sFacing"></select>
+                            <input type="hidden" name="Notes" ng-model="a.notes" title="Line Notes" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">{{getEncyclopediaCount(Pattern, count[0].count)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <input type="button" value="Add Row" ng-click="row.add(-1)">
+        </form>
+    </body>
+</html>
