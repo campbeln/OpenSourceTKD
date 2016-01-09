@@ -35,12 +35,13 @@
         return factory.create(
             function ($scope, element, attrs, controllers) {
                 var options = factory.options($scope, attrs, 'cnSampleTheoryQuestions'),
-                    css = (options.PAGEBREAK === true ? " class='PAGEBREAK'" : "")
+                    css = (options.PAGEBREAK === true ? " class='PAGEBREAK'" : ""),
+                    sPageOffsets = (options.pageOffsets ? " pageOffsets='" + JSON.stringify(options.pageOffsets) + "' " : "" )
                 ;
 
                 //# 
                 element
-                    .before("<h3 data-toc='false'" + css + ">Sample Theory Questions</h3>")
+                    .before("<h3 data-toc='false'" + css + sPageOffsets + ">Sample Theory Questions</h3>")
                     .before("<p>While not a complete list of questions you may be asked at a grading, you should be able to answer these questions and any questions presented above correctly and confidently if asked:</p>")
                 ;
             },

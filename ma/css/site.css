@@ -55,7 +55,7 @@ BODY {
 }
     BODY > DIV {
         page-break-after: always;
-        page-break-inside: avoid;
+        /*page-break-inside: avoid;*/
         clear: both;
 
         background-color: white;
@@ -82,6 +82,12 @@ BODY {
             display: block;
             width: 100%;
         }
+            BODY #toc A > SPAN[page] {
+                float: right;
+            }
+            BODY #toc A > I {
+                margin: 0 4mm 0 4mm;
+            }
             BODY #toc .h1:hover,
             BODY #toc .h2:hover,
             BODY #toc .h3:hover {
@@ -93,16 +99,18 @@ BODY {
             }
             BODY #toc .h2 {
                 font-size: 110%;
-                margin-left: 2%;
+                padding-left: 2%;
+                width: 98%;
             }
             BODY #toc .h3 {
-                margin-left: 4%;
+                padding-left: 4%;
+                width: 96%;
             }
                 
 BLOCKQUOTE {
     padding: 0 0 0 4%;
     margin: 0;
-    background-image: url("../img/blockquote.gray.png");
+    background-image: url("/ma/img/blockquote.gray.png");
     background-position: 0% 5px;
     background-size: 3.5%;
     background-repeat: no-repeat;

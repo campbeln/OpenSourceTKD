@@ -1,4 +1,4 @@
-﻿<html ng-app="ngCn" ng-controller="BookController" ng-init="init()">
+<html ng-app="ngCn" ng-controller="BookController" ng-init="init()">
     <head>
         <title>Student Manual</title>
         
@@ -64,21 +64,78 @@
                 }, 100);
             }; //# cn.positionH0s
 
+            cn.make = {
+                int: function(i, vDefault) {
+                    return (!isNaN(parseInt(i)) ?
+                        parseInt(i) :
+                        (arguments.length > 1 ? vDefault : 0)
+                    );
+                },
+                json: function(sJson, vDefault) {
+                    var oReturnVal = vDefault;
+
+                    try {
+                        oReturnVal = JSON.parse(sJson);
+                    } catch (e) {}
+
+                    return oReturnVal;
+                }
+            };
+
+            cn.is = {
+                obj: function (o, bDisallowEmptyObject) {
+                    //# NOTE: getOwnPropertyNames is IE9+
+                    return (o && o === Object(o) && !cn.is.fn(o)) && (!bDisallowEmptyObject || Object.getOwnPropertyNames(o).length !== 0) ? true : false; //# && !core.is.date(o)
+                },
+                fn: function(f) {
+                    return (Object.prototype.toString.call(f) === '[object Function]') ? true : false;
+                }
+            };
+
             //# 
             cn.toc = function() {
-                var $this, sID,
+                var $this, sID, oPageData,
+                    iTitleCount = 0,
+                    iPage = 0,
                     $toc = $("#toc")
                 ;
                 
-                $("h1, h2, h3").not("[no-toc]").each(function(i) {
-                    $this = $(this);
-                    sID = "title" + i;
+                $("BODY > DIV").each(function(/*j*/) {
+                    $(this).find("h1, h2, h3, .PAGEBREAK").not("[no-toc]").each(function(/*i*/) {
+                        $this = $(this);
+                        sID = "title" + ++iTitleCount;
                     
-                    $this.attr("id", sID);
-                    $toc.append("<a href='#" + sID + "' class='" + $this[0].tagName.toLowerCase() + "'>" +
-                        $this.html() +
-                    "</a>");
-                });                
+                        $this.attr("id", sID);
+                        if ($this.hasClass("PAGEBREAK")) {
+                            iPage++;
+                        }
+
+                        oPageData = cn.make.json($this.attr("pageOffsets"), {});
+                        iPage += cn.make.int(oPageData["a4"], 0);
+
+                        if ($this.filter("h1, h2, h3").length > 0) {
+                            $toc.append(
+                                "<a href='#" + sID + "' class='" + $this[0].tagName.toLowerCase() + "'>" +
+                                    "<span page>" + iPage + "</span>" +
+                                    $this.html() +
+                                "</a>"
+                            );
+                        }
+                    });
+
+                    iPage++;
+                });
+                
+                $toc.find("A").each(function(){
+                    var $this = $(this),
+                        rowHeight = $this.height()
+                    ;
+
+                    while ($this.height() === rowHeight) {
+                        $this.append(" .");
+                    }
+                    $this.html($this.html().slice(0,-6));
+                });   
             };
 
             //# 
@@ -349,7 +406,7 @@
         <div class="title">
             <img ng-src="{{url}}" class="theme" style="width: 30%;"/>
             <h1 no-toc>The {{Text.ColorName}} Book - Student Handbook</h1>
-            <span class="version neektest">Version 4.5 (October 2015)</span>
+            <span class="version neektest">Version 4.6 (December 2015)</span>
             <div class="noprint">
                 HTML Color Code: <input type="text" ng-model="css.mainColor" />
                 <br/>Name Of Color: <input type="text" ng-model="Text.ColorName" />
@@ -394,7 +451,7 @@
                 <em>By Nuno Nogueira<br/>(Wikipedia cc-by-sa-2.5)</em>
             </div>
 
-            <h1>What is Taekwon-Do?</h1>
+            <h1 pageOffsets='{ "a4": 3 }'>What is Taekwon-Do?</h1>
             <p>
                 Taekwon-Do (태권도) is a Korean system of self-defence. 태 (tae, <i>tay</i>) can be translated as “to strike or break with foot”; 권 (kwon) can be translated as “to strike or break with fist”; and 도 (do) can be translated as “art” or “way”. Therefore, Taekwon-Do can be loosely translated as “the art of hand and foot fighting”. Taekwon-Do is pronounced “tay-KWON-dough”.
             </p>
@@ -665,7 +722,7 @@
                 <li>Meaning of the white belt; Innocence, no previous knowledge of Taekwon-Do.</li>
                 <li>Why 3-Step Sparring is executed with the footwork “Outside, Inside, Outside” or “Inside, Outside, Inside”; To maintain proper distance.</li>
                 <li>Details about the belt system, Dan classifications and the colors of the belts; White, Yellow, Green, Blue, Red, Black. 10 Kup levels and 9 Dan levels.</li>
-                <li>The total number of patterns (tuls) in Taekwon-Do as well as what that number represents; 24, representing the hours in a day and by that an entire lifetime. Two additional patterns have been retired/forgotten.</li>
+                <li>The total number of patterns (tuls) in Taekwon-Do as well as what that number represents; 24, representing the hours in a day and by that an entire lifetime. Two additional patterns have been retired.</li>
                 <li>The science behind Taekwon-Do; Sine wave and reaction force.</li>
             </ul>
             <p>{{Text.Grading.Demonstrates}}</p>
@@ -1157,7 +1214,7 @@
             </p>
 
             
-            <ul cn-sample-theory-questions="{PAGEBREAK: true}">
+            <ul cn-sample-theory-questions="{ PAGEBREAK: true, pageOffsets: { a4: 1 } }">
                 <li>What is the interpretation of (who was) Do-San? What is its diagram? How many movements?</li>
                 <li>Can you tell me more about the interpretation of Do-San? What does Do-San literally translate to?</li>
                 <li>What are the 5 parts of the Physical Composition of Taekwon-Do (or: what are the 5 main ways we use/train our bodies in Taekwon-Do)?</li>
@@ -1286,7 +1343,7 @@
             </p>
             
 
-            <ul cn-sample-theory-questions="{PAGEBREAK: true}">
+            <ul cn-sample-theory-questions="{ PAGEBREAK: true }">
                 <li>What is the interpretation of (who was) Yul-Gok? What is its diagram? How many movements?</li>
                 <li>Can you tell me more about the interpretation of Yul-Gok?</li>
                 <li>How would you describe the concept of integrity? What is an example of poor integrity?</li>
@@ -1351,7 +1408,7 @@
                 <li><h6>Etiquette</h6> is a form of respect and courtesy in Western and Eastern societies that should be observed by students both inside and outside the do-jang. While a black belt may outrank a white belt in the realm of Taekwon-Do, the white belt may be senior to that black belt in other respects (such as in age and/or station in life). A slight given to the white belt from the black belt is in actuality an insult to everyone involved.</li>
             </ol>
             
-            <ul cn-sample-theory-questions>
+            <ul cn-sample-theory-questions="{ pageOffsets: { a4: 1 } }">
                 <li>What is the interpretation of (who was) Joong-Gun? What is its diagram? How many movements?</li>
                 <li>Can you tell me more about the interpretation of Joong-Gun?</li>
                 <li>What does the color of the blue belt represent?</li>
@@ -1672,8 +1729,7 @@
 
         <div>
             <h1>
-                1st Degree Students (Black Belt)
-                <br/>+ Junior Black Belts
+                1st Degree Students (Black Belt) + Junior Black Belts
             </h1>
             <p>
                 Your time as a Kup student can be thought of as standing on the side of a road, while attaining your black belt typifies stepping onto that road to begin your journey. While many believe a black belt represents an expert level of understanding, in Taekwon-Do it represents a solid foundation of knowledge and techniques. In short, your learning has only just begun!
@@ -1729,7 +1785,7 @@
                 Gae-Baek is named after a great general in the Baek-Je Dynasty (660AD). The diagram represents his severe and strict military discipline. 
             </p>
 
-            <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
+            <h2 pageOffsets='{ "a4": 1 }'>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
             <h3>Six Types of Sparring</h3>
             <p>
                 The six types of sparring in Taekwon-Do fall under two major categories; pre-arranged sparring and free sparring.
@@ -1756,7 +1812,7 @@
                 The Tori is responsible for the safety of their Uke. They should be aware of their Uke’s ukemi (tumbling) abilities, ensure open lanes of traffic before executing a throw and conscientious of their Uke’s flexibility and level of discomfort/pain when executing joint locks and strikes. The Uke invests a lot of trust in their Tori and that trust should never be abused. A key outcome for the Tori is gaining practical experience on the effectiveness of strikes, locks and movement via exploratory manipulation of their Uke.
             </p>
 
-            <h3>Philosophy of Taekwon-Do</h3>
+            <h3 pageOffsets='{ "a4": 1 }'>Philosophy of Taekwon-Do</h3>
             <p>
                 It is my firm belief that through Taekwon-Do, anyone can garner enough strength to become a guardian of justice, to challenge social disunity and, to cultivate the human spirit to the highest level attainable. It is in this spirit, I am dedicating the art of Taekwon-Do to the people of the world.  – General Choi Hong Hi
             </p>
@@ -1876,7 +1932,7 @@
                 Ko-Dang is the pseudonym of the patriot Cho Man Sik. Known as the Ghandi of Korea he was a nationalist activist in Korea’s independence movement. The 39 movements of the pattern represent the number of times he was imprisoned.
             </p>
 
-            <h3>U-Nam, Taekwon-Do's Lost Pattern</h3>
+            <h3 pageOffsets='{ "a4": 1 }'>U-Nam, Taekwon-Do's Lost Pattern</h3>
             <p>
                 Thanks to research from Taekwon-Do historian Dr George Vitale (8th Degree) assisted by Grandmaster C.K. Choi (Chang Keun), Taekwon-Do's "lost pattern" has been reintroduced to the art. U-Nam is only featured in the Korean HanGul/Chinese HanJa first edition of the first book published about the art, “Taekwon-Do” (1959) by Gen. Choi Hong Hi.
             </p>
@@ -1899,7 +1955,7 @@
                 Further research states that while Juche was being developed in the early 1980’s to replace Ko-Dang, General Choi stated that patterns in Taekwon-Do are only named after individuals important to Korean history who have passed away. This precluded Juche from being named after Kim Il-Sung (1912-1994) “Eternal President” of the Democratic People's Republic of Korea (DPRK, a.k.a. North Korea) or any other prominent official in good standing with the DPRK. With the rediscovery of U-Nam, we know that this was not always the case.
             </p>
 
-            <h3>Ko-Dang Pattern’s Retirement</h3>
+            <h3 class="PAGEBREAK">Ko-Dang Pattern’s Retirement</h3>
             <p>
                 The retirement and replacement of Ko-Dang with Juche is a controversial topic. Named for the pseudonym of Cho Man Sik, Ko-Dang was one of the art’s original 20+1 patterns. The term Juche has a strong association with the communist ideology of the DPRK while Cho Man Sik was an early Soviet-supported political rival to Kim Il-Sung.
             </p>
@@ -1931,7 +1987,7 @@
                 A supplemental form of sparring called Pattern Sparring (Off-Diagram) can be employed as the basis for a Prearranged Free Sparring demonstration. Pattern Sparring (Off-Diagram) utilises a pattern’s prescribed techniques while allowing freedom of directionality. One combatant performs the techniques of a given pattern while the other combatant(s) apply techniques that pair appropriately to those from the pattern (e.g. a pattern’s Low Block is used against a Low Front Snap Kick). This approach showcases your knowledge of applications of techniques from the chosen pattern while giving you a strong starting point to design your Prearranged Free Sparring demonstration.
             </p>
 
-            <h3>Ideal Instructor</h3>
+            <h3 class="PAGEBREAK">Ideal Instructor</h3>
             <p>
                 At this point, you should consider being a regular instructor or even a branch instructor. The act of standing at the front of a class challenges your knowledge and understanding of techniques, patterns and concepts in a much deeper way than standing in rank. Aspire towards becoming an ideal instructor. Aspire towards being humble and admitting mistakes when they occur (even in front of your own class). Be patient with your students and always show them the respect that you expect from them. Your students will train you to become a better black belt and toward higher ranks.
             </p>
@@ -1946,7 +2002,7 @@
                 <li>One who gains confidence from his seniors, is trusted by his fellow Instructors and is respected by his juniors.</li>
             </ol>
 
-            <h3 class="PAGEBREAK">Cross-Training</h3>
+            <h3>Cross-Training</h3>
             <p>
                 An additional avenue worth exploring to improve your own skills and understanding is to consider cross-training in another martial art or coordinated physical activity. From obvious choices such as BJJ, Judo, Aikido or Boxing to the less obvious of parkour/freerunning, gymnastics or even ballet, many insights can be gained from taking up a discipline that is seemingly far removed from Taekwon-Do. This pursuit of understanding from varying points of view has encouraged us at {{Text.SchoolName}} to include concepts outside of the traditional Taekwon-Do syllabus (such as Uke/Tori , The Four Stages Of Self-Defence, etc.).
             </p>
@@ -1966,7 +2022,7 @@
 
             <div cn-grading-sheet='{
                     Kup: -3,
-                    Patterns: ["Eul-Am", "Choong-Jang", "Juche", "U-Nam<span>Optional Tul</span>", "Ko-Dang<span>Optional Tul</span>"],
+                    Patterns: ["Eul-Am", "Choong-Jang", "Juche", "Ko-Dang<span>Optional Tul</span>", "U-Nam<span>Optional Tul</span>"],
                     FundamentalMovements: null,
                     Power: [
                         "3-Target Flying Techniques,\n2 foot 1 hand (1 Board Each)",
@@ -2022,8 +2078,8 @@
                 <li>{{Text.LI.UmpireClass('B')}}</li>
             </ul>
 
+            <h2 class="PAGEBREAK">{{Text.H2.DanPatternExercisesDrills}}</h2>
             <cn-diagram data-key="si"></cn-diagram>
-            <h2>{{Text.H2.DanPatternExercisesDrills}}</h2>
             <p>
                 The patterns (tuls) for 3rd Degree students to learn before grading are Sam-Il (<i>SAM-ill</i>), Yoo-Sin (<i>YOU-schin</i>) and Choi-Yong (<i>CHOI-young</i>). Pattern counts are 33-68-46. The left foot is returned to Junbi in Sam-Il, the right foot in Yoo-Sin and the right foot in Choi-Yong, or more succinctly: Left-Right-Right.
             </p>
@@ -2040,7 +2096,63 @@
             </p>
 
             <h2>{{Text.H2.KnowledgeTheoryInDepth}}</h2>
-            [work in progress]
+            <h3>Training Secrets</h3>
+            <ol>
+                <li>To study the theory of power thoroughly</li>
+                <li>To understand the purpose and method of each movement clearly</li>
+                <li>To bring the movement of the eyes, hands, feet, and breath into a single coordinated action</li>
+                <li>To choose the appropriate attacking tool for each vital spot</li>
+                <li>To become familiar with the correct angle and distance for attack and defence</li>
+                <li>Keep both arms and legs bent slightly while movement is in motion</li>
+                <li>All movements must begin with a backward motion with very few exceptions, however once the movement is in motion it should not be stopped before reaching the target</li>
+                <li>To create a sine wave during the movement by utilising the knee spring properly</li>
+                <li>To exhale briefly at the moment of each blow except a connecting motion</li>
+            </ol>
+
+            <h3>Moral Culture</h3>
+            <p>
+                The broad connotations and various possible interpretations of the moral culture are often very difficult for the western mind to grasp because this is an aspect of Oriental Philosophy which pervades the lives of Oriental people. In a word, it is the endeavour and process of becoming an exemplary person such as Confucius (552-479 AD).
+            </p>
+            <p>
+                To become such a person, one has to first find himself and acquire a moral character which is respected by all. This can only be achieved through constant practice of mental discipline. Thus, if the times call for it, the mentally disciplined man can contribute to the building of an ideal society through wise counsel to the government and, even after death, through his everlasting examples.
+            </p>
+            <p>
+                Confucius said, "to promote the sense of morality one must treat others with faithfulness and sincerity based on righteousness, and to eliminate completely vicious thinking".
+            </p>
+            <p>
+                Everyone of us, as a social being, desires to live in a free and peaceful society. At the same time, it is our obligation to build such a society for the people. I have quoted various words of wisdom of ancient saints and philosophers for creating an ideal society in the hope that students of Taekwon-Do use them as a guide to cultivating their moral culture.
+            </p>
+            <p>
+                An ideal society, according to LAO-TZU, is one in which the ruler is of such high moral character that he can rule naturally, not by interference or fear but by appealing to the good nature of his people, who by merely doing their duty can live freely in peace without fear and anxiety.
+            </p>
+            <p>
+                Next, a moral society is one in which the people admire and praise their ruler in gratitude for his love and the benign disposition he bears toward his people.
+            </p>
+            <p>
+                Thirdly there is a "legalistic society in which the ruler, because he lacks the moral authority, resorts to various laws to govern his people, who in turn obey because they fear the retribution that the violation of these laws will bring." Under these circumstances, the ruler loses touch with his people.
+            </p>
+            <p>
+                Finally the worst kind of society is that in which the ruler, through deception and trickery, misuses his legal authority to further his personal ambitions and imposes his rule upon his people by force as he deems necessary. In such a society, the ruler is despised and hated by his people and eventually invites not only his own downfall but with him the downfall of the people and the country.
+            </p>
+            <p>
+                In Taekwon-Do a heavy emphasis is placed on moral culture, for it not only promotes a healthy body and keen mind but good sportsmanship and the perfection of moral behavior. As ancient Greeks first espoused in their sound mind, sound body, creative spirit concept, the more disciplined and cultivated the mind is, the more disciplined and cultivated will be the student's use of Taekwon-Do.
+            </p>
+            <p>
+                No doubt the following lessons may be somewhat hard to fully understand; however, it would behoove the serious student of Taekwon-Do to read, digest, and attempt to grasp these very fundamental essences of moral culture.
+            </p>
+            <ol>
+                <li>
+                    Return to the basic nature - Mencius gave the following analogy when he reasoned that a man is basically good. Even a ruthless robber, coming upon an innocent child about to fall into a well, will try to save the child, forgetting for the moment, his intention to rob the house. This good nature becomes obscured or completely lost by greed for money and power.
+                </li>
+                <li>
+                    Be virtuous - It is difficult to define what virtue is. However, these are five human qualities which have been recognised as virtues since ancient times; humanity, righteousness, courtesy, wisdom, and trust. To be virtuous one must constantly cultivate and practice these virtues. Confucius said, "Virtue is like the North Star. All the stars revolve around it in an orderly fashion." Therefore, people who surround the virtuous person, naturally will act for the betterment of society.
+                </li>
+            </ol>
+
+            <h2>Power Demonstration</h2>
+            <p>
+                Demonstrate any Taekwon-Do concept utilising destruction as a conveyance medium. The demonstration should be articulated with supporting theories and evidence drawn from the Encyclopaedia of Taekwon-Do.
+            </p>
         </div>
 
         <div>
@@ -2051,9 +2163,9 @@
                     Patterns: ["Sam-Il", "Yoo-Sin", "Choi-Yong"],
                     FundamentalMovements: ["X-Knife-Hand Raising Block", "Waving Kick", "Sweeping Kick", "Grasping Kick"],
                     Power: [
-                        "Back Fist",
-                        "Mid-Air Kick",
-                        "Flying Reverse Turning Kick",
+                        "Back Fist (4 Boards)",
+                        "Mid-Air Kick (1 Board)",
+                        "Flying Reverse Turning Kick (1 Board)",
                         "<i>Demonstration</i>",
                         "<span>Nominated Break</span>"
                     ],

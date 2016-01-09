@@ -1,4 +1,4 @@
-﻿<html ng-app="ngCn">
+<html ng-app="ngCn">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
@@ -89,6 +89,8 @@
                         delete counts[i].leglineofattack;
                         delete counts[i].armtechnique;
                         delete counts[i].armlineofattack;
+                        delete counts[i].legtechniquetype;
+                        delete counts[i].armtechniquetype;
 
                         //# If we are supposed to resetBools, do so now
                         if (resetBools) {
@@ -99,9 +101,7 @@
                 }
 
                 //# Prepare the .Model
-                console.log("here", $scope.Model);
                 pruneCounts([$scope.Model], true);
-                console.log("there");
 
                 //# Initialize the controller
                 $scope.init = function() {
@@ -187,7 +187,7 @@
                             oRow = a_oCounts[iIndex];
                             if (window.confirm("Remove row " + oRow.count + (oRow.countorder ? oRow.countorder : "") + "?")) {
                                 $scope.row.dom(iIndex).removeClass("highlight");
-                                a_oCounts.splice(1, 1);
+                                a_oCounts.splice(iIndex, 1);
                             }
                         }
                     } //# remove
@@ -288,6 +288,24 @@
                     $('#sql').show();
                 };
 
+                //# 
+                $scope.clear = function(sMode, oPatternCount) {
+                    switch (sMode.substr(0, 1).toLowerCase()) {
+                        case "m": {
+                            oPatternCount.motionid = oPatternCount.bodymovementid = oPatternCount.eyesto = oPatternCount.eyesdiagramdirection = oPatternCount.feetinmotion = "";
+                            break;
+                        }
+                        case "a": {
+                            oPatternCount.armlr = oPatternCount.armsection = oPatternCount.armtechniqueid = oPatternCount.armtool = oPatternCount.armto = oPatternCount.armdiagramdirection = oPatternCount.facing = "";
+                            oPatternCount.isarmtooltwin = 0;
+                            break;
+                        }
+                        case "l": {
+                            oPatternCount.leglr = oPatternCount.legsection = oPatternCount.legtechniqueid = oPatternCount.legtool = oPatternCount.legto = oPatternCount.legdiagramdirection = "";
+                            break;
+                        }
+                    }
+                };
 
                 //# 
                 function mysql_real_escape_string(str) {
@@ -353,7 +371,7 @@
                                 <button title="Remove" ng-click="row.remove($index)">-</button>
                             </div>
                         </td>
-
+                        
                         <!-- MOVEMENT -->
                         <td>
                             <select data-type="int" ng-model="a.motionid" name='MotionID' title="Movement" ng-options="item.id as item.name for item in Motions"><option value=""/></select>
@@ -363,6 +381,8 @@
                             <select name='EyesTo' ng-model="a.eyesto" title="Eyes To Direction" ng-options="item as item for item in enums.a_sDirection"></select> ;
                             <select name='EyesDiagramDirection' ng-model="a.eyesdiagramdirection" title="Eyes To Diagram Direction" ng-options="item as item for item in enums.a_sDiagramDirection"></select>
                             )
+
+                            <button ng-click="clear('move', a)" title="Clear Movement">x</button>
                         </td>
 
                         <!-- FEET -->
@@ -382,6 +402,8 @@
                             <select name='LegTo' ng-model="a.legto" title="Leg Technique Direction" ng-options="item as item for item in enums.a_sDirection"></select> ;
                             <select name='LegDiagramDirection' ng-model="a.legdiagramdirection" title="Leg Technique Diagram Direction" ng-options="item as item for item in enums.a_sDiagramDirection"></select>
                             )
+                            
+                            <button ng-click="clear('leg', a)" title="Clear Leg">x</button>
                         </td>
 
                         <!-- ARM -->
@@ -397,6 +419,8 @@
                             <select name='ArmTo' ng-model="a.armto" title="Arm Technique Direction" ng-options="item as item for item in enums.a_sDirection"></select> ;
                             <select name='ArmDiagramDirection' ng-model="a.armdiagramdirection" title="Arm Technique Diagram Direction" ng-options="item as item for item in enums.a_sDiagramDirection"></select>
                             )
+                            
+                            <button ng-click="clear('arm', a)" title="Clear Arm">x</button>
                         </td>
 
                         <!-- FACING -->

@@ -78,7 +78,7 @@ cn.format = window.cn.format || {};
             sLineOfAttack = sArmLeg + 'lineofattack',
             sIsArmToolTwin = (sArmLeg === "arm" ? "isarmtooltwin" : null)
         ;
-
+        
         //# Traverse the passed ah_sRows, appending each entry onto our sReturn value (handling the last entry seperate to avoid the last </br>)
         for (i = 0; i < iLength; i++) {
             //# Reset the a_sTemp for this loop, filling it with the present data
