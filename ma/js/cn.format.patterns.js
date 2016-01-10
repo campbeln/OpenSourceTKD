@@ -143,8 +143,8 @@ cn.format = window.cn.format || {};
         for (i = 0; i < ah_sRows.length; i++) {
             sTemp = (
                 (ah_sRows[i]['motion'] ? ah_sRows[i]['motion'] + " " : "") +
-                (ah_sRows[i]['bodymovement'] ? "<em>" + ah_sRows[i]['bodymovement'] + "</em> " : "") +
-                $namespace.format.patterns.formatBrackets(ah_sRows[i]['eyesto'], ah_sRows[i]['eyesdiagramdirection'], false)
+                (ah_sRows[i]['bodymovement'] ? "<em>" + ah_sRows[i]['bodymovement'] + "</em> " : "")
+                //+ $namespace.format.patterns.formatBrackets(ah_sRows[i]['eyesto'], ah_sRows[i]['eyesdiagramdirection'], false)
             ).trim();
             if (sTemp) { sReturn += "<div>" + sTemp + "</div><br/>" }
         }
@@ -155,12 +155,44 @@ cn.format = window.cn.format || {};
 
 
     //# 
+    $namespace.format.patterns.formatDirection = function (ah_sRows) {
+        var i, sTemp,
+            sReturn = ""
+        ;
+
+        //# Traverse the passed ah_sRows, appending each entry onto our sReturn value
+        for (i = 0; i < ah_sRows.length; i++) {
+            if (ah_sRows[i]['eyesto']) {
+                if (ah_sRows[i]['eyesdiagramdirection']) {
+                    sTemp = ah_sRows[i]['eyesto'] + "; " + ah_sRows[i]['eyesdiagramdirection']
+                }
+                else {
+                    sTemp = ah_sRows[i]['eyesto']
+                }
+            }
+            else if (ah_sRows[i]['eyesdiagramdirection']) {
+                sTemp = ah_sRows[i]['eyesdiagramdirection']
+            }
+            else {
+                sTemp = "";
+            }
+            
+            sTemp = sTemp.trim();
+            //if (sTemp) { sReturn += "<div>" + sTemp + "</div><br/>"; }
+            sReturn += (sTemp ? "<div>" + sTemp + "</div><br/>" : "<br/>");
+        }
+
+        //# Return our sReturn value while removing the trailing <br/>
+        return (sReturn ? sReturn.substr(0, sReturn.length - 5) : "");
+    };
+
+    //# 
     $namespace.format.patterns.formatBrackets = function (sPrefix, sSuffix, bUseSquare) {
         var sReturn = (sPrefix ? sPrefix : "");
 
         //# 
         if (sSuffix) {
-            if (sSuffix.substr(0, 1) == '~') { sSuffix = '<span>' + sSuffix + '</span>'; }  //# em? i?
+            //if (sSuffix.substr(0, 1) == '~') { sSuffix = '<span>' + sSuffix + '</span>'; }  //# em? i?
             sReturn = (sReturn ? sReturn + "; " + sSuffix : sSuffix);
         }
 

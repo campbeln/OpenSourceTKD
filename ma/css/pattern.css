@@ -111,6 +111,15 @@ H1, H2, H3, H4, H5, H6 {
             font-size: 150%;
             line-height: 10px;
         }
+        .patterns THEAD TH.shrink {
+            width: 1%;
+            white-space: nowrap;
+            padding: 0 30px 0 0;
+        }
+            .patterns THEAD TH.shrink:first-of-type,
+            .patterns THEAD TH.shrink:last-of-type {
+                padding: 0;
+            }
         .patterns .line {
             height: 2px;
             background-color: black;

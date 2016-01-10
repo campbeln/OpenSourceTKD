@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html ng-app="ngCn">
 <head>
     <title></title>
@@ -254,15 +254,18 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th>
+                        <th class="shrink">
                             <em>Verbal</em>
                             <br />Count
                         </th>
                         <th>
                             Motion [Method] &nbsp; <em>Body Movement</em>
-                            <br />(Eyes To; Diagram Direction)
                         </th>
-                        <th>
+                        <th class="shrink">
+                            Diagram
+                            <br />Direction
+                        </th>
+                        <th class="shrink">
                             Feet In
                             <br />Motion
                         </th>
@@ -274,19 +277,20 @@
                             Arm &nbsp; Section &nbsp; <em>Arm Technique</em> &nbsp; [Tool; Line]
                             <br />(Technique To; Diagram Direction)
                         </th>
-                        <th class="primary">
+                        <th class="shrink primary">
                             <em class="face">☺</em>
                             <br />ing
                         </th>
                     </tr>
                     <tr class="line">
-                        <td colspan="6"></td>
+                        <td colspan="99"></td>
                     </tr>
                 </thead>
                 <tbody ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="count in Pattern.GroupedCounts">
                     <tr>
                         <td ng-class="count[0].counted == '1' ? 'count' : 'number'">{{count[0].count <= 0 || count[0].count >= 999 ? "&bullet;" : count[0].count}}</td>
                         <td ng-bind-html="cn.format.patterns.formatBodyMovement(count)"></td>
+                        <td ng-bind-html="cn.format.patterns.formatDirection(count)"></td>
                         <td ng-bind-html="cn.format.patterns.formatLine(count, 'feetinmotion', false)"></td>
                         <td ng-bind-html="cn.format.patterns.formatTechnique(count, 'leg')"></td>
                         <td ng-bind-html="cn.format.patterns.formatTechnique(count, 'arm')"></td>
