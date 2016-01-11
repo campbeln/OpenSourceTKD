@@ -159,21 +159,18 @@
                 
                     add: function (iIndex) {
                         var a_oCounts = ($scope.PatternCounts || []),
-                            bCopy = (iIndex > -1 && iIndex < a_oCounts.length),
-                            oRow = $.extend({}, (
-                                bCopy ?
-                                a_oCounts[iIndex] :
-                                $scope.Model
-                            ))
+                            bCopy = (iIndex > -1 && iIndex < a_oCounts.length)
                         ;
                         
                         //# 
                         if (bCopy) {
-                            a_oCounts.splice(iIndex, 0, oRow);
+                            a_oCounts.splice(iIndex, 0, $.extend({}, a_oCounts[iIndex]));
                             $scope.row.highlight(iIndex + 1);
                         }
                         else {
-                            a_oCounts.push(oRow);
+                            do {
+                                a_oCounts.push($.extend({}, $scope.Model));
+                            } while (++iIndex < 5)
                         }
                     }, //# add
                     

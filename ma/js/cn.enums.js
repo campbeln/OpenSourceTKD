@@ -1,4 +1,4 @@
-﻿cn.enums = {};
+cn.enums = {};
 
 cn.enums.a_oPatterns = [
     { 'ID': '', 'Name': '', },
@@ -26,7 +26,7 @@ cn.enums.a_oPatterns = [
     { 'ID': '1021', 'Name': 'Ko-Dang (2nd Dan)', },
     { 'ID': '1022', 'Name': 'Sam-Il (3rd Dan)', },
     { 'ID': '1023', 'Name': 'Yoo-Sin (3rd Dan)', },
-    { 'ID': '1024', 'Name': 'Choi-Yeong (3rd Dan)', },
+    { 'ID': '1024', 'Name': 'Choi-Yong (3rd Dan)', },
     { 'ID': '1025', 'Name': 'Yeon-Gae (4th Dan)', },
     { 'ID': '1026', 'Name': 'Eul-Ji (4th Dan)', },
     { 'ID': '1027', 'Name': 'Moon-Moo (4th Dan)', },
@@ -117,6 +117,7 @@ cn.enums.a_sToolArm = [
     'Backfist',
     'Middle-Knuckle Fist',
     'Foreknuckle Fist',
+    'Long Fist',
     'Open Fist',
     'X-Fist',
     'Inner Forearm',
