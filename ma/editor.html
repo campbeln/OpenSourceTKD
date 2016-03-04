@@ -381,7 +381,7 @@
 
                             <button ng-click="clear('move', a)" title="Clear Movement">x</button>
 
-                            <input type="text" ng-model="a.note" title="Note" placeholder="Note" style="border: 1px dashed gray; background-color: transparent; font-style: italic; width: 230px;" />
+                            <input type="text" ng-model="a.note" title="Note" placeholder="Note" ng-class="{ note: a.note }" style="border: 1px dashed gray; font-style: italic; width: 230px;" />
                         </td>
 
                         <!-- FEET -->
@@ -434,7 +434,7 @@
                 </tbody>
             </table>
         
-            <input type="button" value="Add Row" ng-click="row.add(-1)">
+            <input type="button" value="Add Rows" ng-click="row.add(-1)">
         </form>
     </body>
 </html>

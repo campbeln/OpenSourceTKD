@@ -43,6 +43,10 @@ TABLE {
         background-color: #dddddd;
     }
 
+.note {
+    background: #FFBF66 !important;
+}
+
 /* Old CSS left for future reference */
 /*
 SELECT[name^=MotionID_],

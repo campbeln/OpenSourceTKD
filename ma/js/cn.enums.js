@@ -30,7 +30,7 @@ cn.enums.a_oPatterns = [
     { 'ID': '1025', 'Name': 'Yeon-Gae (4th Dan)', },
     { 'ID': '1026', 'Name': 'Eul-Ji (4th Dan)', },
     { 'ID': '1027', 'Name': 'Moon-Moo (4th Dan)', },
-    { 'ID': '1028', 'Name': 'Seo-San (5th Dan)', },
+    { 'ID': '1028', 'Name': 'So-San (5th Dan)', },
     { 'ID': '1029', 'Name': 'Se-Jong (5th Dan)', },
     { 'ID': '1031', 'Name': 'U-Nam (5th Dan)', },
     { 'ID': '1032', 'Name': 'U-Nam Lost In Translation (5th Dan)', },
@@ -80,6 +80,8 @@ cn.enums.a_sDiagramDirection = [
     'D',
     'E',
     'F',
+    'G',
+    'H',
     'AC',
     'AD',
     'BC',
@@ -89,6 +91,7 @@ cn.enums.a_sDiagramDirection = [
     'CF',
     'DE',
     'DF',
+    'DG',
     'ED',
     '~A',
     '~B',
@@ -104,10 +107,11 @@ cn.enums.a_sToolLeg = [
     'Heel',
     'Back of Heel',
     'Instep',
-    'Side Instep/Arch',
+    'Side Instep',
     'Foot Sword',
     'Side Sole',
-    'Knee'
+    'Knee',
+    'Reverse Footsword'
 ];
 
 cn.enums.a_sToolArm = [
@@ -120,6 +124,7 @@ cn.enums.a_sToolArm = [
     'Long Fist',
     'Open Fist',
     'X-Fist',
+    'Forearm',
     'Inner Forearm',
     'Outer Forearm',
     'Knife-Hand',
@@ -138,7 +143,10 @@ cn.enums.a_sToolArm = [
     'Straight Fingertip',
     'Flat Fingertip',
     'Upset Fingertip',
-    'Double Finger'
+    'Double Finger',
+    'Bow Wrist',
+    'Angle Fingertip',
+    'Under Fist'
 ];
 
 cn.enums.a_sLR = [
