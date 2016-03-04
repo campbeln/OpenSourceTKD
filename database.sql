@@ -21,8 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `fusionmartialart`
 --
-DROP TABLE `classes`, `classtimes`, `encyclopediacount`, `encyclopedias`, `instructors`, `motions`, `movements`, `patterncount`, `patterns`, `stances`, `techniquelinesofattack`, `techniques`;
-DROP VIEW `viewpattern`, `viewpatterntechniquecounts`, `viewpatterntechniques`, `viewstances`;
+DROP TABLE IF EXISTS  `classes`, `classtimes`, `encyclopediacount`, `encyclopedias`, `instructors`, `motions`, `movements`, `patterncount`, `patterns`, `stances`, `techniquelinesofattack`, `techniques`;
+DROP VIEW IF EXISTS `viewpattern`, `viewpatterntechniquecounts`, `viewpatterntechniques`, `viewstances`;
 
 -- --------------------------------------------------------
 
@@ -325,6 +325,7 @@ INSERT INTO `Motions` (`ID`, `Name`, `Description`, `ShortDescription`, `Encyclo
 CREATE TABLE IF NOT EXISTS `Movements` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(100) NOT NULL,
+  `IsDirectionChange` tinyint(1) NOT NULL DEFAULT '0',
   `Notes` tinytext,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3046 ;
@@ -333,74 +334,75 @@ CREATE TABLE IF NOT EXISTS `Movements` (
 -- Dumping data for table `Movements`
 --
 
-INSERT INTO `Movements` (`ID`, `Name`, `Notes`) VALUES
-(3000, 'Stepping Forward', NULL),
-(3003, 'Stepping Backward', NULL),
-(3013, 'Stepping Across L', NULL),
-(3031, 'Stepping Across R', NULL),
+INSERT INTO `Movements` (`ID`, `IsDirectionChange`, `Name`, `Notes`) VALUES
+(3000, 0, 'Stepping Forward', NULL),
+(3003, 0, 'Stepping Backward', NULL),
+(3013, 0, 'Stepping Across L', NULL),
+(3031, 0, 'Stepping Across R', NULL),
 
-(3007, 'Turning L 30°', NULL),
-(3015, 'Turning L 60°', NULL),
-(3001, 'Turning L 90°', NULL),
-(3009, 'Turning L 120°', NULL),
-(3028, 'Turning L 150°', NULL),
-(3012, 'Turning L 180°', NULL),
-(3005, 'Turning L 270°', NULL),
-(3008, 'Turning L 330°', NULL),
-(3047, 'Turning L 360°', NULL),
+(3007, 1, 'Turning L 30°', NULL),
+(3015, 1, 'Turning L 60°', NULL),
+(3001, 1, 'Turning L 90°', NULL),
+(3009, 1, 'Turning L 120°', NULL),
+(3028, 1, 'Turning L 150°', NULL),
+(3012, 1, 'Turning L 180°', NULL),
+(3005, 1, 'Turning L 270°', NULL),
+(3052, 1, 'Turning L 300°', NULL),
+(3008, 1, 'Turning L 330°', NULL),
+(3047, 1, 'Turning L 360°', NULL),
 
-(3014, 'Turning R 30°', NULL),
-(3010, 'Turning R 60°', NULL),
-(3002, 'Turning R 90°', NULL),
-(3050, 'Turning R 120°', NULL),
-(3027, 'Turning R 150°', NULL),
-(3004, 'Turning R 180°', NULL),
-(3046, 'Turning R 210°', NULL),
-(3016, 'Turning R 270°', NULL),
-(3044, 'Turning R 360°', NULL),
+(3014, 1, 'Turning R 30°', NULL),
+(3010, 1, 'Turning R 60°', NULL),
+(3002, 1, 'Turning R 90°', NULL),
+(3050, 1, 'Turning R 120°', NULL),
+(3027, 1, 'Turning R 150°', NULL),
+(3004, 1, 'Turning R 180°', NULL),
+(3046, 1, 'Turning R 210°', NULL),
+(3016, 1, 'Turning R 270°', NULL),
+(3044, 1, 'Turning R 360°', NULL),
 
-(3017, 'Spot Turn Method 1 L 180°', NULL),
-(3006, 'Spot Turn Method 1 R 180°', NULL),
+(3017, 1, 'Spot Turn Method 1 L 180°', NULL),
+(3006, 1, 'Spot Turn Method 1 R 180°', NULL),
 
-(3011, 'Slipping Forward', 'One foot moves without taking a step.'),
-(3018, 'Slipping {Pulling} Backward', 'One foot moves without taking a step. When done in while moving backward, this is referred to as "pulling the foot" or "pulling backward". But in order to be consistent, it is described here as "slipping backward".'),
+(3011, 0, 'Slipping Forward', 'One foot moves without taking a step.'),
+(3018, 0, 'Slipping {Pulling} Backward', 'One foot moves without taking a step. When done in while moving backward, this is referred to as "pulling the foot" or "pulling backward". But in order to be consistent, it is described here as "slipping backward".'),
 
-(3022, 'Sliding Forward [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
-(3026, 'Sliding {Shifting} Backward [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths. When done in while moving backward, this is referred to as "shifting backward". But in order to be consistent, it is described here as "sliding backward".'),
+(3022, 0, 'Sliding Forward [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
+(3026, 0, 'Sliding {Shifting} Backward [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths. When done in while moving backward, this is referred to as "shifting backward". But in order to be consistent, it is described here as "sliding backward".'),
 
-(3048, 'Sliding Across L [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
-(3049, 'Sliding Across R [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
+(3048, 0, 'Sliding Across L [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
+(3049, 0, 'Sliding Across R [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
 
-(3023, 'Flying {Jumping} Forward [~5 SW]', "Jumping/Flying technique covering approx. 5 Shoulder Widths."),
+(3023, 0, 'Flying {Jumping} Forward [~5 SW]', "Jumping/Flying technique covering approx. 5 Shoulder Widths."),
 
-(3019, 'Jumping Forward [~1½ SW]', 'Approx. 1½ Shoulder Widths.'),
-(3033, 'Jumping Backward [~1½ SW]', 'Approx. 1½ Shoulder Widths.'),
-(3040, 'Jumping Forward [~1½ SW] L 360°', 'Approx. 1½ Shoulder Widths.'),
-(3041, 'Jumping Forward [~1½ SW] R 360°', 'Approx. 1½ Shoulder Widths.'),
-(3042, 'Jumping Backward [~1½ SW] R 360°', 'Executed as part of a dodging maneuver.'),
-(3043, 'Jumping Backward [~1½ SW] L 360°', 'Executed as part of a dodging maneuver.'),
-(3030, 'Jumping Up', NULL),
-(3024, 'Jumping Up L 360°', NULL),
-(3038, 'Jumping Forward [~1 SW]', 'Approx. 1 Shoulder Width.'),
-(3051, 'Jumping Forward [~2 SW]', 'Approx. 2 Shoulder Widths.'),
-(3029, 'Jumping L [~½ SW]', 'Executed as part of a dodging maneuver.'),
-
-
-(3020, 'Pivot L 120°', NULL),
-(3021, 'Pivot R 120°', NULL),
-(3039, 'Pivot L 60°', NULL),
-
-(3036, 'Double Stepping Backward', NULL),
-(3025, 'Double Stepping Forward', NULL),
-
-(3034, 'Shuffle Forward', 'Rear foot steps to the back of the front foot, then the front foot steps forward.'),
-(3035, 'Shuffle Backward', 'Front foot steps to the front of the back foot, then the back foot steps backward.'),
-
-(3037, 'Crouch Down', 'Lower body toward ground.'),
-(3045, 'Stand Up', 'Stand up from lowered position.'),
+(3019, 0, 'Jumping Forward [~1½ SW]', 'Approx. 1½ Shoulder Widths.'),
+(3033, 0, 'Jumping Backward [~1½ SW]', 'Approx. 1½ Shoulder Widths.'),
+(3040, 1, 'Jumping Forward [~1½ SW] L 360°', 'Approx. 1½ Shoulder Widths.'),
+(3041, 1, 'Jumping Forward [~1½ SW] R 360°', 'Approx. 1½ Shoulder Widths.'),
+(3042, 1, 'Jumping Backward [~1½ SW] R 360°', 'Executed as part of a dodging maneuver.'),
+(3043, 1, 'Jumping Backward [~1½ SW] L 360°', 'Executed as part of a dodging maneuver.'),
+(3030, 0, 'Jumping Up', NULL),
+(3024, 0, 'Jumping Up L 360°', NULL),
+(3038, 0, 'Jumping Forward [~1 SW]', 'Approx. 1 Shoulder Width.'),
+(3051, 0, 'Jumping Forward [~2 SW]', 'Approx. 2 Shoulder Widths.'),
+(3029, 0, 'Jumping L [~½ SW]', 'Executed as part of a dodging maneuver.'),
 
 
-(3032, '&nbsp;', NULL);
+(3020, 1, 'Pivot L 120°', NULL),
+(3021, 1, 'Pivot R 120°', NULL),
+(3039, 1, 'Pivot L 60°', NULL),
+
+(3036, 0, 'Double Stepping Backward', NULL),
+(3025, 0, 'Double Stepping Forward', NULL),
+
+(3034, 0, 'Shuffle Forward', 'Rear foot steps to the back of the front foot, then the front foot steps forward.'),
+(3035, 0, 'Shuffle Backward', 'Front foot steps to the front of the back foot, then the back foot steps backward.'),
+
+(3037, 0, 'Crouch Down', 'Lower body toward ground.'),
+(3045, 0, 'Stand Up', 'Stand up from lowered position.'),
+
+
+(3032, 0, '&nbsp;', NULL);
 
 -- 3046
 
@@ -465,8 +467,8 @@ CREATE TABLE IF NOT EXISTS `TechniqueLinesOfAttack` (
   `IsArmToolTwin` tinyint(1) DEFAULT '0',
   `LineOfAttack` enum('Cr','Br','Sr','RBr','RSr','~Cr','~Br','~Sr','~RBr','~RSr','~45°','~90°','~90°/RSr') DEFAULT NULL,
   `Tool` enum(
-	'Forefist','Side Fist','Backfist','Middle-Knuckle Fist','Foreknuckle Fist','Long Fist','Open Fist','X-Fist','Forearm','Inner Forearm','Outer Forearm','Knife-Hand','Reverse Knife-Hand','X-Knife-Hand','Palm','Palm Heel','Alternate Palm','Arch Hand','Backhand','Elbow','Side Elbow','Back Elbow','Fingertip','Straight Fingertip','Flat Fingertip','Upset Fingertip','Double Finger',
-	'Ball of Foot','Heel','Back of Heel','Instep','Side Instep','Foot Sword','Knee'
+	'Forefist','Side Fist','Backfist','Middle-Knuckle Fist','Foreknuckle Fist','Long Fist','Open Fist','X-Fist','Forearm','Inner Forearm','Outer Forearm','Knife-Hand','Reverse Knife-Hand','X-Knife-Hand','Palm','Palm Heel','Alternate Palm','Arch Hand','Backhand','Elbow','Side Elbow','Back Elbow','Fingertip','Straight Fingertip','Flat Fingertip','Upset Fingertip','Double Finger','Bow Wrist','Angle Fingertip','Under Fist',
+	'Ball of Foot','Heel','Back of Heel','Instep','Side Instep','Foot Sword','Knee','Reverse Footsword'
   ) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -522,6 +524,7 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 (10010, 'Ready Stance', 'Leg', 0, 'Warrior Ready Stance A', NULL, NULL, 1, 0, 0, 0, 0),
 (10011, 'Ready Stance', 'Leg', 0, 'Warrior Ready Stance B', NULL, NULL, 1, 0, 0, 0, 0),
 (10012, 'Ready Stance', 'Leg', 0, 'Parallel Ready Stance with X-Back Hand', NULL, NULL, 1, 0, 0, 0, 0),
+(10013, 'Ready Stance', 'Leg', 0, 'Parallel Ready Stance with overlapped Back Hand', NULL, NULL, 1, 0, 0, 0, 0),
 
 
 (10100, 'Stance', 'Leg', 0, 'Walking Stance', NULL, NULL, 1, 0, 1, 1, 0),
@@ -579,6 +582,7 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 (10220, 'Attack', 'Arm', 0, 'Outward Cross-Cut', NULL, NULL, 1, 0, 0, 0, 0),				-- v3 p102
 (10231, 'Attack', 'Arm', 1, 'Crescent Strike', NULL, 'Cr', 1, 0, 0, 0, 0),					-- v3 p145
 (10232, 'Attack', 'Arm', 1, 'U-Shape Punch', NULL, 'Cr', 0, 0, 1, 0, 0),					--
+(10233, 'Attack', 'Arm', 1, 'Horizontal Block', NULL, '~90°', 1, 1, 0, 0, 0),				-- 
 
 
 (10300, 'Attack', 'Leg', 0, 'Front Snap Kick', NULL, '~Sr', 1, 0, 0, 0, 0),					-- v4 p33
@@ -593,14 +597,16 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 (10309, 'Attack', 'Leg', 0, 'Reverse Turning Kick', NULL, NULL, 0, 0, 1, 0, 0),
 (10310, 'Attack', 'Leg', 0, 'Reverse Hooking Kick', NULL, 'Cr', 0, 0, 1, 0, 0),
 (10311, 'Attack', 'Leg', 0, 'Hooking Kick', NULL, 'Cr', 0, 0, 1, 0, 0),
-(10312, 'Attack', 'Leg', 1, 'Pick-Shape Kick', NULL, 'Cr', 1, 0, 0, 0, 0),
+(10312, 'Attack', 'Leg', 1, 'Pick-Shape Kick', NULL, 'Cr', 1, 0, 0, 0, 0),                  -- v4 p59
 (10313, 'Attack', 'Leg', 1, 'Waving Kick', NULL, 'Cr', 1, 1, 0, 0, 0),
 (10314, 'Attack', 'Leg', 1, 'Sweeping Kick', NULL, 'Cr', 1, 0, 1, 0, 0),
 (10315, 'Attack', 'Leg', 1, 'Crescent Kick', NULL, 'Cr', 1, 0, 1, 0, 0),
-
 (10316, 'Attack', 'Leg', 0, 'Side Thrusting Kick', NULL, '~45°', 0, 0, 1, 0, 0),
 (10317, 'Attack', 'Leg', 0, 'Side Checking Kick', NULL, '~45°', 0, 0, 1, 0, 0),
 (10318, 'Attack', 'Leg', 0, 'Side Pushing Kick', NULL, '~45°', 0, 0, 1, 0, 0),
+(10319, 'Attack', 'Leg', 1, 'Inward Vertical Kick', NULL, 'Cr', 1, 0, 1, 0, 0),
+(10320, 'Attack', 'Leg', 1, 'Outward Vertical Kick', NULL, 'Cr', 1, 0, 1, 0, 0),
+(10321, 'Attack', 'Leg', 1, 'Downward Kick', NULL, 'Br', 1, 0, 1, 0, 0),                    -- v4 p58
 
 
 
@@ -2652,14 +2658,14 @@ CREATE TABLE IF NOT EXISTS `PatternCount` (
   `LegTechniqueID` int(11) DEFAULT NULL,
   `LegTo` enum('12:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00') DEFAULT NULL,
   `LegDiagramDirection` enum('A','B','C','D','E','F','AC','AD','BC','BD','BF','CE','CF','DE','DF','~A','~B','~C','~D','~E','~F') DEFAULT NULL,
-  `LegTool` enum('Ball of Foot','Heel','Back of Heel','Instep','Side Instep','Foot Sword','Side Sole','Knee') DEFAULT NULL,
+  `LegTool` enum('Ball of Foot','Heel','Back of Heel','Instep','Side Instep','Foot Sword','Side Sole','Knee','Reverse Footsword') DEFAULT NULL,
   `Facing` enum('F','H','S','RH','RS','&nbsp;') DEFAULT NULL,
   `ArmLR` enum('L','R') DEFAULT NULL,
   `ArmSection` enum('Low','Mid','High','L Mid/R High','R Mid/L High') DEFAULT NULL,
   `ArmTechniqueID` int(11) DEFAULT NULL,
   `ArmTo` enum('12:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00') DEFAULT NULL,
   `ArmDiagramDirection` enum('A','B','C','D','E','F','AC','AD','BC','BD','BF','CE','CF','DE','DF','~A','~B','~C','~D','~E','~F') DEFAULT NULL,
-  `ArmTool` enum('Forefist','Side Fist','Backfist','Middle-Knuckle Fist','Foreknuckle Fist','Open Fist','X-Fist','Inner Forearm','Outer Forearm','Knife-Hand','Reverse Knife-Hand','X-Knife-Hand','Palm','Palm Heel','Alternate Palm','X-Palm','Arch Hand','Backhand','Elbow','Side Elbow','Back Elbow','Fingertip','Straight Fingertip','Flat Fingertip','Upset Fingertip','Double Finger') DEFAULT NULL,
+  `ArmTool` enum('Forefist','Side Fist','Backfist','Middle-Knuckle Fist','Foreknuckle Fist','Open Fist','X-Fist','Inner Forearm','Outer Forearm','Knife-Hand','Reverse Knife-Hand','X-Knife-Hand','Palm','Palm Heel','Alternate Palm','X-Palm','Arch Hand','Backhand','Elbow','Side Elbow','Back Elbow','Fingertip','Straight Fingertip','Flat Fingertip','Upset Fingertip','Double Finger','Bow Wrist','Angle Fingertip','Under Fist') DEFAULT NULL,
   `IsArmToolTwin` tinyint(1) NOT NULL DEFAULT '0',
   `Note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
@@ -4074,7 +4080,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1027, 32, 'b', 1, '6:00', 'C', 'Rh+L', 'L', 'High', NULL, NULL, 'Heel', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3047, 10309, NULL, NULL),
 (1027, 33, NULL, 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10100, 10401, NULL),
 (1027, 34, NULL, 1, NULL, NULL, 'L;L+R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3026, 10102, 10407, NULL),
-(1027, 35, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, '26 mirror'),
+(1027, 35, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
 (1027, 36, 'a', 1, NULL, NULL, 'R', 'R', NULL, '4:00', '~A', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10703, NULL, NULL),
 (1027, 36, 'b', 1, '12:00', 'D', 'Rh+L!', NULL, NULL, '3:00', 'A', NULL, 'L', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3012, 10106, 10205, NULL),
 (1027, 37, 'a', 1, NULL, NULL, 'L+R', NULL, NULL, '3:00', 'A', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3022, 10106, NULL, NULL),
@@ -4101,8 +4107,26 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1027, 49, 'a', 1, NULL, NULL, 'L', 'L', 'Low', NULL, NULL, 'Side Sole', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3032, 10314, 10607, NULL),
 (1027, 49, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, NULL, '0', 'H', NULL, 3000, 10104, 10403, NULL),
 (1027, 50, 'a', 1, NULL, NULL, 'L', 'L', 'Low', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 10317, NULL, NULL),
-(1027, 50, 'b', 1, NULL, NULL, 'L', 'L', 'Mid', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, NULL, '0', 'H', 2005, NULL, 10316, 10403, NULL),
-(1027, 51, NULL, 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', NULL, NULL, 3000, 10104, 10218, NULL);
+(1027, 50, 'b', 1, NULL, NULL, 'L', 'L', 'Mid', NULL, NULL, 'Ball of Foot', NULL, 'Mid', NULL, NULL, NULL, '0', 'H', 2005, NULL, 10316, 10403, NULL),
+(1027, 51, NULL, 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10104, 10218, NULL),
+(1027, 52, 'a', 1, NULL, NULL, 'R', 'R', 'Low', NULL, NULL, 'Side Sole', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3032, 10314, NULL, NULL),
+(1027, 52, 'b', 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, NULL, '0', 'H', NULL, 3000, 10104, 10403, NULL),
+(1027, 53, 'a', 1, NULL, NULL, 'R', 'R', 'Low', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 10317, 10607, NULL),
+(1027, 53, 'b', 1, NULL, NULL, 'R', 'R', 'Mid', NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', 2005, NULL, 10316, NULL, NULL),
+(1027, 54, NULL, 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10104, 10218, NULL),
+(1027, 55, 'a', 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, 10702, NULL, NULL),
+(1027, 55, 'b', 1, '6:00', 'C', 'Rh+L', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3012, 10100, 10200, NULL),
+(1027, 56, 'a', 1, NULL, NULL, 'R;L', 'R', NULL, '5:00', 'AC', NULL, 'L', 'Low', NULL, NULL, 'Forefist', '0', 'H', NULL, 3019, 10109, 10200, NULL),
+(1027, 56, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, NULL),
+(1027, 57, 'a', 1, '12:00', 'D', 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3012, NULL, NULL, NULL),
+(1027, 57, 'b', 1, NULL, NULL, 'R', 'L', NULL, '2:00', 'AD', NULL, 'R', 'Low', NULL, NULL, 'Forefist', '0', 'H', NULL, 3051, 10109, 10200, NULL),
+(1027, 57, 'c', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, NULL),
+(1027, 58, NULL, 1, NULL, NULL, 'L+R', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3024, 10302, NULL, 'R'),
+(1027, 59, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, NULL, 10104, 10403, NULL),
+(1027, 60, 'a', 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, 10702, NULL, NULL),
+(1027, 60, 'b', 1, NULL, NULL, 'Rh+L', 'R', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Arch Hand', '0', 'RH', NULL, NULL, 10100, 10402, NULL),
+(1027, 61, NULL, 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200, NULL),
+(1027, 999, NULL, 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3003, 10000, NULL, NULL);
 
 
 -- Seo-San
@@ -4151,6 +4175,84 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 
 
 -- Tong-Il
+INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `note`) VALUES
+(1030, '0', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10013, NULL, NULL),
+(1030, 1, NULL, 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forefist', 1, 'F', 2004, 3003, 10100, 10200, NULL),
+(1030, 2, NULL, 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', 1, 'F', 2004, 3003, 10100, 10214, NULL),
+(1030, 3, NULL, 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Outer Forearm', '0', 'H', NULL, 3000, 10102, 10409, NULL),
+(1030, 4, 'a', 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Palm', '0', 'H', NULL, 3018, 10100, 10409, NULL),
+(1030, 4, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, NULL),
+(1030, 5, NULL, 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, 3000, 10104, 10200, NULL),
+(1030, 6, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'H', 2002, NULL, NULL, 10200, NULL),
+(1030, 7, NULL, 1, NULL, NULL, 'L!', 'R', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Backhand', '0', 'H', NULL, 3000, 10104, 10218, NULL),
+(1030, 8, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', NULL, NULL, 'Reverse Footsword', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 10319, 10629, NULL),
+(1030, 9, NULL, 1, NULL, NULL, 'R!', 'L', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backhand', '0', 'H', NULL, 3000, 10104, 10218, NULL),
+(1030, 10, NULL, '0', NULL, NULL, 'L', 'L', 'Mid', NULL, NULL, 'Reverse Footsword', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 10319, 10629, NULL),
+(1030, 11, 'a', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, 2004, 3000, 10721, NULL, NULL),
+(1030, 11, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Palm', 1, 'H', NULL, 3011, 10104, 10233, NULL),
+(1030, 12, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', NULL, 3000, 10100, 10401, NULL),
+(1030, 13, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Reverse Knife-Hand', '0', 'RH', 2004, NULL, NULL, 10401, NULL),
+(1030, 14, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200, NULL),
+(1030, 15, NULL, '0', NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200, 'error in foot diagram'),
+(1030, 16, NULL, 1, '5:00', 'AC', 'R', 'R', 'Mid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3027, 10321, 10607, NULL),
+(1030, 17, NULL, 1, '6:00', 'C', 'R!', 'L', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'H', NULL, 3014, 10104, 10223, NULL),
+(1030, 18, NULL, 1, '2:00', 'BC', 'L', 'L', 'Mid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3052, 10320, 10607, NULL),
+(1030, 19, NULL, 1, '6:00', 'C', 'L!', 'R', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Backfist', '0', 'H', NULL, 3015, 10104, 10223, NULL),
+(1030, 20, NULL, 1, '12:00', 'D', 'R', 'R', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, 3004, 10100, 10200, NULL),
+(1030, 21, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200, NULL),
+(1030, 22, NULL, 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Bow Wrist', '0', 'H', NULL, 3000, 10102, 10416, NULL),
+(1030, 23, NULL, 1, NULL, NULL, 'Lh+R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Bow Wrist', '0', 'H', NULL, 3000, 10102, 10416, NULL),
+(1030, 24, NULL, 1, '6:00', 'C', 'Rh+L', 'L', NULL, NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Palm', '0', 'F', 2004, 3012, 10100, 10406, NULL),
+(1030, 25, NULL, '0', NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Palm', '0', 'F', 2004, 3000, 10100, 10406, NULL),
+(1030, 26, 'a', 1, NULL, NULL, 'R>L', NULL, NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Knife-Hand', '0', 'F', NULL, 3000, 10110, 10400, 'As per Kwang-Gae #12 but described somewhat differently'),
+(1030, 26, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10628, NULL),
+(1030, 27, NULL, 1, '12:00', 'D', 'L', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Knife-Hand', '0', 'F', NULL, 3012, 10100, 10402, NULL),
+(1030, 28, NULL, 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200, NULL),
+(1030, 29, 'a', 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, 3000, NULL, 10211, NULL),
+(1030, 29, 'b', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, 3022, 10104, 10626, NULL),
+(1030, 30, NULL, 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'High', '9:00', 'B', 'Angle Fingertip', '0', 'F', NULL, 3003, 10100, 10202, NULL),
+(1030, 31, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL),
+(1030, 31, 'a', 1, '6:00', 'C', 'L', 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3006, 10705, NULL, NULL),
+(1030, 31, 'b', 1, NULL, NULL, 'Lh+R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Knife-Hand', '0', 'F', NULL, NULL, 10100, 10402, NULL),
+(1030, 32, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200, NULL),
+(1030, 33, 'a', 1, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, 3000, NULL, 10211, NULL),
+(1030, 33, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, 3022, 10104, 10626, NULL),
+(1030, 34, NULL, 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'L', 'High', '3:00', 'A', 'Angle Fingertip', '0', 'F', NULL, 3003, 10100, 10202, NULL),
+(1030, 35, 'a', 1, NULL, NULL, 'R>L;R', 'L', NULL, NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', NULL, 3018, 10104, 10403, NULL),
+(1030, 35, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10611, NULL),
+(1030, 36, 'a', 1, '12:00', 'D', 'L>R;L', 'R', NULL, NULL, NULL, NULL, NULL, 'Low', NULL, NULL, NULL, '0', 'H', NULL, 3012, 10104, 10403, NULL),
+(1030, 36, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10611, NULL),
+(1030, 37, 'a', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, NULL, '0', 'F', NULL, 3011, 10100, 10400, NULL),
+(1030, 37, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', NULL, NULL, NULL, NULL, 10415, NULL),
+(1030, 38, NULL, 1, NULL, NULL, 'R!', 'R', NULL, NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Forefist', 1, 'F', NULL, 3000, 10100, 10224, NULL),
+(1030, 39, 'a', 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3003, 10111, 10201, NULL),
+(1030, 39, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10649, NULL),
+(1030, 40, NULL, 1, '6:00', 'C', 'R', 'R', 'Mid', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3004, 10306, 10612, NULL),
+(1030, 41, NULL, 1, '3:00', 'A', 'R', NULL, NULL, NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3001, 10106, 10417, NULL),
+(1030, 42, NULL, 1, NULL, NULL, 'L+R', NULL, NULL, NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3049, 10106, 10417, NULL),
+(1030, 43, NULL, 1, '9:00', 'B', 'R!', NULL, NULL, NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3012, 10106, 10417, NULL),
+(1030, 44, NULL, 1, NULL, NULL, 'L+R', NULL, NULL, NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3048, 10106, 10417, NULL),
+(1030, 45, 'a', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3001, NULL, 10201, NULL),
+(1030, 45, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, 10111, 10649, NULL),
+(1030, 46, NULL, 1, '12:00', 'D', 'L', 'L', 'High', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3012, 10306, 10612, NULL),
+(1030, 47, 'a', 1, '6:00', 'C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3004, NULL, NULL, NULL),
+(1030, 47, 'b', 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'X-Fist', 1, 'F', NULL, 3019, 10109, 10406, NULL),
+(1030, 48, NULL, 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Under Fist', '0', 'F', NULL, 3003, 10100, 10201, NULL),
+(1030, 49, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Under Fist', '0', 'F', NULL, 3000, 10100, 10201, NULL),
+(1030, 50, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', NULL, NULL, NULL, NULL, 10418, NULL),
+(1030, 51, NULL, 1, '2:00', 'AD', 'Lh+Rh', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', '3:00', 'A', 'Knife-Hand', '0', 'RH', NULL, 3020, 10100, 10405, NULL),
+(1030, 52, 'a', 1, '6:00', 'C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3050, NULL, NULL, NULL),
+(1030, 52, 'b', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Palm', '0', NULL, NULL, 3000, 10100, 10418, NULL),
+(1030, 53, NULL, 1, '10:00', 'BD', 'Lh+Rh', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', '9:00', 'B', 'Knife-Hand', '0', 'RH', NULL, 3021, 10100, 10405, NULL),
+(1030, 54, 'a', 1, '12:00', 'D', 'R', 'R', 'High', NULL, NULL, 'Foot Sword', NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'S', NULL, 3010, 10302, 10403, NULL),
+(1030, 54, 'b', 1, NULL, NULL, 'R>L', NULL, NULL, NULL, NULL, NULL, NULL, 'Mid', '6:00', 'C', 'Side Elbow', 1, 'F', 2004, NULL, 10110, 10204, 'only b in slow motion?'),
+(1030, 55, NULL, 1, NULL, NULL, 'L', NULL, NULL, '3:00', 'A', NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'S', NULL, 3000, 10106, 10206, NULL),
+(1030, 56, NULL, 1, NULL, NULL, 'R>L;R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, 10100, 10200, NULL),
+(1030, 999, NULL, 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3000, 10013, NULL, NULL);
+
+
+
+
 
 
 
