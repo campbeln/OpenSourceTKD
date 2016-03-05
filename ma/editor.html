@@ -96,6 +96,7 @@
                         if (resetBools) {
                             $scope.Model.counted = '1';
                             $scope.Model.isarmtooltwin = '0';
+                            $scope.Model.islegtechniqueflying
                         }
                     }
                 }
@@ -299,6 +300,7 @@
                         }
                         case "l": {
                             oPatternCount.leglr = oPatternCount.legsection = oPatternCount.legtechniqueid = oPatternCount.legtool = oPatternCount.legto = oPatternCount.legdiagramdirection = "";
+                            oPatternCount.islegtechniqueflying = 0;
                             break;
                         }
                     }
@@ -397,6 +399,7 @@
 
                             <br />
                             <select name='LegTool' ng-model="a.legtool" title="Leg Attacking Tool" ng-options="item as item for item in enums.a_sToolLeg"></select>
+                            <input type='checkbox' name='IsLegTechniqueFlying' ng-model="a.islegtechniqueflying" ng-true-value="1" ng-false-value="0" title="Is Flying/Mid-Air Technique?">
                             (
                             <select name='LegTo' ng-model="a.legto" title="Leg Technique Direction" ng-options="item as item for item in enums.a_sDirection"></select> ;
                             <select name='LegDiagramDirection' ng-model="a.legdiagramdirection" title="Leg Technique Diagram Direction" ng-options="item as item for item in enums.a_sDiagramDirection"></select>

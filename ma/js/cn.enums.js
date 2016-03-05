@@ -27,8 +27,8 @@ cn.enums.a_oPatterns = [
     { 'ID': '1022', 'Name': 'Sam-Il (3rd Dan)', },
     { 'ID': '1023', 'Name': 'Yoo-Sin (3rd Dan)', },
     { 'ID': '1024', 'Name': 'Choi-Yong (3rd Dan)', },
-    { 'ID': '1025', 'Name': 'Yeon-Gae (4th Dan)', },
-    { 'ID': '1026', 'Name': 'Eul-Ji (4th Dan)', },
+    { 'ID': '1025', 'Name': 'Yon-Gae (4th Dan)', },
+    { 'ID': '1026', 'Name': 'Ul-Ji (4th Dan)', },
     { 'ID': '1027', 'Name': 'Moon-Moo (4th Dan)', },
     { 'ID': '1028', 'Name': 'So-San (5th Dan)', },
     { 'ID': '1029', 'Name': 'Se-Jong (5th Dan)', },
@@ -111,7 +111,8 @@ cn.enums.a_sToolLeg = [
     'Foot Sword',
     'Side Sole',
     'Knee',
-    'Reverse Footsword'
+    'Reverse Footsword',
+    'Foot'
 ];
 
 cn.enums.a_sToolArm = [
