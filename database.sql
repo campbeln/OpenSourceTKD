@@ -2685,26 +2685,26 @@ CREATE TABLE IF NOT EXISTS `PatternCount` (
 --
 
 -- Saju Jurgi
-INSERT INTO `PatternCount` (`PatternID`, `Count`, `CountOrder`, `Counted`, `MotionID`, `BodyMovementID`, `EyesTo`, `EyesDiagramDirection`, `FeetInMotion`, `LegLR`, `LegSection`, `LegTechniqueID`, `LegTo`, `LegDiagramDirection`, `LegTool`, `Facing`, `ArmLR`, `ArmSection`, `ArmTechniqueID`, `ArmTo`, `ArmDiagramDirection`, `ArmTool`, `IsArmToolTwin`, `Note`) VALUES
-(1000, 0, NULL, 1, NULL, NULL, '12:00', 'D', NULL, NULL, NULL, 10000, NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
-(1000, 1, NULL, 1, NULL, 3000, NULL, NULL, 'R', 'R', NULL, 10100, NULL, NULL, NULL, 'F', 'R', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1000, 2, NULL, 1, NULL, 3001, '9:00', 'B', 'R>L;R', 'L', NULL, 10100, NULL, NULL, NULL, 'H', 'L', 'Low', 10400, NULL, NULL, 'Outer Forearm', 0, NULL),
-(1000, 3, NULL, 1, NULL, 3000, NULL, NULL, 'R', 'R', NULL, 10100, NULL, NULL, NULL, 'F', 'R', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1000, 4, NULL, 1, NULL, 3001, '6:00', 'C', 'R>L;R', 'L', NULL, 10100, NULL, NULL, NULL, 'H', 'L', 'Low', 10400, NULL, NULL, 'Outer Forearm', 0, NULL),
-(1000, 5, NULL, 1, NULL, 3000, NULL, NULL, 'R', 'R', NULL, 10100, NULL, NULL, NULL, 'F', 'R', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1000, 6, NULL, 1, NULL, 3001, '3:00', 'A', 'R>L;R', 'L', NULL, 10100, NULL, NULL, NULL, 'H', 'L', 'Low', 10400, NULL, NULL, 'Outer Forearm', 0, NULL),
-(1000, 7, NULL, 1, NULL, 3000, NULL, NULL, 'R', 'R', NULL, 10100, NULL, NULL, NULL, 'F', 'R', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1000, 999, NULL, 1, NULL, 3001, '12:00', 'D', 'R', NULL, NULL, 10000, NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
+INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `islegtechniqueflying`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `note`) VALUES
+(1000, '0', NULL, 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10000, NULL, NULL),
+(1000, 1, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1000, 2, NULL, 1, '9:00', 'B', 'R>L;R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3001, 10100, 10400, NULL),
+(1000, 3, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1000, 4, NULL, 1, '6:00', 'C', 'R>L;R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3001, 10100, 10400, NULL),
+(1000, 5, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1000, 6, NULL, 1, '3:00', 'A', 'R>L;R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3001, 10100, 10400, NULL),
+(1000, 7, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1000, 999, NULL, 1, '12:00', 'D', 'R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3001, 10000, NULL, NULL),
 
-(1001, 0, NULL, 1, NULL, NULL, '12:00', 'D', NULL, NULL, NULL, 10000, NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
-(1001, 1, NULL, 1, NULL, 3000, NULL, NULL, 'L', 'L', NULL, 10100, NULL, NULL, NULL, 'F', 'L', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1001, 2, NULL, 1, NULL, 3002, '3:00', 'A', 'L>R;L', 'R', NULL, 10100, NULL, NULL, NULL, 'H', 'R', 'Low', 10400, NULL, NULL, 'Outer Forearm', 0, NULL),
-(1001, 3, NULL, 1, NULL, 3000, NULL, NULL, 'L', 'L', NULL, 10100, NULL, NULL, NULL, 'F', 'L', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1001, 4, NULL, 1, NULL, 3002, '6:00', 'C', 'L>R;L', 'R', NULL, 10100, NULL, NULL, NULL, 'H', 'R', 'Low', 10400, NULL, NULL, 'Outer Forearm', 0, NULL),
-(1001, 5, NULL, 1, NULL, 3000, NULL, NULL, 'L', 'L', NULL, 10100, NULL, NULL, NULL, 'F', 'L', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1001, 6, NULL, 1, NULL, 3002, '9:00', 'B', 'L>R;L', 'R', NULL, 10100, NULL, NULL, NULL, 'H', 'R', 'Low', 10400, NULL, NULL, 'Outer Forearm', 0, NULL),
-(1001, 7, NULL, 1, NULL, 3000, NULL, NULL, 'L', 'L', NULL, 10100, NULL, NULL, NULL, 'F', 'L', 'Mid', 10200, NULL, NULL, 'Forefist', 0, NULL),
-(1001, 999, NULL, 1, NULL, 3002, '12:00', 'D', 'L', NULL, NULL, 10000, NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL);
+(1001, '0', NULL, 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10000, NULL, NULL),
+(1001, 1, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1001, 2, NULL, 1, '3:00', 'A', 'L>R;L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3002, 10100, 10400, NULL),
+(1001, 3, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1001, 4, NULL, 1, '6:00', 'C', 'L>R;L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3002, 10100, 10400, NULL),
+(1001, 5, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1001, 6, NULL, 1, '9:00', 'B', 'L>R;L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3002, 10100, 10400, NULL),
+(1001, 7, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
+(1001, 999, NULL, 1, '12:00', 'D', 'L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3002, 10000, NULL, NULL);
 
 
 -- Saju Makgi
