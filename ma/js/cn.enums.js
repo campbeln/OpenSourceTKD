@@ -174,7 +174,8 @@ cn.enums.a_sSectionArm = [
     'L Mid/R High',
     'R Mid/L High',
     'R Low/L Mid',
-    'L Low/R Mid'
+    'L Low/R Mid',
+    'Low>Mid'
 ];
 
 cn.enums.a_sFacing = [
