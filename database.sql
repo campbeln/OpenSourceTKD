@@ -556,75 +556,81 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 (10153, 'Stance', 'Leg', 0, 'Raised Prone Position', NULL, NULL, 0, 0, 1, 1, 1),
 
 
-(10200, 'Attack', 'Arm', 0, 'Punch', NULL, 'Cr', 1, 0, 0, 0, 0),							-- v3 p25
-(10201, 'Attack', 'Arm', 0, 'Strike', NULL, 'Cr', 1, 0, 0, 0, 0),							-- v3 p140
-(10202, 'Attack', 'Arm', 0, 'Thrust', NULL, 'Cr', 1, 1, 1, 0, 0),							-- v3 p84
-(10203, 'Attack', 'Arm', 1, 'Side Thrust', NULL, '~90°', 1, 1, 0, 0, 0),					-- v3 p92, ~Sr?
-(10204, 'Attack', 'Arm', 1, 'Back Thrust', NULL, 'Sr', 1, 0, 0, 0, 0),						-- v3 p98
-(10205, 'Attack', 'Arm', 0, 'Side Strike', NULL, 'Cr', 0, 1, 1, 1, 0),						-- v3 p128-131, Side Strike = Outward Strike = Outward Side Strike, but Side Strike = Cr & Outward Side Strike = 90°
-(10218, 'Attack', 'Arm', 0, 'Outward/Side Strike', NULL, '~90°', 0, 1, 1, 0, 0),			-- v3 p128, Side Strike = Outward Strike = Outward Side Strike, but Side Strike = Cr & Outward Side Strike = 90°
+(10200, 'Attack', 'Arm', 0, 'Punch', NULL, 'Cr', 1, 0, 0, 0, 0),							-- v3p25
+(10201, 'Attack', 'Arm', 0, 'Strike', NULL, 'Cr', 1, 0, 0, 0, 0),							-- v3p140
+(10202, 'Attack', 'Arm', 0, 'Thrust', NULL, 'Cr', 1, 1, 1, 0, 0),							-- - v3p84 Low,Mid,High; 'Upset Fingertip','Straight Fingertip','Flat Fingertip','Double Finger','Angle Fingertip'
+(10203, 'Attack', 'Arm', 1, 'Side Thrust', NULL, '~90°', 1, 1, 0, 0, 0),					-- - v3p92 Mid; (+Twin) '[Side] Elbow','Flat Fingertip'+forefinger; ~Sr? redefine as Back Thust?
+(10204, 'Attack', 'Arm', 1, 'Back Thrust', NULL, 'Sr', 1, 0, 0, 0, 0),						-- - v3p98 Mid; 'Elbow'; defined as 'Twin Side Back Elbow' and 'Back Elbow'
+(10205, 'Attack', 'Arm', 0, 'Side Strike', NULL, 'Cr', 0, 1, 1, 1, 0),						-- - v3p128-131 Mid,High; 'Knife-Hand',(Twin) 'Backfist','Side Fist'+(Twin) 'Back Hand'; Side Strike = Outward Strike = Outward Side Strike, but Side Strike = Cr & Outward Side Strike = 90°
+(10218, 'Attack', 'Arm', 0, 'Outward/Side Strike', NULL, '~90°', 0, 1, 1, 0, 0),			-- - v3p128 Mid,High; 'Knife-Hand',(Twin) 'Backfist','Side Fist'+?(Twin) 'Back Hand'; Side Strike = Outward Strike = Outward Side Strike, but Side Strike = Cr & Outward Side Strike = 90°
 -- (10219, 'Attack', 'Arm', 0, 'Outward {Side} Strike', NULL, 'C', 0, 0, 0, 0, 0),						-- dup 10218
-(10206, 'Attack', 'Arm', 0, 'Side Punch', NULL, '~90°', 0, 1, 1, 0, 0),						-- v3 p41
-(10207, 'Attack', 'Arm', 0, 'Side Back Strike', NULL, '~90°', 1, 1, 1, 0, 0),				-- v3 p147
-(10208, 'Attack', 'Arm', 1, 'Side Front Strike', NULL, '~Sr', 1, 0, 0, 0, 0),				-- v3 p148
-(10211, 'Attack', 'Arm', 1, 'Upset Punch', NULL, 'Sr', 1, 0, 1, 0, 0),						-- v3 p48
-(10212, 'Attack', 'Arm', 1, 'Horizontal Punch', NULL, '~90°/RSr', 0, 1, 0, 0, 0),			-- v3 p68
-(10213, 'Attack', 'Arm', 1, 'Horizontal Thrust', NULL, '~90°', 1, 1, 0, 0, 0),				-- v3 p96
-(10214, 'Attack', 'Arm', 1, 'Horizontal Strike', NULL, '~90°', 1, 1, 0, 0, 0),				-- v3 p134
-(10215, 'Attack', 'Arm', 0, 'Inward Strike', NULL, 'Br', 1, 0, 1, 0, 0),					-- v3 p116
-(10216, 'Attack', 'Arm', 1, 'Upper Strike', NULL, 'Sr', 1, 0, 0, 0, 0),						-- v3 p109
-(10217, 'Attack', 'Arm', 1, 'Upward Punch', NULL, 'Cr', 1, 0, 1, 0, 0),						-- v3 p46
-(10221, 'Attack', 'Arm', 0, 'Downward Thrust', NULL, '~Sr', 1, 0, 1, 0, 0),					-- v3 p89
-(10222, 'Attack', 'Arm', 1, 'Downward Punch', NULL, 'Cr', 1, 0, 1, 0, 0),					-- v3 p53
-(10223, 'Attack', 'Arm', 1, 'Downward Strike', NULL, 'Sr', 1, 0, 0, 0, 0),					-- v3 p127
-(10210, 'Attack', 'Arm', 1, 'Side Downward Strike', NULL, '~90°', 0, 0, 1, 0, 0),			-- v3 p124
-(10224, 'Attack', 'Arm', 0, 'Vertical Punch', NULL, 'Cr', 1, 0, 0, 0, 0),					-- v3 p36
-(10225, 'Attack', 'Arm', 1, 'Angle Punch', NULL, 'RBr', 1, 0, 0, 0, 0),						-- v3 p59
-(10226, 'Attack', 'Arm', 0, 'Crescent Punch', NULL, 'Cr', 1, 0, 1, 0, 0),					-- v3 p54
-(10227, 'Attack', 'Arm', 1, 'Turning Punch', NULL, 'Cr', 1, 0, 0, 0, 0),					-- v3 p56
-(10228, 'Attack', 'Arm', 1, 'Mid-Air Strike', NULL, '~90°', 0, 0, 0, 0, 0),					-- v3 p155
-(10229, 'Attack', 'Arm', 1, 'Inward Cross-Cut', NULL, NULL, 1, 0, 1, 1, 0),					-- v3 p103
-(10230, 'Attack', 'Arm', 1, 'Side Cross-Cut', NULL, NULL, 0, 1, 2, 0, 0),					-- v3 p105
-(10220, 'Attack', 'Arm', 0, 'Outward Cross-Cut', NULL, NULL, 1, 0, 0, 0, 0),				-- v3 p102
-(10231, 'Attack', 'Arm', 1, 'Crescent Strike', NULL, 'Cr', 1, 0, 0, 0, 0),					-- v3 p145
-(10232, 'Attack', 'Arm', 1, 'U-Shape Punch', NULL, 'Cr', 0, 0, 1, 0, 0),					--
-(10233, 'Attack', 'Arm', 1, 'Horizontal Block', NULL, '~90°', 1, 1, 0, 0, 0),				--
+(10206, 'Attack', 'Arm', 0, 'Side Punch', NULL, '~90°', 0, 1, 1, 0, 0),						-- - v3p41 Mid; 'Forefist'
+(10207, 'Attack', 'Arm', 0, 'Side Back Strike', NULL, '~90°', 1, 1, 1, 0, 0),				-- - v3p147 High; 'Backfist'+'Back Hand'
+(10208, 'Attack', 'Arm', 1, 'Side Front Strike', NULL, '~Sr', 1, 0, 0, 0, 0),				-- - v3p148 High; 'Backfist'+'Reverse Knife-Hand','Back Hand'
+(10211, 'Attack', 'Arm', 1, 'Upset Punch', NULL, 'Sr', 1, 0, 1, 0, 0),						-- - v3p48 Mid; (Twin) 'Forefist','Middle-Knuckle Fist'
+(10212, 'Attack', 'Arm', 1, 'Horizontal Punch', NULL, '~90°/RSr', 0, 1, 0, 0, 0),			-- - v3p68 Mid; Twin 'Forefist'
+(10213, 'Attack', 'Arm', 1, 'Horizontal Thrust', NULL, '~90°', 1, 1, 0, 0, 0),				-- - v3p96 Mid; (Twin) 'Elbow'
+(10214, 'Attack', 'Arm', 1, 'Horizontal Strike', NULL, '~90°', 1, 1, 0, 0, 0),				-- - v3p134 Mid; Twin 'Knife-Hand', Twin 'Side Fist', 'Back Fist',+twin back fist or twin back hand
+(10215, 'Attack', 'Arm', 0, 'Inward Strike', NULL, 'Br', 1, 0, 1, 0, 0),					-- v3p116 Mid,High; 'Knife-Hand'+twin knife-hand, twin reverse knife-hand, under fist, palm, twin palm and bear hand
+(10216, 'Attack', 'Arm', 1, 'Upper Strike', NULL, 'Sr', 1, 0, 0, 0, 0),						-- - v3p109 High (U-Nam has Mid); 'Elbow'
+(10217, 'Attack', 'Arm', 1, 'Upward Punch', NULL, 'Cr', 1, 0, 1, 0, 0),						-- - v3p46 High; 'Forefist'
+(10221, 'Attack', 'Arm', 0, 'Downward Thrust', NULL, '~Sr', 1, 0, 1, 0, 0),					-- - v3p89 Low; 'Flat Fingertip','Straight Elbow'
+(10222, 'Attack', 'Arm', 1, 'Downward Punch', NULL, 'Cr', 1, 0, 1, 0, 0),					-- - v3p53 Low; 'Forefist'
+(10223, 'Attack', 'Arm', 1, 'Front {Straight} Downward Strike', NULL, 'Sr', 1, 0, 0, 0, 0),					-- - v3p127 Mid; 'Knife-Hand','Back Fist'+side fist, back hand, twin side fist, twin knife-hand, twin back hand and base of knife-hand
+(10210, 'Attack', 'Arm', 1, 'Side {Circular} Downward Strike', NULL, '~90°', 0, 0, 1, 0, 0),			-- - v3p124 Mid; 'Knife-Hand','Back Fist'+side fist, back hand, twin side fist, twin knife-hand, twin back hand and base of knife-hand
+(10224, 'Attack', 'Arm', 0, 'Vertical Punch', NULL, 'Cr', 1, 0, 0, 0, 0),					-- - v3p36 Low?,Mid,High; (Twin) 'Forefist'
+(10225, 'Attack', 'Arm', 1, 'Angle Punch', NULL, 'RBr', 1, 0, 0, 0, 0),						-- - v3p59 Mid,High?; 'Forefist'
+(10226, 'Attack', 'Arm', 0, 'Crescent Punch', NULL, 'Cr', 1, 0, 1, 0, 0),					-- - v3p54 Mid,High; (Twin) 'Forefist'+(Twin) 'Foreknuckle Fist'
+(10227, 'Attack', 'Arm', 1, 'Turning Punch', NULL, 'Cr', 1, 0, 0, 0, 0),					-- - v3p56 Mid; 'Forefist'
+(10228, 'Attack', 'Arm', 1, 'Mid-Air Strike', NULL, '~90°', 0, 0, 0, 0, 0),					-- - v3p155 Mid; 'Knife-Hand','Back Fist'
+(10229, 'Attack', 'Arm', 1, 'Inward Cross-Cut', NULL, NULL, 1, 0, 1, 1, 0),					-- - v3p103 High; 'Flat Fingertip'
+(10230, 'Attack', 'Arm', 1, 'Side Cross-Cut', NULL, NULL, 0, 1, 2, 0, 0),					-- - v3p105 High; 'Flat Fingertip'
+(10220, 'Attack', 'Arm', 0, 'Outward Cross-Cut', NULL, NULL, 1, 0, 0, 0, 0),				-- - v3p102 High; 'Flat Fingertip'
+(10231, 'Attack', 'Arm', 1, 'Crescent Strike', NULL, 'Cr', 1, 0, 0, 0, 0),					-- - v3p145 p54 High; 'Arch Hand','Finger Pincers'
+(10232, 'Attack', 'Arm', 1, 'U-Shape Punch', NULL, 'Cr', 0, 0, 1, 0, 0),					-- - v3p52 Mid/High; 'Forefist'
+-- 'Forefist','Side Fist','Backfist','Middle-Knuckle Fist','Foreknuckle Fist','Open Fist','X-Fist','Forearm','Inner Forearm','Outer Forearm',
+--    'Knife-Hand','Reverse Knife-Hand','X-Knife-Hand','Palm','Palm Heel','Alternate Palm','X-Palm','Arch Hand','Backhand','Elbow',
+--     'Side Elbow','Back Elbow','Fingertip','Straight Fingertip','Flat Fingertip','Upset Fingertip','Double Finger','Bow Wrist',
+--     'Angle Fingertip','Under Fist','Long Fist'
+-- ++ 'Straight Forearm','Straight Knife-Hand','Thumb Ridge','Back Forearm','Straight Elbow','Front Elbow'
+-- ++ 'Finger Pincers'
 
 
-(10300, 'Attack', 'Leg', 0, 'Front Snap Kick', NULL, '~Sr', 1, 0, 0, 0, 0),					      -- v4p33 'Ball of Foot','Instep','Toes','Knee'
-(10301, 'Attack', 'Leg', 0, 'Side Front Snap Kick', NULL, '~45°', 0, 0, 1, 0, 0),			    -- v4p46 'Ball of Foot','Instep','Toes'
-(10302, 'Attack', 'Leg', 0, 'Side Piercing Kick', NULL, '~90°', 0, 1, 0, 0, 0),				    -- v4p17 'Foot Sword'
-(10303, 'Attack', 'Leg', 1, 'Upward Kick', NULL, 'Cr', 1, 0, 0, 0, 0),                    -- v4p61 'Knee'
-(10304, 'Attack', 'Leg', 0, 'Turning Kick', NULL, NULL, 0, 0, 1, 0, 0),                   -- v4p50 'Ball of Foot','Instep','Toes','Knee'
-(10305, 'Attack', 'Leg', 1, 'Flying Side Piercing Kick', NULL, '~90°', 0, 1, 0, 0, 0),    -- v4p110 'Foot Sword'
-(10306, 'Attack', 'Leg', 0, 'Back Piercing Kick', NULL, '~Sr', 1, 0, 0, 0, 0),            -- v4p26 'Foot Sword'
-(10307, 'Attack', 'Leg', 1, 'Pressing Kick', NULL, 'Cr', 0, 1, 0, 0, 0),                  -- v4p72 'Foot Sword' (Outward); 'Side Sole' (Inward)
-(10308, 'Attack', 'Leg', 1, 'Twisting Kick', NULL, 'Cr', 0, 1, 0, 0, 0),                  -- v4p66 'Ball of Foot', 'Knee', 'Toes' (Low); 'Ball of Foot','Instep','Toes','Knee' (Mid); 'Ball of Foot', 'Toes' (High)
-(10309, 'Attack', 'Leg', 0, 'Reverse Turning Kick', NULL, NULL, 0, 0, 1, 0, 0),           -- v4p62 'Back of Heel', 'Ball of Foot'
-(10310, 'Attack', 'Leg', 0, 'Reverse Hooking Kick', NULL, 'Cr', 0, 0, 1, 0, 0),           -- v4p64 'Back of Heel'
-(10311, 'Attack', 'Leg', 0, 'Hooking Kick', NULL, 'Cr', 0, 0, 1, 0, 0),                   -- v4p172 'Side Instep'
-(10312, 'Attack', 'Leg', 1, 'Pick-Shape Kick', NULL, 'Cr', 1, 0, 0, 0, 0),                -- v4p59 'Back of Heel'
-(10313, 'Attack', 'Leg', 1, 'Waving Kick', NULL, 'Cr', 1, 1, 0, 0, 0),                    -- v4p166 'Side Sole'
-(10314, 'Attack', 'Leg', 1, 'Sweeping Kick', NULL, 'Cr', 1, 0, 1, 0, 0),                  -- v4p75 'Side Sole', 'Back of Heel'
-(10315, 'Attack', 'Leg', 1, 'Crescent Kick', NULL, 'Cr', 1, 0, 1, 0, 0),                  -- v4p160 'Foot Sole'
-(10316, 'Attack', 'Leg', 0, 'Side Thrusting Kick', NULL, '~45°', 0, 0, 1, 0, 0),          -- v4p28 'Ball of Foot'
-(10317, 'Attack', 'Leg', 0, 'Side Checking Kick', NULL, '~45°', 0, 0, 1, 0, 0),           -- v4p168 'Side Sole'
-(10318, 'Attack', 'Leg', 0, 'Side Pushing Kick', NULL, '~45°', 0, 0, 1, 0, 0),            -- v4p30 'Foot Sword'
-(10319, 'Attack', 'Leg', 1, 'Inward Vertical Kick', NULL, 'Cr', 1, 0, 1, 0, 0),           -- v4p70 'Foot Sword' (Outward); 'Reverse Foot Sword' (Inward)
-(10320, 'Attack', 'Leg', 1, 'Outward Vertical Kick', NULL, 'Cr', 1, 0, 1, 0, 0),          -- v4p70 'Foot Sword' (Outward); 'Reverse Foot Sword' (Inward)
-(10321, 'Attack', 'Leg', 1, 'Downward Kick', NULL, 'Br', 1, 0, 1, 0, 0),                  -- v4p58 'Back of Heel'
-(10322, 'Attack', 'Leg', 1, 'Mid-Air Kick', NULL, '~90°', 0, 1, 0, 0, 0),                 -- v4p120 == Flying Side Piercing || Thrusting Kick
-(10323, 'Attack', 'Leg', 0, 'Flying High Kick', NULL, '~Sr', 1, 0, 0, 0, 0),              -- v4p118 'Ball of Foot', 'Toes'
+(10300, 'Attack', 'Leg', 0, 'Front Snap Kick', NULL, '~Sr', 1, 0, 0, 0, 0),					      -- - v4p33 'Ball of Foot','Instep','Toes','Knee'(<- using Upward Kick)
+-- (10301, 'Attack', 'Leg', 0, 'Side Front Snap Kick', NULL, '~45°', 0, 0, 1, 0, 0),			    -- - dup 10300 v4p46 'Ball of Foot','Instep','Toes'
+(10302, 'Attack', 'Leg', 0, 'Side Piercing Kick', NULL, '~90°', 0, 1, 0, 0, 0),				    -- - v4p17 'Foot Sword'
+(10303, 'Attack', 'Leg', 1, 'Upward {Front Snap} Kick', NULL, 'Cr', 1, 0, 0, 0, 0),       -- - v4p61 Mid; 'Knee'
+(10304, 'Attack', 'Leg', 0, 'Turning Kick', NULL, NULL, 0, 0, 1, 0, 0),                   -- - v4p50 'Ball of Foot','Instep','Toes','Knee'
+-- (10305, 'Attack', 'Leg', 1, 'Flying Side Piercing Kick', NULL, '~90°', 0, 1, 0, 0, 0),    -- - dup of 10302 v4p110 'Foot Sword'
+(10306, 'Attack', 'Leg', 0, 'Back Piercing Kick', NULL, '~Sr', 1, 0, 0, 0, 0),            -- - v4p26 'Foot Sword'
+(10307, 'Attack', 'Leg', 1, 'Pressing Kick', NULL, 'Cr', 0, 1, 0, 0, 0),                  -- - v4p72 Low; 'Foot Sword' (Outward); 'Side Sole' (Inward)
+(10308, 'Attack', 'Leg', 1, 'Twisting Kick', NULL, 'Cr', 0, 1, 0, 0, 0),                  -- - v4p66 'Ball of Foot', 'Knee', 'Toes' (Low); 'Ball of Foot','Instep','Toes','Knee' (Mid); 'Ball of Foot', 'Toes' (High)
+(10309, 'Attack', 'Leg', 0, 'Reverse Turning Kick', NULL, NULL, 0, 0, 1, 0, 0),           -- - v4p62 'Back of Heel', 'Ball of Foot'
+(10310, 'Attack', 'Leg', 0, 'Reverse Hooking Kick', NULL, 'Cr', 0, 0, 1, 0, 0),           -- - v4p64 'Back of Heel'
+(10311, 'Block', 'Leg', 0, 'Hooking {Outward Vertical} Kick', NULL, 'Cr', 0, 0, 1, 0, 0), -- - v4p172 'Side Instep'
+(10312, 'Attack', 'Leg', 1, '{Downward} Pick-Shape Kick', NULL, 'Cr', 1, 0, 0, 0, 0),     -- - v4p59 'Back of Heel'
+(10313, 'Block', 'Leg', 1, 'Waving Kick', NULL, 'Cr', 1, 1, 0, 0, 0),                    -- - v4p166 'Side Sole'
+(10314, 'Attack', 'Leg', 1, 'Sweeping {~Inward Pressing} Kick', NULL, 'Cr', 1, 0, 1, 0, 0), -- - v4p75 Low; 'Side Sole', 'Back of Heel'; sorta mostly {Inward Pressing}
+(10315, 'Block', 'Leg', 1, 'Crescent {Inward Vertical} Kick', NULL, 'Cr', 1, 0, 1, 0, 0),  -- - v4p160 'Foot Sole'; executed same as inward vertical kick
+(10316, 'Attack', 'Leg', 0, 'Side Thrusting Kick', NULL, '~45°', 0, 0, 1, 0, 0),          -- - v4p28 'Ball of Foot'
+(10317, 'Block', 'Leg', 0, 'Side Checking Kick', NULL, '~45°', 0, 0, 1, 0, 0),           -- - v4p168 'Side Sole'
+(10318, 'Block', 'Leg', 0, 'Side Pushing Kick', NULL, '~45°', 0, 0, 1, 0, 0),            -- - v4p30 'Foot Sword'
+(10319, 'Attack', 'Leg', 1, 'Inward Vertical Kick', NULL, 'Cr', 1, 0, 1, 0, 0),           -- - v4p70 Mid,High; 'Foot Sword' (Outward); 'Reverse Foot Sword' (Inward)
+(10320, 'Attack', 'Leg', 1, 'Outward Vertical Kick', NULL, 'Cr', 1, 0, 1, 0, 0),          -- - v4p70 Mid,High; 'Foot Sword' (Outward); 'Reverse Foot Sword' (Inward)
+(10321, 'Attack', 'Leg', 1, 'Downward Kick', NULL, 'Br', 1, 0, 1, 0, 0),                  -- - v4p58 'Back of Heel'
+-- (10322, 'Attack', 'Leg', 1, 'Mid-Air {Side Piercing} Kick', NULL, '~90°', 0, 1, 0, 0, 0),                 -- - dup 10302 v4p120 == Flying Side Piercing || Thrusting Kick
+(10323, 'Attack', 'Leg', 0, 'Flying High {Front Snap} Kick', NULL, '~Sr', 1, 0, 0, 0, 0),              -- - v4p118 High; 'Ball of Foot', 'Toes'
 -- 'Ball of Foot','Heel','Back of Heel','Instep','Side Instep','Foot Sword','Side Sole','Knee','Reverse Foot Sword','Foot','Foot Sole','Toes'
 
 
-(10400, 'Block', 'Arm', 0, 'Block', NULL, '~Cr', 1, 1, 1, 1, 0),							-- v3p182/188, facing?
-(10410, 'Block', 'Arm', 0, 'Inward Front Block', NULL, 'Cr', 1, 0, 0, 0, 0),					-- v3p206 Low,Mid,High; 'Outer Forearm','Knife-Hand',(Twin*) 'Palm'+'X-Fist'*,'X-Knife-Hand'*,'Reverse Knife-Hand'; * = Not Inward, Full/Center
-(10401, 'Block', 'Arm', 0, 'Side Block', NULL, 'Cr', 0, 1, 1, 1, 0),						-- v3p212, Half/Side facing to Centerline
-(10415, 'Block', 'Arm', 0, 'Outward/Side Block', NULL, '~90°', 0, 1, 1, 0, 0),			-- v3p212/203/128, Half/Side facing to ~90°
--- (10425, 'Block', 'Arm', 0, 'Outward Block', NULL, '~Br', 1, 1, 1, 1, 0),						-- v3p186/203, Half/Side facing to Breast/Shoulder-line, dup 10415
-(10402, 'Block', 'Arm', 1, 'Rising Block', NULL, 'Cr', 1, 0, 0, 0, 0),						-- v3p232 High; 'Forearm','Knife-Hand','X-Fist','X-Knife-Hand','Arc-Hand',(Twin) 'Palm'
-(10403, 'Block', 'Arm', 0, 'Guarding Block', NULL, '~45°', 0, 0, 1, 0, 0),					-- v3p284 Low,Mid,High; 'Forearm','Knife-Hand','Reverse Knife-Hand'
+(10400, 'Block', 'Arm', 0, 'Block', NULL, '~Cr', 1, 1, 1, 1, 0),							    -- v3p182/188, facing?
+(10410, 'Block', 'Arm', 0, 'Inward Front Block', NULL, 'Cr', 1, 0, 0, 0, 0),			-- - v3p206 Low,Mid,High; 'Outer Forearm','Knife-Hand',(Twin*) 'Palm'+'X-Fist'*,'X-Knife-Hand'*,'Reverse Knife-Hand'; * = Not Inward, Full/Center
+  (10401, 'Block', 'Arm', 0, 'Side Block', NULL, 'Cr', 0, 1, 1, 1, 0),						  -- v3p212, Half/Side facing to Centerline
+  (10415, 'Block', 'Arm', 0, 'Outward/Side Block', NULL, '~90°', 0, 1, 1, 0, 0),	  -- v3p212/203/128, Half/Side facing to ~90°
+  (10425, 'Block', 'Arm', 1, 'Outward Block', NULL, '~45°', 0, 0, 1, 0, 0),					-- v3p186 "inward to outward"
+-- (10425, 'Block', 'Arm', 0, 'Outward Block', NULL, '~Br', 1, 1, 1, 1, 0),						-- dup 10415 v3p186/203, Half/Side facing to Breast/Shoulder-line
+(10402, 'Block', 'Arm', 1, 'Rising Block', NULL, 'Cr', 1, 0, 0, 0, 0),						-- - v3p232 High; 'Forearm','Knife-Hand','X-Fist','X-Knife-Hand','Arc-Hand',(Twin) 'Palm'
+(10403, 'Block', 'Arm', 0, 'Guarding Block', NULL, '~45°', 0, 0, 1, 0, 0),			 	-- - v3p284 Low,Mid,High; 'Forearm','Knife-Hand','Reverse Knife-Hand'
 (10404, 'Block', 'Arm', 1, 'Wedging Block', NULL, 'Sr', 1, 0, 0, 0, 0),						-- - v3p266 Mid, High; 'Outer Forearm','Inner Forearm','Knife-Hand','Reverse Knife-Hand'
 (10405, 'Block', 'Arm', 1, 'Circular Block', NULL, '~45°', 0, 0, 1, 1, 0),					-- - v3p298 Low>Mid; 'Inner Forearm','Reverse Knife-Hand'+'Knife-Hand'
 (10406, 'Block', 'Arm', 1, 'Pressing Block', NULL, '~Cr', 1, 0, 0, 0, 0),					-- - v3p257 Low; (Twin) 'Palm','Forefist','X-Fist' ; Palm Pressing Block always done with a Palm Upward Block
@@ -645,13 +651,9 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 (10420, 'Block', 'Arm', 1, 'Side Front Block', NULL, 'Sr', 1, 0, 1, 1, 0),					-- - v3p215 High; 'Inner Forearm','Reverse Knife-Hand'
 (10421, 'Block', 'Arm', 1, 'Checking Block', NULL, 'Cr', 1, 0, 1, 0, 0),					-- - v3p225 Mid,High; 'X-Fist','X-Knife-Hand','Straight Forearm','Straight Knife-Hand'
 (10424, 'Block', 'Arm', 1, 'Scooping Block', NULL, '~Cr', 1, 0, 1, 1, 0),					-- - v3p282 Low>Mid; 'Palm', 'Reverse Knife-Hand'
-(10425, 'Block', 'Arm', 1, 'Outward Block', NULL, '~45°', 0, 0, 1, 0, 0),					-- v3p186 "inward to outward"
 (10426, 'Block', 'Arm', 1, 'Waist {Upward} Block', NULL, '~Cr', 0, 0, 1, 0, 0),				-- - v3p220 Mid; 'Outer Forearm','Inner Forearm','Palm',
--- 'Forefist','Side Fist','Backfist','Middle-Knuckle Fist','Foreknuckle Fist','Open Fist','X-Fist','Forearm','Inner Forearm','Outer Forearm',
---    'Knife-Hand','Reverse Knife-Hand','X-Knife-Hand','Palm','Palm Heel','Alternate Palm','X-Palm','Arch Hand','Backhand','Elbow',
---     'Side Elbow','Back Elbow','Fingertip','Straight Fingertip','Flat Fingertip','Upset Fingertip','Double Finger','Bow Wrist',
---     'Angle Fingertip','Under Fist','Long Fist'
--- ++ 'Straight Forearm','Straight Knife-Hand','Thumb Ridge','Back Forearm','Straight Elbow'
+(10419, 'Block', 'Arm', 1, 'Horizontal Block', NULL, '~90°', 1, 1, 0, 0, 0),				-- - v3p312 Mid; Twin 'Palm',Twin 'Knife-Hand'
+
 
 (10600, 'Action', 'Arm', 1, 'Fist lifted upward', NULL, NULL, 1, 1, 1, 1, 0),
 (10601, 'Action', 'Arm', 0, 'Fist rotated so Backfist faces downward', NULL, 'Sr', 1, 0, 0, 0, 0),
@@ -2897,11 +2899,11 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1008, 21, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
 (1008, 22, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3000, 10007, NULL, NULL),
 (1008, 23, NULL, 1, NULL, NULL, 'L', 'L', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, NULL, 10302, NULL, NULL),
-(1008, 24, 'a', '0', NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3000, 10100, 10201, 'front elbow'),
+(1008, 24, 'a', '0', NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3000, 10100, 10201, '-front from elbow'),
 (1008, 24, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10629, NULL),
 (1008, 25, NULL, 1, '6:00', 'C', 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3004, 10007, NULL, NULL),
 (1008, 26, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, NULL, 10302, NULL, NULL),
-(1008, 27, 'a', '0', NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3000, 10100, 10201, 'front elbow'),
+(1008, 27, 'a', '0', NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3000, 10100, 10201, '-front from elbow'),
 (1008, 27, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10629, NULL),
 (1008, 28, NULL, 1, '3:00', 'E', 'L>R;L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'L Mid/R High', NULL, NULL, 'Knife-Hand', 1, 'H', NULL, 3001, 10104, 10400, NULL),
 (1008, 29, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Straight Fingertip', '0', 'F', NULL, 3000, 10100, 10202, NULL),
@@ -2924,11 +2926,11 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `islegtechniqueflying`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `note`) VALUES
 (1009, '0', NULL, '0', '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10004, NULL, NULL),
 (1009, 1, NULL, 1, '9:00', 'B', 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', NULL, 3001, 10104, 10400, NULL),
-(1009, 2, NULL, 1, NULL, NULL, 'L', 'L', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
+(1009, 2, NULL, 1, NULL, NULL, 'L', 'L', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10300, 10607, 'was 10301 side front snap kick'),
 (1009, 3, 'a', '0', NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10721, NULL, NULL),
 (1009, 3, 'b', '0', NULL, NULL, 'Lh+R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3000, 10102, 10416, NULL),
 (1009, 4, NULL, 1, '3:00', 'A', 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', NULL, 3004, 10104, 10400, NULL),
-(1009, 5, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
+(1009, 5, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10300, 10607, 'was 10301 side front snap kick'),
 (1009, 6, 'a', '0', NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10721, NULL, NULL),
 (1009, 6, 'b', '0', NULL, NULL, 'Rh+L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3000, 10102, 10416, NULL),
 (1009, 7, NULL, 1, '12:00', 'D', 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3001, 10104, 10403, 'L>R?'),
@@ -2982,7 +2984,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1010, 9, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, 10607, NULL),
 (1010, 10, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
 (1010, 11, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200, 'missing Lh diagram'),
-(1010, 12, NULL, 1, '9:00', 'F', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Side Elbow', 1, 'F', 2004, 3001, 10110, 10202, 'slow motion not on sep line'),
+(1010, 12, NULL, 1, '9:00', 'F', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Elbow', 1, 'F', 2004, 3001, 10110, 10203, '-Side from Elbow, slow motion not on sep line'),
 (1010, 13, NULL, 1, '6:00', 'C', 'R!', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3001, 10106, 10417, 'Specifies right!?'),
 (1010, 14, NULL, 1, '12:00', 'D', 'L!', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3004, 10106, 10417, 'Specifies left!?'),
 (1010, 15, NULL, 1, '6:00', 'C', 'L!', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3004, 10106, 10417, 'Specifies left!?'),
@@ -2995,10 +2997,10 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1010, 21, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Knee', NULL, 'Mid', NULL, NULL, NULL, '0', 'F', NULL, NULL, 10303, 10606, NULL),
 (1010, 22, 'a', '0', NULL, NULL, 'R>L', 'R', NULL, '0', '11:00', '~D', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3032, 10701, NULL, NULL),
 (1010, 22, 'b', '0', '6:00', 'C', 'Rh+L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3012, 10104, 10403, NULL),
-(1010, 23, NULL, 1, NULL, NULL, 'L', 'L', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
+(1010, 23, NULL, 1, NULL, NULL, 'L', 'L', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10300, 10607, 'was 10301 side front snap kick'),
 (1010, 24, NULL, '0', NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Flat Fingertip', '0', 'F', NULL, 3000, 10100, 10202, NULL),
 (1010, 25, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10104, 10403, NULL),
-(1010, 26, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
+(1010, 26, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10300, 10607, 'was 10301 side front snap kick'),
 (1010, 27, NULL, '0', NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Flat Fingertip', '0', 'F', NULL, 3000, 10100, 10202, NULL),
 (1010, 28, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', '12:00', 'D', 'Backfist', '0', 'H', NULL, 3003, 10104, 10207, '2 techs 1 count'),
 (1010, 28, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forearm', '0', NULL, NULL, NULL, NULL, 10400, 'no look on backfist!?'),
@@ -3020,24 +3022,24 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `islegtechniqueflying`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `note`) VALUES
 (1011, '0', NULL, '0', '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10005, NULL, NULL),
 (1011, 1, 'a', 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3000, NULL, NULL, 'ERROR large diag differs'),
-(1011, 1, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '6:00', 'C', NULL, 'R', 'Mid', NULL, NULL, 'Side Elbow', '0', 'H', NULL, 3022, 10104, 10202, NULL),
+(1011, 1, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '6:00', 'C', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1011, 2, 'a', 1, '9:00', 'B', 'R>L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3001, '0', '0', NULL),
-(1011, 2, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '3:00', 'A', NULL, 'R', 'Mid', NULL, NULL, 'Side Elbow', '0', 'H', NULL, 3022, 10104, 10202, NULL),
+(1011, 2, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '3:00', 'A', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1011, 3, 'a', 1, '6:00', 'C', 'R>L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3001, '0', '0', NULL),
-(1011, 3, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '12:00', 'D', NULL, 'R', 'Mid', NULL, NULL, 'Side Elbow', '0', NULL, NULL, 3022, 10104, 10202, NULL),
+(1011, 3, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '12:00', 'D', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', NULL, NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1011, 4, 'a', 1, '3:00', 'A', 'R>L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3001, '0', '0', NULL),
-(1011, 4, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '9:00', 'B', NULL, 'R', 'Mid', NULL, NULL, 'Side Elbow', '0', NULL, NULL, 3022, 10104, 10202, NULL),
+(1011, 4, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '9:00', 'B', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', NULL, NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1011, 999, NULL, '0', '12:00', 'D', 'R>L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3001, 10005, NULL, NULL),
 
 (1012, '0', NULL, '0', '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10005, NULL, NULL),
 (1012, 1, 'a', 1, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3000, NULL, NULL, NULL),
-(1012, 1, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '6:00', 'C', NULL, 'L', 'Mid', NULL, NULL, 'Side Elbow', '0', 'H', NULL, 3022, 10104, 10202, NULL),
+(1012, 1, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '6:00', 'C', NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1012, 2, 'a', 1, '3:00', 'A', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3002, '0', '0', NULL),
-(1012, 2, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '9:00', 'B', NULL, 'L', 'Mid', NULL, NULL, 'Side Elbow', '0', NULL, NULL, 3022, 10104, 10202, NULL),
+(1012, 2, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '9:00', 'B', NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', NULL, NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1012, 3, 'a', 1, '6:00', 'C', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3002, '0', '0', NULL),
-(1012, 3, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '12:00', 'D', NULL, 'L', 'Mid', NULL, NULL, 'Side Elbow', '0', NULL, NULL, 3022, 10104, 10202, NULL),
+(1012, 3, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '12:00', 'D', NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', NULL, NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1012, 4, 'a', 1, '9:00', 'B', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3002, '0', '0', NULL),
-(1012, 4, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '3:00', 'A', NULL, 'L', 'Mid', NULL, NULL, 'Side Elbow', '0', NULL, NULL, 3022, 10104, 10202, NULL),
+(1012, 4, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '3:00', 'A', NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', NULL, NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1012, 999, NULL, '0', '12:00', 'D', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3002, 10005, NULL, NULL);
 
 
@@ -3051,7 +3053,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1013, 5, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forefist', '0', 'H', NULL, NULL, NULL, 10217, NULL),
 (1013, 5, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, NULL),
 (1013, 6, NULL, 1, NULL, NULL, 'L;R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, 3022, 10105, 10200, 'R>L? side punch?'),
-(1013, 7, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3018, 10103, 10223, 'side downward?'),
+(1013, 7, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3018, 10103, 10210, NULL),
 (1013, 8, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
 (1013, 9, NULL, 1, '12:00', 'D', 'L>R;L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3001, 10100, 10400, NULL),
 (1013, 10, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
@@ -3076,7 +3078,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1013, 23, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, 3000, 10104, 10200, NULL),
 (1013, 24, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'X-Fist', '0', 'F', NULL, 3011, 10100, 10406, NULL),
 (1013, 25, 'a', 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3000, NULL, NULL, NULL),
-(1013, 25, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '12:00', 'D', NULL, 'R', 'Mid', NULL, NULL, 'Side Elbow', '0', 'H', NULL, 3022, 10104, 10202, '~1 SW shift R'),
+(1013, 25, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '12:00', 'D', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3022, 10104, 10203, '-Side from Elbow, ~1 SW shift R'),
 (1013, 26, 'a', 1, '9:00', 'B', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Inner Forearm', '0', 'F', NULL, 3005, 10110, 10420, NULL),
 (1013, 26, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10630, NULL),
 (1013, 27, 'a', 1, NULL, NULL, 'Lh+Rh', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Inner Forearm', '0', 'F', NULL, NULL, 10110, 10420, NULL),
@@ -3100,7 +3102,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1014, 7, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, NULL, 10302, NULL, NULL),
 (1014, 8, NULL, '0', '12:00', 'D', 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3012, 10104, 10403, NULL),
 (1014, 9, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '&nbsp;', NULL, 3000, 10705, 10999, 'this should probabyl be to side front, as is pictured'),
-(1014, 9, 'b', 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3023, 10305, 10999, NULL),
+(1014, 9, 'b', 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3023, 10302, 10999, 'was 10305 flying side piercing kick'),
 (1014, 9, 'c', 1, NULL, NULL, '&nbsp;', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3032, 10104, 10403, '3 or 2 steps?'),
 (1014, 10, NULL, 1, '3:00', 'E', 'L>R;L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3005, 10104, 10400, NULL),
 (1014, 11, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, NULL, '0', 'F', NULL, 3011, 10100, 10610, 'L>R?'),
@@ -3123,7 +3125,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1014, 22, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10633, 'not desc'),
 (1014, 23, NULL, 1, '9:00', 'B', 'L>R;L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forearm', 1, 'H', NULL, 3005, 10100, 10400, 'should be side block?'),
 (1014, 24, 'a', 1, '6:00', 'C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3001, NULL, NULL, NULL),
-(1014, 24, 'b', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forearm', NULL, 'F', NULL, 3031, 10106, 10410, 'inner forearm?'),
+(1014, 24, 'b', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Outer Forearm', NULL, 'F', NULL, 3031, 10106, 10410, '+Outer'),
 (1014, 24, 'c', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'High', '9:00', 'B', 'Backfist', NULL, 'S', NULL, NULL, NULL, 10205, NULL),
 (1014, 25, 'a', 1, '3:00', 'A', 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3001, 10302, NULL, NULL),
 (1014, 25, 'b', 1, NULL, NULL, 'R', 'R', NULL, '0', '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10704, NULL, NULL),
@@ -3164,12 +3166,12 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1015, 14, NULL, '0', NULL, NULL, 'L', 'L', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', 2005, NULL, 10302, 10607, NULL),
 (1015, 15, 'a', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10104, 10215, NULL),
 (1015, 15, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, NULL),
-(1015, 16, NULL, 1, NULL, NULL, 'L>R', NULL, NULL, '0', '6:00', 'C', NULL, 'L', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3018, 10110, 10223, 'side downward?'),
+(1015, 16, NULL, 1, NULL, NULL, 'L>R', NULL, NULL, '0', '6:00', 'C', NULL, 'L', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3018, 10110, 10210, NULL),
 (1015, 17, NULL, 1, '9:00', 'F', 'R', 'R', 'Low', '0', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3004, 10307, 10607, NULL),
 (1015, 18, NULL, '0', NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', 2005, NULL, 10302, 10607, NULL),
 (1015, 19, 'a', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10104, 10215, NULL),
 (1015, 19, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, NULL),
-(1015, 20, NULL, 1, NULL, NULL, 'R>L', NULL, NULL, '0', '6:00', 'C', NULL, 'R', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3018, 10110, 10223, 'side downward?'),
+(1015, 20, NULL, 1, NULL, NULL, 'R>L', NULL, NULL, '0', '6:00', 'C', NULL, 'R', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3018, 10110, 10210, NULL),
 (1015, 21, NULL, 1, '6:00', 'C', 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'R Low/L Mid', NULL, NULL, 'Palm', '0', 'F', 2004, 3001, 10101, 10406, NULL),
 (1015, 22, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'L Low/R Mid', NULL, NULL, 'Palm', '0', 'F', 2004, 3000, 10101, 10406, NULL),
 (1015, 23, NULL, 1, '12:00', 'D', 'R!', NULL, NULL, '0', '9:00', 'F', NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'S', NULL, 3004, 10106, 10218, NULL),
@@ -3212,11 +3214,11 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1016, 7, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Forefist', '0', 'F', 2001, NULL, NULL, 10406, NULL),
 (1016, 7, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Inner Forearm', '0', NULL, NULL, NULL, NULL, 10420, NULL),
 (1016, 8, NULL, '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Inner Forearm', 1, 'F', 2001, NULL, NULL, 10404, NULL),
-(1016, 9, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10202, NULL),
+(1016, 9, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10204, NULL),
 (1016, 9, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10616, NULL),
 (1016, 10, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2001, NULL, NULL, 10200, NULL),
 (1016, 10, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10648, NULL),
-(1016, 11, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10202, NULL),
+(1016, 11, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10204, NULL),
 (1016, 11, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10616, NULL),
 (1016, 12, NULL, '0', '3:00', 'A', NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', 1, 'S', 2001, 3002, NULL, 10212, NULL),
 (1016, 13, 'a', 1, '12:00', 'D', 'L', NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3001, NULL, 10410, NULL),
@@ -3241,11 +3243,11 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1016, 25, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Inner Forearm', '0', 'F', 2001, NULL, NULL, 10420, NULL),
 (1016, 25, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forefist', '0', NULL, NULL, NULL, NULL, 10406, NULL),
 (1016, 26, NULL, '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Inner Forearm', 1, 'F', 2001, NULL, NULL, 10404, NULL),
-(1016, 27, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10202, NULL),
+(1016, 27, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10204, NULL),
 (1016, 27, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10622, NULL),
 (1016, 28, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2001, NULL, NULL, 10200, NULL),
 (1016, 28, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10648, 'slipped'),
-(1016, 29, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10202, NULL),
+(1016, 29, 'a', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', 2001, NULL, NULL, 10204, NULL),
 (1016, 29, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10616, 'palm or fingerbelly?'),
 (1016, 30, NULL, '0', '9:00', 'B', NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', 1, 'S', 2001, 3001, NULL, 10212, NULL),
 (1016, 31, 'a', 1, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3002, NULL, 10410, NULL),
@@ -3279,7 +3281,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1017, 11, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633, 'not desc'),
 (1017, 12, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, 10725, '0', NULL),
 (1017, 12, 'b', 1, '6:00', 'C', 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3010, 10104, 10403, 'L>R?'),
-(1017, 13, NULL, 1, NULL, NULL, 'L', 'L', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
+(1017, 13, NULL, 1, NULL, NULL, 'L', 'L', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10300, 10607, 'was 10301 side front snap kick'),
 (1017, 14, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Flat Fingertip', '0', 'F', NULL, 3000, 10101, 10202, NULL),
 (1017, 15, NULL, 1, NULL, NULL, 'Rh', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Flat Fingertip', '0', 'F', NULL, NULL, NULL, 10202, NULL),
 (1017, 16, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, NULL, 10302, 10612, NULL),
@@ -3290,7 +3292,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1017, 21, NULL, 1, '6:00', 'C', 'R>L;R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3005, 10100, 10400, NULL),
 (1017, 22, 'a', 1, NULL, NULL, 'R', 'R', 'Mid', '0', '7:00', 'BC', 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3032, 10304, NULL, NULL),
 (1017, 22, 'b', 1, NULL, NULL, 'R', 'R', NULL, '0', '4:00', '~A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3000, 10703, NULL, NULL),
-(1017, 23, NULL, '0', NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, NULL, 'S', 2002, 3019, 10305, NULL, NULL),
+(1017, 23, NULL, '0', NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, NULL, 'S', 2002, 3019, 10302, NULL, 'was 10305 flying side piercing kick'),
 (1017, 24, NULL, 1, NULL, NULL, 'L;R', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Forefist', 1, 'F', NULL, NULL, 10100, 10224, NULL),
 (1017, 25, NULL, 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 'High', '5:00', 'AC', 'Arch Hand', 1, 'RH', NULL, NULL, NULL, 10400, 'no Lh!?'),
 (1017, 26, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10211, NULL),
@@ -3373,7 +3375,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1018, 39, NULL, 1, '12:00', 'D', 'Rh+L', 'L', 'High', '0', '1:00', 'AD', 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3047, 10309, NULL, NULL),
 (1018, 40, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3000, 10102, 10403, NULL),
 (1018, 41, 'a', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3036, 10702, NULL, NULL),
-(1018, 41, 'b', 1, NULL, NULL, 'Lh+R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, NULL, 10104, 10415, NULL),
+(1018, 41, 'b', 1, NULL, NULL, 'Lh+R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, NULL, 10104, 10425, NULL),
 (1018, 42, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3018, 10100, 10200, 'L>R?'),
 (1018, 43, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3003, 10104, 10400, NULL),
 (1018, 44, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3018, 10100, 10200, 'L>R?'),
@@ -3402,16 +3404,16 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1019, 12, NULL, 1, NULL, NULL, 'Lh+R', 'R', 'High', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3037, 10304, 10638, NULL),
 (1019, 13, 'a', '0', NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10153, 10200, NULL),
 (1019, 13, 'b', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10623, NULL),
-(1019, 14, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', '6:00', 'C', NULL, 'L', 'Mid', NULL, NULL, 'Side Elbow', '0', 'H', NULL, 3000, 10104, 10203, NULL),
+(1019, 14, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', '6:00', 'C', NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3000, 10104, 10203, '-Side from Elbow'),
 (1019, 15, NULL, 1, '12:00', 'D', 'L>R;L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3044, 10104, 10403, NULL),
 (1019, 16, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Low>Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3003, 10104, 10424, NULL),
 (1019, 17, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3003, 10104, 10218, NULL),
 (1019, 18, NULL, 1, '6:00', 'C', 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'X-Fist', '0', 'F', NULL, 3012, 10100, 10406, 'L>R?'),
-(1019, 19, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Knee', NULL, NULL, NULL, NULL, 'X-Palm', '0', 'H', NULL, NULL, 10300, 10608, NULL),
+(1019, 19, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Knee', NULL, NULL, NULL, NULL, 'X-Palm', '0', 'H', NULL, NULL, 10303, 10608, 'was 10300 front snap kick'),
 (1019, 20, 'a', 1, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3012, NULL, NULL, NULL),
 (1019, 20, 'b', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3003, 10104, 10403, NULL),
 (1019, 21, 'a', 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3000, NULL, NULL, 'ERROR in diag'),
-(1019, 21, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '6:00', 'C', NULL, 'R', 'Mid', NULL, NULL, 'Side Elbow', '0', 'H', NULL, 3022, 10104, 10203, NULL),
+(1019, 21, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', '6:00', 'C', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3022, 10104, 10203, '-Side from Elbow'),
 (1019, 22, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3031, 10104, 10403, 'R>L?'),
 (1019, 23, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, NULL, 10302, 10612, NULL),
 (1019, 24, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', '8:00', '~B', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3013, 10727, NULL, NULL),
@@ -3421,12 +3423,12 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1019, 26, NULL, 1, '12:00', 'D', 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Flat Fingertip', '0', 'H', NULL, 3012, 10104, 10202, 'L>R?'),
 (1019, 27, 'a', 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Foot', 'L', NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, 10603, NULL),
 (1019, 27, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10620, NULL),
-(1019, 28, 'a', 1, '6:00', 'C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', '12:00', 'D', 'Back Elbow', '0', 'F', 2004, 3012, NULL, 10204, NULL),
+(1019, 28, 'a', 1, '6:00', 'C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', '12:00', 'D', 'Elbow', '0', 'F', 2004, 3012, NULL, 10204, '-Back from Elbow'),
 (1019, 28, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, 10100, 10625, NULL),
-(1019, 29, NULL, 1, NULL, NULL, 'L!', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Backhand', '0', 'H', NULL, 3018, 10104, 10223, 'not desc as pulling/slipping'),
+(1019, 29, NULL, 1, NULL, NULL, 'L!', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Backhand', '0', 'H', NULL, 3018, 10104, 10210, 'not desc as pulling/slipping'),
 (1019, 30, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, NULL, NULL, 10200, NULL),
 (1019, 30, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10629, NULL),
-(1019, 31, NULL, 1, NULL, NULL, 'R!', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Backhand', '0', 'H', NULL, 3000, 10104, 10223, NULL),
+(1019, 31, NULL, 1, NULL, NULL, 'R!', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Backhand', '0', 'H', NULL, 3000, 10104, 10210, NULL),
 (1019, 32, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, NULL, NULL, 10200, NULL),
 (1019, 32, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10629, NULL),
 (1019, 33, NULL, 1, '12:00', 'D', 'L!', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3012, 10104, 10218, NULL),
@@ -3498,10 +3500,10 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1020, 25, 'a', 1, NULL, NULL, 'L', 'L', 'High', '0', NULL, NULL, 'Back of Heel', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3032, 10312, NULL, NULL),
 (1020, 25, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3000, 10102, 10403, NULL),
 (1020, 26, NULL, 1, '12:00', 'D', 'Lh+R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', 2004, 3002, 10002, NULL, NULL),
-(1020, 27, NULL, 1, NULL, NULL, 'L;R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3026, 10102, 10221, 'straight elbow'),
+(1020, 27, NULL, 1, NULL, NULL, 'L;R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3026, 10102, 10221, NULL),
 (1020, 28, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Arch Hand', '0', 'F', NULL, 3011, 10100, 10231, NULL),
 (1020, 29, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, NULL, NULL, NULL),
-(1020, 29, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3026, 10102, 10221, 'straight elbow'),
+(1020, 29, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3026, 10102, 10221, NULL),
 (1020, 30, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Arch Hand', '0', 'F', NULL, 3011, 10100, 10231, NULL),
 (1020, 31, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Knife-Hand', 1, 'F', NULL, 3003, 10100, 10215, NULL),
 (1020, 32, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Forefist', '0', 'F', NULL, 3003, 10100, 10222, NULL),
@@ -3516,7 +3518,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1020, 37, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3025, 10705, NULL, NULL),
 (1020, 37, 'b', 1, NULL, NULL, 'Rh+L', 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3032, 10710, NULL, NULL),
 (1020, 37, 'c', 1, NULL, NULL, 'L+R', 'L', 'Mid', 1, '9:00', 'F', 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3019, 10308, NULL, 'two direction kick'),
-(1020, 37, 'd', 1, NULL, NULL, 'R', 'R', 'Mid', 1, '3:00', 'E', 'Foot', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3032, 10302, NULL, NULL),
+(1020, 37, 'd', 1, NULL, NULL, 'R', 'R', 'Mid', 1, '3:00', 'E', 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3032, 10302, NULL, 'was 10305 flying side piercing kick'),
 (1020, 38, NULL, '0', NULL, NULL, NULL, 'L', NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Palm', 1, 'F', NULL, NULL, 10112, 10402, NULL),
 (1020, 39, NULL, 1, NULL, NULL, 'R;L', 'R', NULL, '0', '6:00', 'C', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3022, 10102, 10203, NULL),
 (1020, 40, 'a', 1, NULL, NULL, 'L', 'R', NULL, '0', '6:00', 'C', NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', 2004, 3047, 10008, NULL, NULL),
@@ -3555,8 +3557,8 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1021, 13, NULL, 1, NULL, NULL, 'L', 'L', 'Mid', '0', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10306, NULL, NULL),
 (1021, 14, 'a', 1, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3004, NULL, NULL, NULL),
 (1021, 14, 'b', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3035, 10104, 10400, NULL),
-(1021, 15, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3003, 10104, 10221, 'straight elbow'),
-(1021, 16, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3003, 10104, 10221, 'straight elbow'),
+(1021, 15, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3003, 10104, 10221, NULL),
+(1021, 16, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3003, 10104, 10221, NULL),
 (1021, 17, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'R Low/L Mid', NULL, NULL, 'Palm', '0', 'F', 2004, 3000, 10100, 10406, NULL),
 (1021, 18, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'L Low/R Mid', NULL, NULL, 'Palm', '0', 'F', 2004, 3000, 10100, 10406, NULL),
 (1021, 19, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Outer Forearm', '0', 'H', NULL, 3003, 10104, 10407, NULL),
@@ -3603,7 +3605,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1022, 6, 'b', 1, '9:00', 'B', 'Rh+L', NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Reverse Knife-Hand', 1, 'F', NULL, 3001, 10106, 10404, NULL),
 (1022, 7, 'a', 1, '6:00', 'C', 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Upset Fingertip', '0', NULL, NULL, 3001, 10100, 10202, NULL),
 (1022, 7, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, NULL),
-(1022, 8, 'a', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', '12:00', 'D', 'Outer Forearm', '0', 'H', NULL, 3018, 10104, 10425, NULL),
+(1022, 8, 'a', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', '12:00', 'D', 'Outer Forearm', '0', 'H', NULL, 3018, 10104, 10415, NULL),
 (1022, 8, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Forearm', '0', NULL, NULL, NULL, NULL, 10400, NULL),
 (1022, 9, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, 3001, 3000, NULL, 1022, NULL),
 (1022, 9, 'b', 1, '3:00', 'A', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Reverse Knife-Hand', 1, 'F', NULL, 3001, 10106, 10404, NULL),
@@ -3621,7 +3623,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1022, 18, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'S', NULL, NULL, 10302, 10403, NULL),
 (1022, 19, 'a', '0', '3:00', 'A', 'R>L', 'R', NULL, '0', '5:00', '~C', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3012, 10701, 10201, 'front elbow'),
 (1022, 19, 'b', '0', NULL, NULL, 'Rh+L', 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 10100, 10629, NULL),
-(1022, 20, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', NULL, 3000, NULL, 10202, NULL),
+(1022, 20, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', NULL, 3000, NULL, 10204, NULL),
 (1022, 20, 'b', 1, '6:00', 'C', NULL, 'L', NULL, '0', '12:00', 'D', NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, 3005, 10112, 10622, NULL),
 (1022, 21, NULL, 1, '2:00', 'AD', 'Rh+Lh', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'X-Fist', '0', 'F', NULL, 3054, 10100, 10406, 'pivot?'),
 (1022, 22, NULL, 1, '6:00', 'C', 'L!', NULL, NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3050, 10106, 10417, NULL),
@@ -3635,7 +3637,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1022, 28, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10640, NULL),
 (1022, 29, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, NULL, NULL, 10200, NULL),
 (1022, 29, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10641, NULL),
-(1022, 30, NULL, 1, '12:00', 'D', 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forearm', '0', 'F', NULL, 3012, 10100, 10410, 'L>R? forearm likely should be inner forearm'),
+(1022, 30, NULL, 1, '12:00', 'D', 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3012, 10100, 10410, '+Outer L>R? forearm likely should be inner forearm'),
 (1022, 31, NULL, '0', NULL, NULL, 'Rh', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forefist', '0', 'F', 2001, NULL, NULL, 10200, NULL),
 (1022, 32, NULL, 1, NULL, NULL, 'L', 'L', 'Low', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, 10603, NULL),
 (1022, 33, 'a', '0', NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3025, 10705, NULL, NULL),
@@ -3713,7 +3715,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1023, 51, 'a', 1, NULL, NULL, 'R!', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3031, 10106, 10201, 'front strike'),
 (1023, 51, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10633, 'not desc'),
 (1023, 52, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', '12:00', 'D', 'Side Sole', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10313, 10607, NULL),
-(1023, 52, 'b', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', '4:00', 'AC', 'Outer Forearm', '0', 'H', NULL, NULL, 10106, 10415, NULL),
+(1023, 52, 'b', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', '4:00', 'AC', 'Outer Forearm', '0', 'H', NULL, NULL, 10106, 10425, NULL),
 (1023, 52, 'c', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10603, 'not desc'),
 (1023, 53, 'a', 1, NULL, NULL, 'L', 'L', NULL, '0', '6:00', 'C', 'Side Sole', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10313, 10607, NULL),
 (1023, 53, 'b', 1, NULL, NULL, 'L', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', '2:00', 'DE', 'Outer Forearm', '0', 'H', NULL, NULL, 10106, 10400, 'dir desc as ED, half facing in sitting?!'),
@@ -3730,7 +3732,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1023, 62, NULL, 1, '9:00', 'B', 'L', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forearm', '0', 'F', NULL, 3004, 10106, 10414, NULL),
 (1023, 63, NULL, 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forearm', '0', 'F', NULL, NULL, NULL, 10414, NULL),
 (1023, 64, 'a', 1, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3002, NULL, NULL, 'ERROR in large diag'),
-(1023, 64, 'b', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3011, 10103, 10223, NULL),
+(1023, 64, 'b', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3011, 10103, 10210, NULL),
 (1023, 65, 'a', 1, '9:00', 'B', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3001, NULL, NULL, NULL),
 (1023, 65, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Forefist', 1, 'F', NULL, 3003, 10100, 10224, NULL),
 (1023, 66, 'a', 1, '3:00', 'A', 'R>L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3012, NULL, NULL, NULL),
@@ -3826,7 +3828,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1025, 4, 'b', 1, NULL, NULL, NULL, 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3032, 10104, 10607, NULL),
 (1025, 5, NULL, 1, NULL, NULL, 'Rh;L+R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'X-Fist', '0', 'H', NULL, 3026, 10104, 10421, 'diff than other diagrams for rev shift'),
 (1025, 6, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Flat Fingertip', '0', 'F', NULL, 3011, 10100, 10220, 'R>L?'),
-(1025, 7, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3018, 10102, 10221, 'straight elbow'),
+(1025, 7, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3018, 10102, 10221, NULL),
 (1025, 8, NULL, 1, NULL, NULL, 'Rh+L;R', 'L', NULL, '0', '2:00', 'AD', NULL, 'L', 'High', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10205, 'slight (1/2 FL) R shift'),
 (1025, 9, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Knife-Hand', '0', 'RH', NULL, 3003, 10100, 10425, 'outward side?'),
 (1025, 10, NULL, 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', 'F', NULL, 3000, 10108, 10411, NULL),
@@ -3841,7 +3843,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1025, 15, 'b', 1, NULL, NULL, NULL, 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3032, 10104, 10607, NULL),
 (1025, 16, NULL, 1, NULL, NULL, 'Lh;L+R', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'X-Fist', '0', 'H', NULL, 3026, 10104, 10421, NULL),
 (1025, 17, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Flat Fingertip', '0', 'F', NULL, 3011, 10100, 10220, 'L>?R?'),
-(1025, 18, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3018, 10102, 10221, 'straight elbow'),
+(1025, 18, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3018, 10102, 10221, NULL),
 (1025, 19, NULL, 1, NULL, NULL, 'Lh+R;L', 'R', NULL, '0', '10:00', 'BD', NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10205, NULL),
 (1025, 20, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Knife-Hand', '0', 'RH', NULL, 3003, 10100, 10425, NULL),
 (1025, 21, NULL, 1, NULL, NULL, 'L', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Palm', '0', 'F', NULL, 3000, 10108, 10411, NULL),
@@ -3854,7 +3856,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1025, 27, NULL, 1, '9:00', 'B', 'Lh+R', 'R', 'High', '0', NULL, NULL, 'Back of Heel', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3016, 10310, NULL, NULL),
 (1025, 28, 'a', 1, NULL, NULL, 'R', 'L', NULL, '0', '7:00', 'BC', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10721, NULL, NULL),
 (1025, 28, 'b', 1, NULL, NULL, 'Rh+L', 'L', 'High', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, NULL, 10302, NULL, NULL),
-(1025, 29, NULL, '0', NULL, NULL, 'R', 'L', NULL, '0', '11:00', 'BD', NULL, 'L', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10223, NULL),
+(1025, 29, NULL, '0', NULL, NULL, 'R', 'L', NULL, '0', '11:00', 'BD', NULL, 'L', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10210, NULL),
 (1025, 30, 'a', 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3002, NULL, NULL, NULL),
 (1025, 30, 'b', 1, NULL, NULL, 'Rh+L', NULL, NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Reverse Knife-Hand', '0', 'F', NULL, 3013, 10106, 10417, NULL),
 (1025, 31, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Elbow', 1, 'F', NULL, 3013, 10109, 10213, NULL),
@@ -3864,7 +3866,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1025, 34, NULL, 1, '3:00', 'A', 'Rh+L', 'L', 'High', '0', NULL, NULL, 'Back of Heel', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3005, 10310, NULL, NULL),
 (1025, 35, 'a', 1, NULL, NULL, 'L', 'R', NULL, '0', '5:00', 'AC', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10721, NULL, NULL),
 (1025, 35, 'b', 1, NULL, NULL, 'Lh+R', 'R', 'High', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, NULL, 10302, NULL, NULL),
-(1025, 36, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', '1:00', 'AD', NULL, 'R', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10223, 'diagram looks to be 1 SW'),
+(1025, 36, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', '1:00', 'AD', NULL, 'R', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10210, 'diagram looks to be 1 SW'),
 (1025, 37, 'a', 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3001, NULL, NULL, NULL),
 (1025, 37, 'b', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3003, 10104, 10403, NULL),
 (1025, 38, NULL, 1, '6:00', 'C', 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', NULL, 3012, 10102, 10426, NULL),
@@ -3875,18 +3877,18 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1025, 42, 'a', 1, NULL, NULL, 'L', NULL, NULL, '0', '8:00', '~B', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10732, NULL, NULL),
 (1025, 42, 'b', 1, '12:00', 'D', 'R!', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3004, 10104, 10218, NULL),
 (1025, 43, NULL, 1, '12:00', 'D', 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3047, 10104, 10403, NULL),
-(1025, 44, 'a', 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3041, 10322, 10999, NULL),
+(1025, 44, 'a', 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3041, 10302, 10999, 'was 10322 Mid-Air Kick'),
 (1025, 44, 'b', 1, NULL, NULL, NULL, 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3032, 10104, 10403, NULL),
-(1025, 45, 'a', 1, NULL, NULL, 'L+R', 'L', 'Mid', 1, NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3040, 10322, 10999, NULL),
+(1025, 45, 'a', 1, NULL, NULL, 'L+R', 'L', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3040, 10302, 10999, 'was 10322 Mid-Air Kick'),
 (1025, 45, 'b', 1, NULL, NULL, NULL, 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3032, 10104, 10403, NULL),
 (1025, 46, 'a', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Reverse Knife-Hand', '0', 'F', NULL, 3018, 10100, 10409, 'R>L?'),
 (1025, 46, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, 'Side fist not explicitly mentioned but in pics'),
 (1025, 47, 'a', 1, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3003, NULL, NULL, NULL),
-(1025, 47, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Side Elbow', '0', 'H', NULL, 3026, 10104, 10202, NULL),
+(1025, 47, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '6:00', 'C', 'Elbow', '0', 'H', NULL, 3026, 10104, 10203, '-Side from Elbow'),
 (1025, 48, 'a', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Reverse Knife-Hand', '0', 'F', NULL, 3018, 10100, 10409, 'L>R?'),
 (1025, 48, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, 'Side fist not explicitly mentioned but in pics'),
 (1025, 49, 'a', 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3003, NULL, NULL, NULL),
-(1025, 49, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Side Elbow', '0', 'H', NULL, 3026, 10104, 10202, NULL),
+(1025, 49, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Elbow', '0', 'H', NULL, 3026, 10104, 10203, '-Side from Elbow'),
 (1025, 999, NULL, 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3000, 10010, NULL, NULL);
 
 
@@ -3903,11 +3905,11 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1026, 6, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot Sole', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10315, 10629, NULL),
 (1026, 7, 'a', 1, '9:00', 'A', 'R', NULL, NULL, '0', '9:00', 'A', NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3001, 10106, 10201, 'Front Elbow'),
 (1026, 7, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10629, NULL),
-(1026, 8, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '3:00', 'B', 'Back Elbow', '0', 'F', NULL, NULL, NULL, 10202, NULL),
+(1026, 8, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', '3:00', 'B', 'Back Elbow', '0', 'F', NULL, NULL, NULL, 10204, NULL),
 (1026, 8, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10625, NULL),
 (1026, 9, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', '3:00', 'B', 'Backfist', '0', 'F', NULL, NULL, NULL, 10207, NULL),
 (1026, 9, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10630, NULL),
-(1026, 10, NULL, 1, '12:00', 'D', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Side Elbow', 1, 'F', NULL, 3001, 10110, 10202, NULL),
+(1026, 10, NULL, 1, '12:00', 'D', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Elbow', 1, 'F', NULL, 3001, 10110, 10203, '-Side from Elbow'),
 (1026, 11, NULL, '0', '3:00', 'A', 'L', 'R', NULL, '0', '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, '0', 'S', 2002, 3002, 10109, 10607, NULL),
 (1026, 12, NULL, 1, NULL, NULL, 'Lh+R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, NULL, 10302, 10607, NULL),
 (1026, 13, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', '11:00', '~D', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10704, NULL, NULL),
@@ -3916,7 +3918,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1026, 15, 'a', 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Knife-Hand', '0', 'F', NULL, 3001, 10107, 10201, 'Standing Up, front strike'),
 (1026, 15, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10614, NULL),
 (1026, 16, NULL, 1, '3:00', 'B', 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'L Mid/R High', NULL, NULL, 'Knife-Hand', 1, NULL, NULL, 3001, 10104, 10400, 'L>R?'),
-(1026, 17, NULL, 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3041, 10322, NULL, NULL),
+(1026, 17, NULL, 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3041, 10302, NULL, 'was 10322 Mid-Air Kick'),
 (1026, 18, NULL, '0', NULL, NULL, NULL, 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forearm', 1, 'H', NULL, NULL, 10100, 10400, 'double'),
 (1026, 19, NULL, 1, '12:00', 'D', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3002, 10004, NULL, NULL),
 (1026, 20, 'a', 1, NULL, NULL, 'R;L', 'R', NULL, '0', '10:00', 'BD', NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'H', NULL, 3051, 10109, 10205, NULL),
@@ -3987,7 +3989,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1027, 24, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3003, 10100, 10200, NULL),
 (1027, 25, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, NULL, NULL, NULL),
 (1027, 25, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3026, 10102, 10407, NULL),
-(1027, 26, NULL, 1, NULL, NULL, 'L', 'L', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
+(1027, 26, NULL, 1, NULL, NULL, 'L', 'L', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10300, 10607, 'was 10301 side front snap kick'),
 (1027, 27, 'a', 1, NULL, NULL, 'L', 'L', NULL, '0', '2:00', '~A', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10703, NULL, NULL),
 (1027, 27, 'b', 1, '6:00', 'C', 'Lh+R!', NULL, NULL, '0', '3:00', 'A', NULL, 'R', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3004, 10106, 10205, NULL),
 (1027, 28, 'a', 1, '3:00', 'A', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3001, NULL, NULL, NULL),
@@ -4001,7 +4003,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1027, 33, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10100, 10401, NULL),
 (1027, 34, 'a', 1, NULL, NULL, 'L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, NULL, NULL, NULL),
 (1027, 34, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3026, 10102, 10407, NULL),
-(1027, 35, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10301, 10607, NULL),
+(1027, 35, NULL, 1, NULL, NULL, 'R', 'R', 'Mid', '0', NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10300, 10607, 'was 10301 side front snap kick'),
 (1027, 36, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', '4:00', '~A', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10703, NULL, NULL),
 (1027, 36, 'b', 1, '12:00', 'D', 'Rh+L!', NULL, NULL, '0', '3:00', 'A', NULL, 'L', 'Mid', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3012, 10106, 10205, NULL),
 (1027, 37, 'a', 1, '3:00', 'A', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3002, NULL, NULL, NULL),
@@ -4042,7 +4044,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1027, 57, 'a', 1, '12:00', 'D', 'L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3012, NULL, NULL, NULL),
 (1027, 57, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', '1:00', 'AD', NULL, 'R', 'Low', NULL, NULL, 'Forefist', '0', 'H', NULL, 3051, 10109, 10200, '1/2 SW L'),
 (1027, 57, 'c', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10650, NULL),
-(1027, 58, NULL, 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3057, 10322, NULL, NULL),
+(1027, 58, NULL, 1, NULL, NULL, 'L+R', 'R', 'Mid', 1, NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'S', NULL, 3057, 10302, NULL, 'was 10322 Mid-Air Kick'),
 (1027, 59, NULL, '0', NULL, NULL, NULL, 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, NULL, 10104, 10403, NULL),
 (1027, 60, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3036, 10702, NULL, NULL),
 (1027, 60, 'b', 1, NULL, NULL, 'Rh+L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Arch Hand', '0', 'RH', NULL, NULL, 10100, 10402, NULL),
@@ -4092,11 +4094,11 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1028, 26, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633, 'L>R? R arm not described, front strike'),
 (1028, 27, 'a', 1, '6:00', 'C', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3002, NULL, NULL, NULL),
 (1028, 27, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'Forearm', 1, 'F', NULL, 3003, 10100, 10401, 'block not described'),
-(1028, 28, NULL, 1, NULL, NULL, 'L+R', 'R', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3051, 10300, NULL, NULL),
+(1028, 28, NULL, 1, NULL, NULL, 'L+R', 'R', NULL, 1, NULL, NULL, 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3051, 10300, NULL, NULL),
 (1028, 29, NULL, '0', NULL, NULL, NULL, 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, NULL, 10104, 10403, '~1/2 SW left'),
-(1028, 30, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, 3003, 10100, 10410, NULL),
+(1028, 30, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3003, 10100, 10410, '+Outer'),
 (1028, 31, NULL, 1, NULL, NULL, 'L+R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3022, 10100, 10200, 'shifting'),
-(1028, 32, NULL, 1, '12:00', 'C', 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forearm', '0', 'F', NULL, 3004, 10100, 10410, 'R>L?'),
+(1028, 32, NULL, 1, '12:00', 'C', 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3004, 10100, 10410, '+Outer R>L?'),
 (1028, 33, NULL, 1, NULL, NULL, 'L+R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3022, 10100, 10200, 'shifting'),
 (1028, 34, NULL, 1, '8:00', 'BC', 'Lh+Rh', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Arch Hand', 1, 'RH', NULL, 3020, 10100, 10400, 'double, more like 9:00 per app'),
 (1028, 35, 'a', 1, NULL, NULL, 'Rh', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Knife-Hand', '0', 'F', NULL, NULL, NULL, 10215, NULL),
@@ -4185,7 +4187,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1029, 20, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'R Low/L Mid', NULL, NULL, 'Palm', '0', 'F', NULL, NULL, 10100, 10406, 'slipping?'),
 (1029, 21, 'a', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3000, 10111, 10201, 'described differenly but app shows backfist'),
 (1029, 21, 'b', 1, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 10708, 10649, NULL),
-(1029, 22, NULL, 1, NULL, NULL, 'L', 'R', NULL, '12:00', 'D', NULL, 'L', 'Mid', NULL, NULL, 'Side Elbow', '0', 'H', NULL, 3000, 10105, 10202, 'no turn, though desc as clockwise?!'),
+(1029, 22, NULL, 1, NULL, NULL, 'L', 'R', NULL, '12:00', 'D', NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3000, 10105, 10203, '-Side from Elbow, no turn, though desc as clockwise?!'),
 (1029, 23, NULL, 1, '3:00', 'A', 'R>L;R', 'L', NULL, '3:00', 'A', NULL, NULL, 'High', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3016, 10104, 10403, 'R>L?'),
 (1029, 24, 'a', 1, '9:00', 'B', 'R>L', 'R', NULL, '1:00', '~D', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3012, 10701, NULL, NULL),
 (1029, 24, 'b', 1, NULL, NULL, 'Rh+L', 'R', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, NULL, 10104, 10200, NULL),
@@ -4205,7 +4207,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1031, 5, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3000, 10100, 10201, NULL),
 (1031, 5, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633, NULL),
 (1031, 6, 'a', 1, NULL, NULL, 'Lh', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', '6:00', 'C', 'Backfist', '0', 'F', NULL, NULL, NULL, 10207, NULL),
-(1031, 6, 'b', 1, NULL, NULL, '&nbsp;', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Low', '11:00', 'BD', 'Forearm', '0', '&nbsp;', NULL, NULL, NULL, 10420, 'other than side front?'),
+(1031, 6, 'b', 1, NULL, NULL, '&nbsp;', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Low', '11:00', 'BD', 'Forearm', '0', '&nbsp;', NULL, NULL, NULL, 10425, 'outward or side front?'),
 (1031, 6, 'c', 1, NULL, NULL, 'Lh', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', 2002, NULL, NULL, 10201, NULL),
 (1031, 6, 'd', 1, NULL, NULL, '&nbsp;', NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633, NULL),
 (1031, 7, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forearm', '0', 'F', NULL, 3000, 10100, 10402, NULL),
@@ -4224,7 +4226,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1031, 16, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Low>Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3003, 10104, 10424, NULL),
 (1031, 17, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3003, 10104, 10218, NULL),
 (1031, 18, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'X-Fist', '0', 'F', NULL, 3000, 10100, 10406, NULL),
-(1031, 19, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Knee', NULL, NULL, NULL, NULL, 'X-Palm', '0', 'H', NULL, NULL, 10300, 10608, NULL),
+(1031, 19, NULL, 1, NULL, NULL, 'R', 'R', 'Low', '0', NULL, NULL, 'Knee', NULL, NULL, NULL, NULL, 'X-Palm', '0', 'H', NULL, NULL, 10303, 10608, 'was 10300 front snap kick'),
 (1031, 20, NULL, 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3026, 10104, 10218, NULL),
 (1031, 21, 'a', 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3000, NULL, NULL, NULL),
 (1031, 21, 'b', 1, NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3022, 10101, 10216, NULL),
@@ -4252,7 +4254,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1031, 36, NULL, '0', NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200, NULL),
 (1031, 37, 'a', 1, '12:00', 'D', 'R>L;R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3004, 10100, 10200, NULL),
 (1031, 37, 'b', 1, NULL, NULL, 'Rh', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3032, NULL, 10200, NULL),
-(1031, 38, 'a', 1, NULL, NULL, 'R+L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', NULL, 3026, 10101, 10202, NULL),
+(1031, 38, 'a', 1, NULL, NULL, 'R+L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', NULL, 3026, 10101, 10204, NULL),
 (1031, 38, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10625, NULL),
 (1031, 39, 'a', 1, '9:00', 'B', 'L>R;L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Low>Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3001, 10105, 10424, NULL),
 (1031, 39, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Open Fist', '0', NULL, NULL, NULL, NULL, 10201, 'Strike or pushing block?'),
@@ -4279,7 +4281,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1032, 6, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10631),
 (1032, 7, 'a', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3000, 10100, 10208),
 (1032, 7, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633),
-(1032, 8, 'a', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, 'L', 'High', '6:00', 'C', NULL, '0', 'F', NULL, NULL, NULL, 10207),
+(1032, 8, 'a', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, 'L', 'High', '6:00', 'C', 'Backfist', '0', 'F', NULL, NULL, NULL, 10207),
 (1032, 8, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10631),
 (1032, 9, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200),
 (1032, 10, 'a', 1, '12:00', 'D', 'R', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3047, 10703, NULL),
@@ -4298,7 +4300,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1032, 21, 'a', 1, NULL, NULL, 'R;L+Rh', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'F', NULL, 3025, 10100, 10201),
 (1032, 21, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10629),
 (1032, 22, NULL, 1, '9:00', 'B', 'L', 'R', NULL, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3001, 10111, 10644),
-(1032, 23, NULL, 1, NULL, NULL, 'L', 'L', 'High', NULL, NULL, 'Foot Sword', 'L', 'High', NULL, NULL, 'Backfist', '0', 'S', NULL, NULL, 10302, 10214),
+(1032, 23, NULL, 1, NULL, NULL, 'L', 'L', 'High', NULL, NULL, 'Foot Sword', 'L', 'Mid', NULL, NULL, 'Backfist', '0', 'S', NULL, NULL, 10302, 10214),
 (1032, 24, 'a', 1, '10:00', 'BD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3014, NULL, NULL),
 (1032, 24, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'Palm', 1, 'H', NULL, 3000, 10104, 10406),
 (1032, 25, 'a', 1, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3010, NULL, NULL),
@@ -4309,16 +4311,16 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1032, 28, 'b', 1, '6:00', 'C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3012, NULL, NULL),
 (1032, 28, 'c', 1, NULL, NULL, 'L+Rh', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3003, 10100, 10643),
 (1032, 29, NULL, 1, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Outer Forearm', 1, 'F', NULL, 3000, 10106, 10417),
-(1032, 30, NULL, 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3000, 10100, 10402),
+(1032, 30, NULL, 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forearm', '0', 'F', NULL, 3000, 10100, 10402),
 (1032, 31, NULL, 1, NULL, NULL, 'R;L+R', 'R', NULL, NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'X-Fist', '0', 'H', NULL, 3026, 10104, 10406),
-(1032, 32, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3000, 10100, 10402),
-(1032, 33, NULL, 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3000, 10100, 10402),
-(1032, 34, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Outer Forearm', '0', 'F', NULL, 3000, 10100, 10402),
+(1032, 32, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forearm', '0', 'F', NULL, 3000, 10100, 10402),
+(1032, 33, NULL, 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forearm', '0', 'F', NULL, 3000, 10100, 10402),
+(1032, 34, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forearm', '0', 'F', NULL, 3000, 10100, 10402),
 (1032, 35, NULL, 1, NULL, NULL, 'L', 'L', 'Low', NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, NULL),
 (1032, 36, NULL, 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3000, 10100, 10200),
 (1032, 37, 'a', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200),
 (1032, 37, 'b', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200),
-(1032, 38, NULL, 1, '12:00', 'D', 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', NULL, 3004, 10101, 10204),
+(1032, 38, NULL, 1, '12:00', 'D', 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Elbow', '0', 'F', NULL, 3004, 10101, 10204),
 (1032, 39, 'a', 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10703, 10999),
 (1032, 39, 'b', 1, '9:00', 'B', 'Rh+L', 'R', NULL, NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Outer Forearm', '0', 'H', NULL, 3001, 10104, 10400),
 (1032, 39, 'c', 1, NULL, NULL, '&nbsp;', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', NULL, NULL, 3032, 10999, 10200),
@@ -4345,15 +4347,15 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1030, 9, NULL, 1, NULL, NULL, 'R!', 'L', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backhand', '0', 'H', NULL, 3000, 10104, 10218, NULL),
 (1030, 10, NULL, '0', NULL, NULL, 'L', 'L', 'Mid', NULL, NULL, 'Reverse Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, NULL, 10319, 10629, 'app in #8 shows mid'),
 (1030, 11, 'a', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, 2004, 3000, 10706, NULL, NULL),
-(1030, 11, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Palm', 1, 'H', NULL, 3011, 10104, 10233, NULL),
+(1030, 11, 'b', 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Palm', 1, 'H', NULL, 3011, 10104, 10419, NULL),
 (1030, 12, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', 2004, 3000, 10100, 10401, NULL),
 (1030, 13, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Reverse Knife-Hand', '0', 'RH', 2004, NULL, NULL, 10401, NULL),
 (1030, 14, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, NULL, 10200, NULL),
 (1030, 15, NULL, '0', NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200, 'ERROR Foot diag missing lifted heel, though desc in text'),
 (1030, 16, NULL, 1, '5:00', 'AC', 'R', 'R', 'Mid', NULL, NULL, 'Back of Heel', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3027, 10321, 10607, 'ERROR large photo and foot diag wrong kick angle'),
-(1030, 17, NULL, '0', '6:00', 'C', 'R!', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3014, 10104, 10223, 'app shows mid'),
+(1030, 17, NULL, '0', '6:00', 'C', 'R!', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3014, 10104, 10210, NULL),
 (1030, 18, NULL, 1, '7:00', 'BC', 'L', 'L', 'Mid', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'H', NULL, 3008, 10320, 10607, 'ERROR sim to #16, made to match angles'),
-(1030, 19, NULL, 1, '6:00', 'C', 'L!', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3007, 10104, 10223, NULL),
+(1030, 19, NULL, 1, '6:00', 'C', 'L!', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Backfist', '0', 'H', NULL, 3007, 10104, 10210, NULL),
 (1030, 20, NULL, 1, '12:00', 'D', 'R', 'R', NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Forefist', '0', 'F', NULL, 3004, 10100, 10200, 'R>L?'),
 (1030, 21, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200, NULL),
 (1030, 22, NULL, 1, NULL, NULL, 'L', 'R', NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Bow Wrist', '0', 'H', NULL, 3000, 10102, 10416, NULL),
@@ -4378,7 +4380,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1030, 36, 'a', 1, '12:00', 'D', 'L', 'R', NULL, NULL, NULL, NULL, NULL, 'Low', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', NULL, 3012, 10104, 10403, 'L>R?'),
 (1030, 36, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10611, NULL),
 (1030, 37, 'a', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Forearm', '0', 'F', NULL, 3011, 10100, 10400, 'L>R?'),
-(1030, 37, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', NULL, NULL, NULL, NULL, 10415, NULL),
+(1030, 37, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', NULL, NULL, NULL, NULL, 10425, NULL),
 (1030, 38, NULL, 1, NULL, NULL, 'R!', 'R', NULL, NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Forefist', 1, 'F', NULL, 3000, 10100, 10224, NULL),
 (1030, 39, 'a', 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3003, 10111, 10201, 'strike described differently, but app shows backfist'),
 (1030, 39, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10649, NULL),
@@ -4400,7 +4402,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1030, 52, 'b', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Palm', '0', 'F', NULL, 3000, 10100, 10418, NULL),
 (1030, 53, NULL, 1, '10:00', 'BD', 'Lh+Rh', 'R', NULL, NULL, NULL, NULL, 'L', 'Low>Mid', '9:00', 'B', 'Knife-Hand', '0', 'RH', NULL, 3021, 10100, 10405, NULL),
 (1030, 54, 'a', 1, '12:00', 'D', 'R', 'R', 'High', NULL, NULL, 'Foot', NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'S', NULL, 3010, 10302, 10403, 'two movement in one count'),
-(1030, 54, 'b', 1, NULL, NULL, 'R>L', NULL, NULL, NULL, NULL, NULL, NULL, 'Mid', '6:00', 'C', 'Side Elbow', 1, 'F', 2004, NULL, 10110, 10204, 'only b in slow motion?'),
+(1030, 54, 'b', 1, NULL, NULL, 'R>L', NULL, NULL, NULL, NULL, NULL, NULL, 'Mid', '6:00', 'C', 'Elbow', 1, 'F', 2004, NULL, 10110, 10204, 'Twin Side Back Elbow, only b in slow motion?'),
 (1030, 55, NULL, 1, NULL, NULL, 'L', NULL, NULL, '3:00', 'A', NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'S', NULL, 3000, 10106, 10206, NULL),
 (1030, 56, NULL, 1, NULL, NULL, 'R', 'L', NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, NULL, 10100, 10200, 'R>L?'),
 (1030, 999, NULL, 1, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3000, 10013, NULL, NULL);
