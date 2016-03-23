@@ -3575,7 +3575,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1021, 12, 'b', 1, '6:00', 'C', NULL, 'R', NULL, '0', '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3012, 10008, NULL, NULL, NULL),
 (1021, 13, NULL, 1, NULL, NULL, 'L', 'L', 'Mid', '0', NULL, NULL, 'Foot Sword', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10306, NULL, NULL, NULL),
 (1021, 14, 'a', 1, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3004, NULL, NULL, NULL, NULL),
-(1021, 14, 'b', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3035, 10104, 10400, NULL, NULL),
+(1021, 14, 'b', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3003, 10104, 10400, NULL, NULL),
 (1021, 15, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3003, 10104, 10221, NULL, NULL),
 (1021, 16, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3003, 10104, 10221, NULL, NULL),
 (1021, 17, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'R Low/L Mid', NULL, NULL, 'Palm', '0', 'F', 2004, 3000, 10100, 10406, NULL, NULL),
@@ -4276,7 +4276,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1031, 38, 'a', 1, NULL, NULL, 'R+L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', '6:00', 'C', 'Back Elbow', '0', 'F', NULL, 3026, 10101, 10204, NULL, NULL),
 (1031, 38, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10625, NULL, NULL),
 (1031, 39, 'a', 1, '9:00', 'B', 'L>R;L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Low>Mid', NULL, NULL, 'Palm', '0', 'H', NULL, 3001, 10105, 10424, NULL, NULL),
-(1031, 39, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Open Fist', '0', NULL, NULL, NULL, NULL, 10201, NULL, NULL),
+(1031, 39, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Open Fist', '0', NULL, NULL, NULL, NULL, 10200, NULL, 10201), -- from strike to punch to match Choong-Jang
 (1031, 40, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Forearm', '0', 'H', NULL, 3000, 10100, 10400, NULL, NULL),
 (1031, 40, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Inner Forearm', '0', NULL, NULL, NULL, NULL, 10400, NULL, NULL),
 (1031, 41, NULL, 1, '3:00', 'A', 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3004, 10104, 10400, NULL, NULL),
