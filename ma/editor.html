@@ -76,6 +76,7 @@
 
                 $scope.LegTechniques = cn.patterns.legtechniques();
                 $scope.ArmTechniques = cn.patterns.armtechniques();
+				$scope.AllTechniques = $scope.LegTechniques.concat($scope.ArmTechniques);
                 $scope.BodyMovements = cn.patterns.bodymovements();
                 $scope.Motions = cn.patterns.motions();
                 
@@ -383,7 +384,8 @@
 
                             <button ng-click="clear('move', a)" title="Clear Movement">x</button>
 
-                            <input type="text" ng-model="a.note" title="Note" placeholder="Note" ng-class="{ note: a.note }" style="border: 1px dashed gray; font-style: italic; width: 230px;" />
+                            <input type="text" ng-model="a.note" title="Note" placeholder="Note" ng-class="{ note: a.note }" style="border: 1px dashed gray; font-style: italic; width: 200px;" />
+							<select name='OriginalTechniqueID' ng-model="a.originaltechniqueid" title="Original Technique" ng-options="item.id as item.name for item in AllTechniques | orderBy:'name'" style='width: 100px;'></select>
                         </td>
 
                         <!-- FEET -->
@@ -428,7 +430,6 @@
                         <!-- FACING -->
                         <td class="facing">
                             <select name='Facing' ng-model="a.facing" title="Shoulder Facing" ng-options="item as item for item in enums.a_sFacing"></select>
-                            <input type="hidden" name="Notes" ng-model="a.notes" title="Line Notes" />
                         </td>
                     </tr>
                     <tr>
