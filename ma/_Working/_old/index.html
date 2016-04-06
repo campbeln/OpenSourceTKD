@@ -1,0 +1,310 @@
+﻿<html ng-app="ngCn">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+        <!-- script type="text/javascript" src="angular.preinit.js"></script -->
+        <script type="text/javascript" src="angular.js"></script>
+        <script type="text/javascript" src="data.js"></script>
+        <script type="text/javascript" src="patterndata.js.php?var=pdata&version=0.2"></script>
+        <script type="text/javascript">
+            //# 
+            var ngCn = angular.module("ngCn", []);
+
+
+            //# define Controller
+            ngCn.controller('PCountController', function ($scope) {
+                $scope.Model = {};
+                $scope.RowCount = 5;
+                $scope.data = data;
+
+                //# Initialize the controller
+                $scope.init = function () { };
+
+                $scope.range = function (n) {
+                    return new Array(n);
+                };
+            }); //# ngCn.controller('PCountController'...
+
+
+            //# 
+            $(document).ready(function () {
+                //# 
+                $("[name^=FeetInMotion]").keyup(function () {
+                    $(this).val(
+                        $(this).val().replace(/([a-z])/, function (s) {
+                            return s.toUpperCase();
+                        })
+                    );
+                });
+
+
+                //# Hook the #GenSQL button's .click
+                $('#GenSQL').click(function () {
+                    var $this, $TR, value, sSQL,
+                        a_sColumnNames = [],
+                        $TRs = $("TBODY TR"),
+                        iPatternID = $('#PatternID').val()
+                    ;
+
+                    //# Populate the a_sColumnNames then set the header of the sSQL
+                    $TRs.eq(0).find(":input").each(function() {
+                        a_sColumnNames.push($(this).attr('name'));
+                    });
+                    sSQL = "INSERT INTO PatternCount (`PatternID`, `" + a_sColumnNames.join('`, `') + "`) VALUES\n";
+
+                    //# Traverse .each of the $TRs
+                    $TRs.each(function () {
+                        $TR = $(this);
+
+                        //# If this $TR hasn't had data filled in, bail out of the .each
+                        if (!$TR.find("input[name='Count']").val()) { return false; }
+
+                        //# 
+                        sSQL += "(" + iPatternID;
+
+                        //# Traverse .each of the $TR's :input's
+                        $TR.find(":input").each(function () {
+                            $this = $(this);
+
+                            //# Determine the data-type and process the value accordingly
+                            switch($this.data("type")) {
+                            case "bool": {
+                                value = ($this.is(':checked') ? "1" : "0");
+                                break;
+                            }
+                            case "int": {
+                                value = parseInt($this.val(), 10) || null;
+                                break;
+                            }
+                            case "numeric": {
+                                value = parseFloat($this.val(), 10) || null;
+                                break;
+                            }
+                            default: { //# string
+                                value = $this.val() + '';
+                                value = (value ? "'" + mysql_real_escape_string(value) + "'" : null);
+                                break;
+                            }
+                            }
+
+                            //# Add this record's 
+                            sSQL += ", " + (value !== null ? value : "NULL");
+                        });
+
+                        //# 
+                        sSQL += "),\n";
+                    });
+                
+                    //# Set the .html of the #sql and return false (so the button doesn't submit)
+                    $('#sql').html('<pre>' + sSQL.substr(0, sSQL.length - 2) + ';</pre>');
+                    return false;
+                });
+
+
+                //# 
+                function mysql_real_escape_string(str) {
+                    return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (c) {
+                        switch (c) {
+                            case "\0":
+                                return "\\0";
+                            case "\x08":
+                                return "\\b";
+                            case "\x09":
+                                return "\\t";
+                            case "\x1a":
+                                return "\\z";
+                            case "\n":
+                                return "\\n";
+                            case "\r":
+                                return "\\r";
+                            case "\"":
+                            case "'":
+                            case "\\":
+                            case "%":
+                                return "\\" + c;
+                        }
+                    });
+                }
+            });
+			
+			var patterns = {};
+        </script>
+		<!--
+        <script type="text/javascript" src="patterndata.js.php?varjs=patterns&version=0.1"></script>
+		-->
+        <script type="text/javascript" src="patterndata.js"></script>
+
+        <style type="text/css">
+            .destroy {
+                display: none;
+            }
+
+            SELECT[name^=MotionID_],
+            SELECT[name^=BodyMovmentID_],
+            SELECT[name^=LegTechniqueID_],
+            SELECT[name^=ArmTechniqueID_] {
+            }
+
+            TABLE {
+                font-size: 70%;
+                line-height: 100%;
+                width: 98%;
+                margin: 15px auto 0 auto;
+            }
+                TABLE TR:hover {
+                    background: #FFBF66;
+                }
+                TABLE TH {
+                    padding: 5px;
+                    font-weight: normal;
+                    background: #FFBF66;
+                }
+                    TABLE TH:last-child {
+                        padding: 0;
+                    }
+                TABLE TD {
+                    padding: 5px 2px 5px 2px;
+                    white-space: nowrap;
+                }
+
+                TABLE SELECT,
+                TABLE INPUT {
+                    width: 30px;
+                    border: 1px solid gray;
+                }
+                    TABLE SELECT {
+                        width: auto;
+                    }
+                    TABLE .FeetInMotion INPUT {
+                        width: 70px;
+                    }
+                
+                TABLE .odd {
+                    background-color: #dddddd;
+                }
+
+        </style>
+    </head>
+    <body ng-controller="PCountController" ng-init="init()">
+        <select id='PatternID'>
+            <option ng-repeat="item in data.a_oPatterns" value="{{item.ID}}">{{item.Name}}</option>
+        </select>
+        <input id='GenSQL' type="button" value='Gen SQL' />
+
+
+        <div id='sql'></div>
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th><strong>Verbal</strong> Count</th>
+                    <th>Body Movement (Eyes To; Diagram Direction)</th>
+                    <th>Feet In Motion</th>
+                    <th>Leg &nbsp; Section &nbsp; <strong>Leg Technique</strong> (Stance To; Diagram Direction)</th>
+                    <th>Arm &nbsp; Section &nbsp; <strong>Arm Technique</strong> (Arm Technique To; Diagram Direction)</th>
+                    <th>☺ing</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="a in range(RowCount) track by $index" ng-class-odd="'odd'">
+                    <!-- COUNT -->
+                    <td>
+                        <input type='text' data-type='int' name='Count'>
+                        <input type='text' name='CountOrder'>
+                        <input type='checkbox' data-type="bool" name='Counted'>
+                    </td>
+
+                    <!-- MOVEMENT -->
+                    <td>
+                        <select data-type="int" name='MotionID'>
+                            <option ng-repeat="item in data.a_oMotions" value="{{item.ID}}">{{item.Name}}</option>
+                        </select>
+                        <select data-type="int" name='BodyMovementID'>
+                            <option ng-repeat="item in data.a_oMovements" value="{{item.ID}}">{{item.Name}}</option>
+                        </select>
+
+                        <br />(
+                        <select name='EyesTo'>
+                            <option ng-repeat="item in data.a_sDirection">{{item}}</option>
+                        </select> ;
+                        <select name='EyesDiagramDirection'>
+                            <option ng-repeat="item in data.a_sDiagramDirection">{{item}}</option>
+                        </select>
+                        )
+                    </td>
+
+                    <!-- FEET -->
+                    <td class='FeetInMotion'>
+                        <input type='text' name='FeetInMotion'>
+                    </td>
+
+                    <!-- LEG -->
+                    <td>
+                        <select name='LegLR'>
+                            <option ng-repeat="item in data.a_sLR">{{item}}</option>
+                        </select>
+                        <select name='LegSection'>
+                            <option ng-repeat="item in data.a_sSectionLeg">{{item}}</option>
+                        </select>
+                        <select data-type="int" name='LegTechniqueID'>
+                            <option ng-repeat="item in data.a_oTechniquesLeg" value="{{item.ID}}">{{item.Name}}</option>
+                        </select>
+
+                        <br />
+                        <select name='ToolLeg'>
+                            <option ng-repeat="item in data.a_sToolLeg">{{item}}</option>
+                        </select>
+                        (
+                        <select name='LegTo'>
+                            <option ng-repeat="item in data.a_sDirection">{{item}}</option>
+                        </select> ;
+                        <select name='LegDiagramDirection'>
+                            <option ng-repeat="item in data.a_sDiagramDirection">{{item}}</option>
+                        </select>
+                        )
+                    </td>
+
+                    <!-- ARM -->
+                    <td>
+                        <select name='ArmLR'>
+                            <option ng-repeat="item in data.a_sLR">{{item}}</option>
+                        </select>
+                        <select name='ArmSection'>
+                            <option ng-repeat="item in data.a_sSectionArm">{{item}}</option>
+                        </select>
+                        <select data-type="int" name='ArmTechniqueID'>
+                            <option ng-repeat="item in data.a_oTechniquesArm" value="{{item.ID}}">{{item.Name}}</option>
+                        </select>
+
+                        <br />
+                        <select name='ToolArm'>
+                            <option ng-repeat="item in data.a_sToolArm">{{item}}</option>
+                        </select>
+                        <input type='checkbox' data-type="bool" name='ArmToolIsTwin'>
+                        (
+                        <select name='ArmTo'>
+                            <option ng-repeat="item in data.a_sDirection">{{item}}</option>
+                        </select> ;
+                        <select name='ArmDiagramDirection'>
+                            <option ng-repeat="item in data.a_sDiagramDirection">{{item}}</option>
+                        </select>
+                        )
+                    </td>
+
+                    <!-- FACING -->
+                    <td class="facing">
+                        <select name='Facing'>
+                            <option ng-repeat="item in data.a_sFacing">{{item}}</option>
+                        </select>
+                        
+                        <input type="hidden" name="Notes" />
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </body>
+</html>
