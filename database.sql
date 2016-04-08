@@ -641,7 +641,7 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 (10320, 'Attack', 'Leg', 1, 'Outward Vertical Kick', NULL, 'Cr', 1, 0, 1, 0, 0),          -- - v4p70 Mid,High; 'Foot Sword' (Outward); 'Reverse Foot Sword' (Inward)
 (10321, 'Attack', 'Leg', 1, 'Downward Kick', NULL, 'Br', 1, 0, 1, 0, 0),                  -- - v4p58 'Back of Heel'
 (10322, 'Attack', 'Leg', 1, 'Mid-Air {Side Piercing} Kick', NULL, '~90°', 0, 1, 0, 0, 0),                 -- - dup 10302 v4p120 == Flying Side Piercing || Thrusting Kick
-(10323, 'Attack', 'Leg', 0, 'Flying High {Front Snap} Kick', NULL, '~Sr', 1, 0, 0, 0, 0),              -- - v4p118 High; 'Ball of Foot', 'Toes'
+(10323, 'Attack', 'Leg', 0, 'High {Front Snap} Kick', NULL, '~Sr', 1, 0, 0, 0, 0),              -- - v4p118 High; 'Ball of Foot', 'Toes' (was Flying)
 -- 'Ball of Foot','Heel','Back of Heel','Instep','Side Instep','Foot Sword','Side Sole','Knee','Reverse Foot Sword','Foot','Foot Sole','Toes'
 
 (10390, 'Attack', 'Leg', 0, 'Side Front Snap Kick', NULL, '~45°', 0, 0, 1, 0, 0),			    -- - dup 10300 v4p46 'Ball of Foot','Instep','Toes'

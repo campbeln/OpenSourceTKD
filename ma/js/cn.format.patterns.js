@@ -1,18 +1,18 @@
-//# 
+//#
 cn.format = window.cn.format || {};
 
 
-//# 
+//#
 //#     NOTE: Requires cn.data.patterns
 (function ($namespace, $patterns) {
     'use strict';
-    
 
-    //# 
+
+    //#
     $namespace.format.patterns = $namespace.format.patterns || {};
 
 
-    //# 
+    //#
     $namespace.format.patterns.groupByCount = function (sPatternId) {
         var i, iCount,
             ah_sPattern = $patterns.patterncounts("?", "PatternID", sPatternId),
@@ -41,7 +41,7 @@ cn.format = window.cn.format || {};
     };
 
 
-    //# 
+    //#
     $namespace.format.patterns.getColumnAsArray = function (ah_sRows, sColumnName, bIncludeNulls) {
         var i, value,
             a_sReturn = []
@@ -61,12 +61,13 @@ cn.format = window.cn.format || {};
     };
 
 
-    //# 
+    //#
     $namespace.format.patterns.formatTechnique = function (ah_sRows, sArmLeg) {
         var a_sTemp, sTwin, sFlying, i,
+            bArm = (sArmLeg.toLowerCase() === "arm"),
             sReturn = "",
             iLength = ah_sRows.length,
-            sArmLeg = (sArmLeg.toLowerCase() === "arm" ? "arm" : "leg"),
+            sArmLeg = (bArm ? "arm" : "leg"),
             sTechnique = sArmLeg + 'technique',
             sType = sArmLeg + 'techniquetype',
             sTool = sArmLeg + 'tool',
@@ -78,7 +79,7 @@ cn.format = window.cn.format || {};
             sLineOfAttack = sArmLeg + 'lineofattack',
             sIsArmToolTwin = (sArmLeg === "arm" ? "isarmtooltwin" : null)
         ;
-        
+
         //# Traverse the passed ah_sRows, appending each entry onto our sReturn value (handling the last entry seperate to avoid the last </br>)
         for (i = 0; i < iLength; i++) {
             //# Reset the a_sTemp for this loop, filling it with the present data
@@ -97,13 +98,13 @@ cn.format = window.cn.format || {};
             }
 
             if (ah_sRows[i][sTechnique]) {
-				sFlying = (ah_sRows[i]['islegtechniqueflying'] === "1" ? 'Flying ' : '');
-			
+                sFlying = (!bArm && ah_sRows[i]['islegtechniqueflying'] === "1" ? 'Flying ' : '');
+
                 if ((ah_sRows[i][sType] + "").trim().toLowerCase() == 'action') {
                     a_sTemp.push(ah_sRows[i][sTechnique]);
                 }
                 else {
-                    a_sTemp.push("<em>" + $namespace.format.patterns.formatTechniqueText(ah_sRows[i][sTechnique]) + "</em>");  //# b?
+                    a_sTemp.push("<em>" + sFlying + $namespace.format.patterns.formatTechniqueText(ah_sRows[i][sTechnique]) + "</em>");  //# b?
                 }
             }
 
@@ -128,14 +129,14 @@ cn.format = window.cn.format || {};
     };
 
 
-    //# 
+    //#
     $namespace.format.patterns.formatTechniqueText = function (sTechnique) {
         //# Replace {}'s with <span/> so the text is properly formatted
         return sTechnique.replace(new RegExp('{', 'g'), '<span>').replace(new RegExp('}', 'g'), '</span>');
     };
 
 
-    //# 
+    //#
     $namespace.format.patterns.formatBodyMovement = function (ah_sRows) {
         var i, sTemp,
             sReturn = ""
@@ -156,7 +157,7 @@ cn.format = window.cn.format || {};
     };
 
 
-    //# 
+    //#
     $namespace.format.patterns.formatDirection = function (ah_sRows) {
         var i, sTemp,
             sReturn = ""
@@ -178,7 +179,7 @@ cn.format = window.cn.format || {};
             else {
                 sTemp = "";
             }
-            
+
             sTemp = sTemp.trim();
             //if (sTemp) { sReturn += "<div>" + sTemp + "</div><br/>"; }
             sReturn += (sTemp ? "<div>" + sTemp + "</div><br/>" : "<br/>");
@@ -188,11 +189,11 @@ cn.format = window.cn.format || {};
         return (sReturn ? sReturn.substr(0, sReturn.length - 5) : "");
     };
 
-    //# 
+    //#
     $namespace.format.patterns.formatBrackets = function (sPrefix, sSuffix, bUseSquare) {
         var sReturn = (sPrefix ? sPrefix : "");
 
-        //# 
+        //#
         if (sSuffix) {
             //if (sSuffix.substr(0, 1) == '~') { sSuffix = '<span>' + sSuffix + '</span>'; }  //# em? i?
             sReturn = (sReturn ? sReturn + "; " + sSuffix : sSuffix);
@@ -207,7 +208,7 @@ cn.format = window.cn.format || {};
     };
 
 
-    //# 
+    //#
     $namespace.format.patterns.formatLine = function (ah_sRows, sColumnName, bIncludeNulls) {
         var sRV = "",
             a_sColumn = $namespace.format.patterns.getColumnAsArray(ah_sRows, sColumnName, bIncludeNulls)
