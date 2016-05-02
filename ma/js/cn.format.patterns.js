@@ -7,6 +7,9 @@ cn.format = window.cn.format || {};
 (function ($namespace, $patterns) {
     'use strict';
 
+	//# 
+	
+	
 
     //#
     $namespace.format.patterns = $namespace.format.patterns || {};
@@ -14,10 +17,15 @@ cn.format = window.cn.format || {};
 
     //#
     $namespace.format.patterns.groupByCount = function (sPatternId) {
-        var i, iCount,
+        var i, j, iCount, oTemp, bFound, sName,
+			iOrigRef = 0,
             ah_sPattern = $patterns.patterncounts("?", "PatternID", sPatternId),
             ao_sReturn = []
         ;
+		
+		//# 
+		ao_sReturn.originals = [];
+		ao_sReturn.connecting = false;
 
         //# Traverse the ah_sPattern
         for (i = 0; i < ah_sPattern.length; i++) {
@@ -30,8 +38,38 @@ cn.format = window.cn.format || {};
 
             //# If we don't already have this index, .push in an empty array
             if (!ao_sReturn[iCount]) {
-                ao_sReturn.push([])
+                ao_sReturn.push([]);
             }
+
+			//# 
+			if (cn.eq.num(ah_sPattern[i].motionid, 2003)) {
+				ao_sReturn.connecting = true;
+			}
+			
+			//# 
+			if (cn.is.num(ah_sPattern[i].originaltechniqueid)) {
+				bFound = false;
+				sName = ah_sPattern[i].originaltechnique;
+				oTemp = {
+					ref: -1,
+					name: sName,
+					appendage: ah_sPattern[i].originaltechniqueappendage
+				};
+				
+				for (j = 0; j < ao_sReturn.originals.length; j++) {
+					if (cn.cp.str(ao_sReturn.originals[j].name, sName)) {
+						oTemp.ref = ao_sReturn.originals[j].ref;
+						break;
+					}
+				}
+				
+				if (oTemp.ref === -1) {
+					ao_sReturn.originals.push(oTemp);
+					oTemp.ref = ao_sReturn.originals.length;
+				}
+			
+				ah_sPattern[i].original = oTemp;
+			}
 
             //# .push in the current h_sCount
             ao_sReturn[iCount].push(ah_sPattern[i]);
