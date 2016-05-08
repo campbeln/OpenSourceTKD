@@ -19,7 +19,7 @@
     //#
     //#     NOTE: This function is a full re-implementation of "YAHOO.namespace" from Yahoo!'s "YAHOO.js" (http://developer.yahoo.net/yui/).
     //#     FROM: https://code.google.com/p/cn-namespace/source/browse/Cn.Web/js/Cn/Cn.js
-    //# © 2004-2006 Nick Campbell, All Rights Reserved. This code is hereby licensed under the terms of the LGPL (http://www.gnu.org/copyleft/lesser.html).
+    //# ï¿½ 2004-2006 Nick Campbell, All Rights Reserved. This code is hereby licensed under the terms of the LGPL (http://www.gnu.org/copyleft/lesser.html).
     function $namespace(sNameSpace) {
         //# Ensure the sNameSpace is built then .resolve it for the caller
         //#     NOTE: We cannot use the functions below as we end up in a chicken or the egg issue due to eating our own dog food
@@ -304,6 +304,26 @@
                 core.make.str(x).trim().toLowerCase() === core.make.str(y).trim().toLowerCase()
             );
         },
+		
+		//#
+		contains: function(x, y) {
+			var sCurrent, i,
+				bReturnVal = false,
+				a_vValues = (core.is.arr(y, true) ? y : [y]),
+				sValue = core.make.str(x).trim().toLowerCase()
+			;
+			
+			for (i = 0; i < a_vValues.length; i++) {
+				sCurrent = core.make.str(a_vValues[i]).trim().toLowerCase();
+				
+				if (sValue.indexOf(sCurrent) > -1) {
+					bReturnVal = true;
+					break;
+				}
+			}
+			
+			return bReturnVal;
+		},
 
         //# Determines relationship between the passed x and y, returning -1 if x is before y, 0 if x == y, 1 if x is after y or undefined if x or y are not numeric
         num: function (x, y) {

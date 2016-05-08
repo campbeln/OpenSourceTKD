@@ -169,13 +169,13 @@ H1, H2, H3, H4, H5, H6 {
     .patterns .facing {
         text-align: center;
     }
-
+/*
     .patterns .addedtext,
     .patterns SPAN {
-        color: #009025; /* #C0504D */
-        border-bottom: dashed 1px #009025; /* #C0504D */
+        color: #009025; /* #C0504D * /
+        border-bottom: dashed 1px #009025; /* #C0504D * /
     }
-
+*/
     .patterns .junbi {
         font-weight: bold;
         font-style: normal !important;

@@ -22,9 +22,9 @@
 		ngCn.filter('console', function () {
 			return function (val, v) {
 				if (v) {
-					core.console.log(v, val);
+					cn.console.log(v, val);
 				} else {
-					core.console.log(val);
+					cn.console.log(val);
 				}
 				return "";
 			};
@@ -54,7 +54,7 @@
         };
 
         //# define Controller
-        ngCn.controller('PatternController', function ($scope, $filter, $timeout) {
+        ngCn.controller('PatternController', function ($scope, $filter, $timeout, $sce) {
             $scope.cn = cn;
             $scope.enums = cn.enums;
             $scope.show = {
@@ -77,6 +77,10 @@
                 });
             };
             
+            //# 
+            $scope.asHtml = function (sHtml) {
+                return $sce.trustAsHtml(sHtml);
+            };
 
             //# 
             $scope.refresh = function() {
@@ -266,13 +270,13 @@
                     <h2>{{getTulExercise(Pattern, true)}} Writeup</h2>
                 </caption>
                 <thead>
-                    <tr>
+                    <tr style="color: gray; font-style: italic;">
                         <th class="shrink">
-                            <em>Verbal</em>
-                            <br />Count
+                            #
                         </th>
                         <th>
-                            Motion [Method] &nbsp; <em>Body Movement</em>
+                            <div style="color: black; font-weight: bold; font-style: normal;">Body Movement</div>
+                            Motion [Method]
                         </th>
                         <th class="shrink">
                             Diagram
@@ -283,11 +287,11 @@
                             <br />Motion
                         </th>
                         <th>
-                            Leg &nbsp; Section &nbsp; <em>Stance/Leg Technique</em> &nbsp; [Tool; Line]
+                            Leg Section <b style="color: black; font-style: normal;">Stance/Leg Technique</b> [Tool; Line]
                             <br />(Stance/Technique To; Diagram Direction)
                         </th>
                         <th>
-                            Arm &nbsp; Section &nbsp; <em>Arm Technique</em> &nbsp; [Tool; Line]
+                            Arm Section <b style="color: black; font-style: normal;">Arm Technique</b> [Tool; Line]
                             <br />(Technique To; Diagram Direction)
                         </th>
                         <th class="shrink primary">
@@ -299,7 +303,7 @@
                         <td colspan="99"></td>
                     </tr>
                 </thead>
-                <tbody ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="count in Pattern.GroupedCounts">
+                <tbody ng-class-odd="'odd'" ng-class-even="'even'"  style="background-color: {{($even ? 'white' : '#e6e6e6')}};" ng-repeat="count in Pattern.GroupedCounts">
 					<!--tr style="border-bottom: 1px dashed red;">
                         <td ng-class="count[0].counted == '1' ? 'count' : 'number'">{{count[0].count <= 0 || count[0].count >= 999 ? "&bullet;" : count[0].count}}</td>
                         <td ng-bind-html="cn.format.patterns.formatBodyMovement(count)"></td>
@@ -310,68 +314,73 @@
                         <td class='facing' ng-bind-html="cn.format.patterns.getColumnAsArray(count, 'facing', false).join('<br />')"></td>
 					</tr-->
                     <tr style="font-style: italic;">
-                        <td ng-class="count[0].counted == '1' ? 'count' : 'number'">{{count[0].count <= 0 || count[0].count >= 999 ? "&bullet;" : count[0].count}}</td>
+                        <!--
+                        <td ng-class="count[0].counted == '1' ? 'count' : 'number'">
+                            {{count[0].count <= 0 || count[0].count >= 999 ? "&bullet;" : count[0].count}}
+                        </td>
+                        -->
+                        <td ng-bind-html="cn.format.patterns.count(count, asHtml)"></td>
                         <td>
-							<div ng-repeat="row in count">
+							<div style="color: gray;" ng-repeat="row in count">
 								{{row.motion}}
-								<b style="font-weight: bold; color: black;" ng-if="cn.is.string(row.bodymovement)">{{row.bodymovement}}</b>
+								<b style="color: black; font-style: normal;" ng-if="cn.is.string(row.bodymovement)" ng-bind-html="cn.format.patterns.tech(row.bodymovement, asHtml)"></b>
 								<br ng-if="!$last" />
 							</div>
 						</td>
 						<td>
-							<div ng-repeat="row in count" ng-if="cn.is.string(row.eyesto) || cn.is.string(row.eyesdiagramdirection)">
+							<div style="color: gray;" ng-repeat="row in count" ng-if="cn.is.string(row.eyesto) || cn.is.string(row.eyesdiagramdirection)">
 								{{row.eyesto}}{{cn.is.string(row.eyesto) && cn.is.string(row.eyesdiagramdirection) ? "; " : ""}}
 								{{row.eyesdiagramdirection}}
 								<br ng-if="!$last" />
 							</div>						
 						</td>
 						<td>
-							<div ng-repeat="row in count" ng-if="cn.is.string(row.feetinmotion)">
+							<div style="color: gray;" ng-repeat="row in count" ng-if="cn.is.string(row.feetinmotion)">
 								{{row.feetinmotion}}
 								<br ng-if="!$last" />
 							</div>
 						</td>
 						<td>
 							<div ng-repeat="row in count" ng-if="cn.is.string(row.legtechnique)">
-								{{row.leglr}} {{row.legsection}}
+								<span style="color: gray;">{{row.leglr}} {{row.legsection}}</span>
 								<switch ng-switch="cn.make.str(row.legtechniquetype).trim().toLowerCase()">
-									<div ng-switch-when="action">{{cn.eq.num(row.islegtechniqueflying, 1) ? "Flying" : ""}} {{row.legtechnique}} <sup ng-if="cn.cp.str(row.original.appendage, 'leg')">{{row.original.ref}}</sup></div>
-									<b style="font-weight: bold; color: black; font-style: none;" ng-switch-default>{{cn.eq.num(row.islegtechniqueflying, 1) ? "Flying" : ""}} {{row.legtechnique}} <sup ng-if="cn.cp.str(row.original.appendage, 'leg')">{{row.original.ref}}</sup></b>
+									<u style="color: gray;" ng-switch-when="action">{{cn.eq.num(row.islegtechniqueflying, 1) ? "Flying" : ""}} <tech ng-bind-html="cn.format.patterns.tech(row.legtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'leg')"> {{row.original.ref}}</sup></u>
+									<b style="color: black; font-style: normal;" ng-switch-default>{{cn.eq.num(row.islegtechniqueflying, 1) ? "Flying" : ""}} <tech ng-bind-html="cn.format.patterns.tech(row.legtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'leg')"> {{row.original.ref}}</sup></b>
 								</switch>
 								
-								<div ng-if="cn.is.string(row.legtool) || cn.is.string(row.leglineofattack)">
+								<i style="color: gray;" ng-if="cn.is.string(row.legtool) || cn.is.string(row.leglineofattack)">
 									[{{row.legtool}}{{cn.is.string(row.legtool) && cn.is.string(row.leglineofattack) ? "; " : ""}}
 									{{row.leglineofattack}}]
-								</div>
-								<div ng-if="cn.is.string(row.legto) || cn.is.string(row.legdiagramdirection)">
+								</i>
+								<i style="color: gray;" ng-if="cn.is.string(row.legto) || cn.is.string(row.legdiagramdirection)">
 									({{row.legto}}{{cn.is.string(row.legto) && cn.is.string(row.legdiagramdirection) ? "; " : ""}}
 									{{row.legdiagramdirection}})
-								</div>
+								</i>
 								<br/>
 							</div>
 						</td>
 						<td>
 							<div ng-repeat="row in count" ng-if="cn.is.string(row.armtechnique)">
-								{{row.armlr}} {{row.armsection}}
+								<span style="color: gray;">{{row.armlr}} {{row.armsection}}</span>
 								<switch ng-switch="cn.make.str(row.armtechniquetype).trim().toLowerCase()">
-									<div ng-switch-when="action">{{row.armtechnique}} <sup ng-if="cn.cp.str(row.original.appendage, 'arm')">{{row.original.ref}}</sup></div>
-									<b style="font-weight: bold; color: black; font-style: none;" ng-switch-default>{{row.armtechnique}} <sup ng-if="cn.cp.str(row.original.appendage, 'arm')">{{row.original.ref}}</sup></b>
+									<u style="color: gray;" ng-switch-when="action"><tech ng-bind-html="cn.format.patterns.tech(row.armtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'arm')"> {{row.original.ref}}</sup></u>
+									<b style="color: black; font-style: normal;" ng-switch-default><tech ng-bind-html="cn.format.patterns.tech(row.armtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'arm')"> {{row.original.ref}}</sup></b>
 								</switch>
 								
-								<div ng-if="cn.is.string(row.armtool) || cn.is.string(row.armlineofattack)">
+								<i style="color: gray;" ng-if="cn.is.string(row.armtool) || cn.is.string(row.armlineofattack)">
 									[{{cn.is.string(row.armtool) ?
 										(cn.eq.num(row.isarmtooltwin, 1) ? "Twin " : "") + row.armtool :
 										""
-									}}{{cn.is.string(row.armtool) && cn.is.string(row.armlineofattack) ? "; " : ""}}{{row.armlineofattack}}]
-								</div>
-								<div ng-if="cn.is.string(row.armto) || cn.is.string(row.armdiagramdirection)">
+									}}{{cn.is.string(row.armtool) && cn.is.string(row.armlineofattack) ? "; " : ""}}{{cn.format.patterns.armLineOfAttack(row)}}]
+								</i>
+								<i style="color: gray;" ng-if="cn.is.string(row.armto) || cn.is.string(row.armdiagramdirection)">
 									({{row.armto}}{{cn.is.string(row.armto) && cn.is.string(row.armdiagramdirection) ? "; " : ""}}{{row.armdiagramdirection}})
-								</div>
+								</i>
 								<br/>
 							</div>
 						</td>						
 						<td class='facing'>
-							<div ng-repeat="row in count" ng-if="cn.is.string(row.facing)">
+							<div style="color: gray;" ng-repeat="row in count" ng-if="cn.is.string(row.facing)">
 								{{row.facing}}
 								<br ng-if="!$last" />
 							</div>
@@ -392,9 +401,9 @@
 			<section id="orgtech" ng-if="cn.is.arr(Pattern.GroupedCounts.originals, true) || cn.is.true(Pattern.GroupedCounts.connecting)">
 				<!--h2>Original Techniques</h2-->
 				<ul>
-					<li ng-if="cn.is.true(Pattern.GroupedCounts.connecting)">
+					<!--li ng-if="cn.is.true(Pattern.GroupedCounts.connecting)">
 						* - Connecting Motion
-					</li>
+					</li-->
 					<li ng-repeat="original in Pattern.GroupedCounts.originals">
 						{{original.ref}} - {{original.name}}
 					</li>

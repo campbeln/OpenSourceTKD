@@ -7,14 +7,59 @@ cn.format = window.cn.format || {};
 (function ($namespace, $patterns) {
     'use strict';
 
-	//# 
-	
-	
 
     //#
     $namespace.format.patterns = $namespace.format.patterns || {};
 
 
+	//# 
+	$namespace.format.patterns.armLineOfAttack = function(oRow) {
+        var sReturnVal = $namespace.make.str(oRow.armlineofattack),
+            sTech = oRow.armtechnique.toLowerCase()
+        ;
+        
+        if ($namespace.cp.str(oRow.armtool, 'elbow')) {
+            if ($namespace.eq.num(oRow.isarmtooltwin, 1) || sTech.indexOf("side") > -1) {
+                sReturnVal = 'Fl';
+            }
+            else if (sTech.indexOf("back") > -1) {
+                sReturnVal = 'Rl';
+            }
+            else {
+                sReturnVal = 'Sl';
+            }
+        }
+        else if ($namespace.cp.num(oRow.armtechniqueid, 10400) === 0 && $namespace.make.str(oRow.armsection).toLowerCase().indexOf(' mid+') > -1) {
+            sReturnVal = "Cl+Cl";
+        }
+        else if ($namespace.cp.str(oRow.facing, 'S') /* && $namespace.cp.contains(sReturnVal, ['Fl', '~Fl', 'Sl', '~Sl']) */) {
+            sReturnVal = "Fl";
+            console.log(oRow.patternid, oRow.count, oRow.countorder, oRow);
+        }
+        
+        return sReturnVal + (cn.cp.num(oRow.istofacing, 1) === 0 ? "*" : "");
+    };
+    
+    //# 
+    $namespace.format.patterns.tech = function(sTech, fnAsHtml) {
+        return fnAsHtml(
+            cn.make.str(sTech).replace("{", "<i style='color: gray; font-weight: normal;'>").replace("}", "</i>")
+        );
+    };
+    
+    //# 
+    $namespace.format.patterns.count = function(a_oCount, fnAsHtml) {
+        var bIsMotion = (cn.make.str(cn.resolve(a_oCount, "0.motion")).toLowerCase().indexOf("motion") > -1),
+            iCount = cn.make.int(cn.resolve(a_oCount, "0.count"))
+        ;
+        
+        return fnAsHtml(
+            (bIsMotion ? "<i style='color: gray;'>" : "<b style='color: black; font-style: normal;'>") +
+            (iCount <= 0 || iCount >= 999 ? "&bullet;" : iCount) +
+            (bIsMotion ? "</i>" : "</b>")
+        );
+    };
+    	
     //#
     $namespace.format.patterns.groupByCount = function (sPatternId) {
         var i, j, iCount, oTemp, bFound, sName,
@@ -22,10 +67,9 @@ cn.format = window.cn.format || {};
             ah_sPattern = $patterns.patterncounts("?", "PatternID", sPatternId),
             ao_sReturn = []
         ;
-		
+        
 		//# 
 		ao_sReturn.originals = [];
-		ao_sReturn.connecting = false;
 
         //# Traverse the ah_sPattern
         for (i = 0; i < ah_sPattern.length; i++) {
@@ -40,11 +84,6 @@ cn.format = window.cn.format || {};
             if (!ao_sReturn[iCount]) {
                 ao_sReturn.push([]);
             }
-
-			//# 
-			if (cn.eq.num(ah_sPattern[i].motionid, 2003)) {
-				ao_sReturn.connecting = true;
-			}
 			
 			//# 
 			if (cn.is.num(ah_sPattern[i].originaltechniqueid)) {
