@@ -370,11 +370,11 @@ INSERT INTO `Movements` (`ID`, `IsDirectionChange`, `Name`, `Notes`) VALUES
 (3011, 0, 'Slipping Forward', 'One foot moves without taking a step.'),
 (3018, 0, 'Slipping {Pulling} Backward', 'One foot moves without taking a step. When done in while moving backward, this is referred to as "pulling the foot" or "pulling backward". But in order to be consistent, it is described here as "slipping backward".'),
 
-(3022, 0, 'Sliding Forward [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
-(3026, 0, 'Sliding {Shifting} Backward [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths. When done in while moving backward, this is referred to as "shifting backward". But in order to be consistent, it is described here as "sliding backward".'),
+(3022, 0, 'Sliding Forward [~2 FT]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
+(3026, 0, 'Sliding {Shifting} Backward [~2 FT]', 'Both feet move without taking a step approx. 2 Foot Lengths. When done in while moving backward, this is referred to as "shifting backward". But in order to be consistent, it is described here as "sliding backward".'),
 
-(3048, 0, 'Sliding Across L [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
-(3049, 0, 'Sliding Across R [~2 FL]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
+(3048, 0, 'Sliding Across L [~2 FT]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
+(3049, 0, 'Sliding Across R [~2 FT]', 'Both feet move without taking a step approx. 2 Foot Lengths.'),
 
 (3023, 0, 'Flying {Jumping} Forward [~5 SW]', "Jumping/Flying technique covering approx. 5 Shoulder Widths."),
 
@@ -741,15 +741,15 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 
 (10700, 'Action', 'Leg', 0, 'Heels Raised ~Sitting Stance', NULL, NULL, 0, 0, 1, 0, 0),
 (10701, 'Action', 'Leg', 0, 'Heel Raised ~Close Stance', NULL, NULL, 1, 1, 0, 0, 0),
-(10702, 'Action', 'Leg', 0, 'Heel Raised ~1 FL behind opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
+(10702, 'Action', 'Leg', 0, 'Heel Raised ~1 FT behind opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
 (10703, 'Action', 'Leg', 0, 'Heel Raised ~Parallel Stance', NULL, NULL, 0, 0, 1, 0, 0),
 (10704, 'Action', 'Leg', 0, 'Heel Raised ~Outer Open Stance', NULL, NULL, 1, 1, 0, 0, 0),
-(10705, 'Action', 'Leg', 0, 'Heel Raised ~1 FL ahead opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
+(10705, 'Action', 'Leg', 0, 'Heel Raised ~1 FT ahead opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
 (10706, 'Action', 'Leg', 0, 'Heel Raised ~1 SW ahead opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
 (10707, 'Action', 'Leg', 0, 'Heel Raised ~1 SW behind opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
 (10708, 'Action', 'Leg', 0, 'Instep to hollow of opposite Leg', NULL, NULL, 1, 0, 0, 0, 0),
 (10709, 'Action', 'Leg', 0, 'Foot inline behind opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
-(10710, 'Action', 'Leg', 0, 'Foot ~1 FL ahead opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
+(10710, 'Action', 'Leg', 0, 'Foot ~1 FT ahead opposite Foot', NULL, NULL, 0, 0, 1, 0, 0),
 
 (10720, 'Action', 'Leg', 0, '~Close Stance', NULL, NULL, 1, 1, 0, 0, 0),
 (10721, 'Action', 'Leg', 0, '~Rear Foot Stance', NULL, NULL, 0, 0, 1, 0, 0),
@@ -3411,7 +3411,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1018, 28, NULL, 1, NULL, NULL, 'Lh', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Low>Mid', '11:00', 'BD', 'Reverse Knife-Hand', '0', 'RH', NULL, NULL, NULL, 10405, NULL, NULL),
 (1018, 29, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Alternate Palm', 1, 'H', NULL, 3018, 10102, 10407, NULL, NULL),
 (1018, 30, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, 3011, 10104, 10200, NULL, NULL),
-(1018, 31, 'a', 1, NULL, NULL, 'L+R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', NULL, 3026, 10104, 10409, 'diag only shows about 1 FL!?', NULL),
+(1018, 31, 'a', 1, NULL, NULL, 'L+R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Reverse Knife-Hand', '0', 'H', NULL, 3026, 10104, 10409, 'diag only shows about 1 FT!?', NULL),
 (1018, 31, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10626, 'not desc', NULL),
 (1018, 32, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Knife-Hand', 1, 'F', NULL, 3000, 10100, 10404, NULL, NULL),
 (1018, 33, NULL, 1, NULL, NULL, 'Rh', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Low>Mid', '1:00', 'AD', 'Reverse Knife-Hand', '0', 'RH', NULL, NULL, NULL, 10405, NULL, NULL),
@@ -3882,7 +3882,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1025, 5, NULL, 1, NULL, NULL, 'Rh;L+R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'X-Fist', '0', 'H', NULL, 3026, 10104, 10421, NULL, 'diff than other diagrams for rev shift'),
 (1025, 6, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Flat Fingertip', '0', 'F', NULL, 3011, 10100, 10220, NULL, 'R>L?'),
 (1025, 7, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Straight Elbow', '0', 'H', NULL, 3018, 10102, 10221, NULL, NULL),
-(1025, 8, NULL, 1, NULL, NULL, 'Rh+L;R', 'L', NULL, '0', '2:00', 'AD', NULL, 'L', 'High', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10205, NULL, 'slight (1/2 FL) R shift'),
+(1025, 8, NULL, 1, NULL, NULL, 'Rh+L;R', 'L', NULL, '0', '2:00', 'AD', NULL, 'L', 'High', NULL, NULL, 'Backfist', '0', 'H', NULL, 3019, 10109, 10205, NULL, 'slight (1/2 FT) R shift'),
 (1025, 9, NULL, 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Knife-Hand', '0', 'RH', NULL, 3003, 10100, 10425, NULL, NULL),
 (1025, 10, NULL, 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', 'F', NULL, 3000, 10108, 10411, NULL, NULL),
 (1025, 11, NULL, 1, NULL, NULL, 'Lh+Rh', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2001, NULL, 10108, 10200, NULL, NULL),
@@ -4113,10 +4113,10 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 -- So-San (fully reviewed)
 INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `islegtechniqueflying`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `originaltechniqueid`, `note`) VALUES
 (1028, '0', NULL, 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10003, NULL, NULL, NULL),
-(1028, 1, NULL, 1, NULL, NULL, 'R;L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3026, 10102, 10403, NULL, 'slides further back per diagram ~3FL'),
+(1028, 1, NULL, 1, NULL, NULL, 'R;L', 'R', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3026, 10102, 10403, NULL, 'slides further back per diagram ~FT'),
 (1028, 2, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3011, 10100, 10224, NULL, NULL),
 (1028, 3, 'a', 1, NULL, NULL, 'L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, NULL, NULL, NULL, NULL),
-(1028, 3, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3026, 10102, 10403, NULL, 'slides further back per diagram ~3FL'),
+(1028, 3, 'b', 1, NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'Mid', NULL, NULL, 'Forearm', '0', 'H', NULL, 3026, 10102, 10403, NULL, 'slides further back per diagram ~FT'),
 (1028, 4, NULL, 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', NULL, 3011, 10100, 10224, NULL, NULL),
 (1028, 5, NULL, 1, '7:30', 'BC', 'Lh+Rh', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Knife-Hand', '0', 'RH', NULL, 3110, 10100, 10425, 10491, 'Examples of disjointed applications'),
 (1028, 6, NULL, '0', '10:00', 'BD', 'Lh+Rh', NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, 3109, 10106, 10200, NULL, 'Examples of disjointed applications'),

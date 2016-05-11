@@ -34,7 +34,10 @@ cn.format = window.cn.format || {};
         }
         else if ($namespace.cp.str(oRow.facing, 'S') /* && $namespace.cp.contains(sReturnVal, ['Fl', '~Fl', 'Sl', '~Sl']) */) {
             sReturnVal = "Fl";
-            console.log(oRow.patternid, oRow.count, oRow.countorder, oRow);
+        }
+        //# Sam-Il #8 right arm
+        else if ($namespace.cp.num(oRow.patternid, 1022) === 0 && $namespace.cp.num(oRow.count, 8) === 0 && $namespace.cp.str(oRow.armlr, 'r')) {
+            sReturnVal = "Fl";
         }
         
         return sReturnVal + (cn.cp.num(oRow.istofacing, 1) === 0 ? "*" : "");
