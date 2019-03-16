@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `Patterns` (
   `Key` varchar(20) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `AKA` varchar(100) DEFAULT NULL,
-  `PatternSet` enum('Chang-Hon', 'WT', 'Other') NOT NULL,
+  `Set` enum('Chang-Hon', 'Kukkiwon', 'Other') NOT NULL,
   `IsOfficial` tinyint(1) DEFAULT '0',
   `GupLevel` enum('10th Gup','9th Gup','8th Gup','7th Gup','6th Gup','5th Gup','4th Gup','3rd Gup','2nd Gup','1st Gup','1st Dan','2nd Dan','3rd Dan','4th Dan','5th Dan','6th Dan','7th Dan','8th Dan','9th Dan') DEFAULT NULL,
   `Belt` enum('White Belt','White Belt Yellow Tip','Yellow Belt','Yellow Belt Green Tip','Green Belt','Green Belt Blue Tip','Blue Belt','Blue Belt Red Tip','Red Belt','Red Belt Black Tip','Black Belt') DEFAULT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `Patterns` (
 -- Dumping data for table `Patterns`
 --
 
-INSERT INTO `Patterns` (`ID`, `SortOrder`, `PatternSet`, `Key`, `Name`, `AKA`, `IsOfficial`, `GupLevel`, `Belt`, `MovementCount`, `Meaning`, `Diagram`) VALUES
+INSERT INTO `Patterns` (`ID`, `SortOrder`, `Set`, `Key`, `Name`, `AKA`, `IsOfficial`, `GupLevel`, `Belt`, `MovementCount`, `Meaning`, `Diagram`) VALUES
 (1000, 1, 'Chang-Hon', 'j', 'Saju-Jirugi', 'Right 4-Directional Punch', 1, '10th Gup', 'White Belt', 7, '4-Directional Punch', 'x'),
 (1001, 2, 'Chang-Hon', 'j', 'Saju-Jirugi', 'Left 4-Directional Punch', 1, '10th Gup', 'White Belt', 7, '4-Directional Punch', 'x'),
 (1002, 5, 'Chang-Hon', 'm', 'Saju-Makgi', 'Right 4-Directional Block', 1, '10th Gup', 'White Belt', 8, '4-Directional Block', 'x'),
@@ -187,25 +187,25 @@ INSERT INTO `Patterns` (`ID`, `SortOrder`, `PatternSet`, `Key`, `Name`, `AKA`, `
 (1117, 1017, 'Other', 'o-sp', 'Left Forearm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL);
 
 /*
-INSERT INTO `Patterns` (`ID`, `SortOrder`, `PatternSet`, `Key`, `Name`, `AKA`, `IsOfficial`, `GupLevel`, `Belt`, `MovementCount`, `Meaning`, `Diagram`) VALUES
-(2000, 2001, 'WT', 'wt-tg1', 'Taegeuk Il Jang', NULL, 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
-(2001, 2002, 'WT', 'wt-tg2', 'Taegeuk Yi Jang', 'Taegeuk Ee Jang', 1, '9th Gup', 'White Belt Yellow Tip', 28, NULL, 'ii'),
-(2002, 2003, 'WT', 'wt-tg3', 'Taegeuk Sam Jang', 'Taegeuk Sahm Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
-(2003, 2004, 'WT', 'wt-tg4', 'Taegeuk Sa Jang', 'Taegeuk Sah Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
-(2004, 2005, 'WT', 'wt-tg5', 'Taegeuk Oh Jang', 'Taegeuk O Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
-(2005, 2006, 'WT', 'wt-tg6', 'Taegeuk Yook Jang', 'Taegeuk Yuk Jang, 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
-(2006, 2007, 'WT', 'wt-tg7', 'Taegeuk Chil Jang', NULL, 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
-(2007, 2008, 'WT', 'wt-tg8', 'Taegeuk Pal Jang', 'Taegeuk Phal Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+INSERT INTO `Patterns` (`ID`, `SortOrder`, `Set`, `Key`, `Name`, `AKA`, `IsOfficial`, `GupLevel`, `Belt`, `MovementCount`, `Meaning`, `Diagram`) VALUES
+(2000, 2001, 'Kukkiwon', 'wt-tg1', 'Taegeuk Il Jang', NULL, 1, '8th Gup', 'Yellow Belt', 28, 'The trigram for Taegeuk Il Jang is three solid lines. This symbol represents the concept of "Keon." Keon means "the heavens" or "the sky." Keon symbolizes the beginning of the creation of all things in the universe, so Taegeuk Il Jang symbolizes the beginning in the training of Taekwondo.', 'ii'),
+(2001, 2002, 'Kukkiwon', 'wt-tg2', 'Taegeuk Yi Jang', 'Taegeuk Ee Jang', 1, '7th Gup', 'Yellow Belt', 28, 'The trigram for Taegeuk Yi Jang represents the concept of "Tae." (Note: the word tae here is not the same as the tae in taekwondo.) Tae is said to symbolize "inner firmness and outer gentleness," the archetype being a river or lake: gentle and flowing at the boundaries, but firm and resolute underneath. The idea is that movements in this form should be fluid, and yet be performed firmly, with good control.', 'ii'),
+(2002, 2003, 'Kukkiwon', 'wt-tg3', 'Taegeuk Sam Jang', 'Taegeuk Sahm Jang', 1, '6th Gup', 'Green Belt', 28, 'The trigram for Taegeuk Sam Jang represents the concept of "Ree" (also spelled Ri). Ree represents heat and brightness, like a fire. The idea is that this form should crackle like a fire: rapidly fluid throughout, with bursts of power. For example, the punches at steps 8 and 10 "burst" forward from their prior stances, like the crackle and pop of a fire. The concept of Ree also symbolizes that the form should be practiced with burning enthusiasm and passion.', 'ii'),
+(2003, 2004, 'Kukkiwon', 'wt-tg4', 'Taegeuk Sa Jang', 'Taegeuk Sah Jang', 1, '5th Gup', 'Green Belt', 28, 'The trigram for Taegeuk Sa Jang represents the concept of "Jin." Jin represents thunder, symbolizing great power and dignity. The power can be seen, for example, in the introduction of the Side Kick, a powerful, linear kick.', 'ii'),
+(2004, 2005, 'Kukkiwon', 'wt-tg5', 'Taegeuk Oh Jang', 'Taegeuk O Jang', 1, '4th Gup', 'Blue Belt', 28, 'The trigram for Taegeuk Oh Jang represents the concept of "Seon" (also spelled Son). Seon symbolizes the wind, which is simultaneously powerful and yet gentle. This form should be performed with flexibility and unyielding power. The power is seen, for example, in the downward hammerfists and the many elbow strikes. The flexibility is seen for example in steps 15-16, where the torso, legs, and arms are all required to stretch and twist.', 'ii'),
+(2005, 2006, 'Kukkiwon', 'wt-tg6', 'Taegeuk Yook Jang', 'Taegeuk Yuk Jang, 1, '3rd Gup', 'Blue Belt', 28, 'The trigram for Taegeuk Yook Jang represents the concept of "Kam" (also spelled Gam). Kam symbolizes water, which is flowing and gentle but also persistent, able to wear away at the hardest stone.', 'ii'),
+(2006, 2007, 'Kukkiwon', 'wt-tg7', 'Taegeuk Chil Jang', NULL, 1, '2nd Gup', 'Red Belt', 28, 'The trigram for Taegeuk Sam Jang represents the concept of "Kan" (also spelled Gan). Kan represents a mountain peak, which is solid, stable, and unmovable. This form teach commitment to both motion and to immobility, with rapid movements forward followed by sudden stops.', 'ii'),
+(2007, 2008, 'Kukkiwon', 'wt-tg8', 'Taegeuk Pal Jang', 'Taegeuk Phal Jang', 1, '1st Gup', 'Red Belt', 27, 'The trigram for Taegeuk Sam Jang represents the concept of "Gon," meaning earth or ground. Just as the earth holds all the basic elements of life, this form incorporates all the basic techniques of taekwondo. Just as the earth is the foundation for everything else, this form serves as the foundation for learning the upcoming Black Belt forms.', 'ii'),
 
-(2000, 2010, 'WT', 'wt-ky', 'Koryo', 'Goryeo, Koryeo (고려)', 1, '1st Dan', 'Black Belt', 28, '"learned man", symbolizing a wise person', 'ii'),
-(2000, 2011, 'WT', 'wt-kg', 'Keumgang', '(금강)', 1, '2nd Dan', 'Black Belt', 28, '"diamond", symbolizing hardness, unbreakable', 'ii'),
-(2000, 2012, 'WT', 'wt-tb', 'Taebaek', '(태백)', 1, '3rd Dan', 'Black Belt', 28, '"sacred mountain", symbolizing spirituality', 'ii'),
-(2000, 2013, 'WT', 'wt-pw', 'Pyongwon', 'Pyeong-won (평원)', 1, '4th Dan', 'Black Belt', 28, '"open plain", symbolizing peacefulness', 'ii'),
-(2000, 2014, 'WT', 'wt-sj', 'Sipjin', 'Shipjin (싶진)', 1, '5th Dan', 'Black Belt', 28, '"eternal 10", symbolizing health and longevity', 'ii'),
-(2000, 2015, 'WT', 'wt-jt', 'Jitae', '(지태)', 1, '6th Dan', 'Black Belt', 28, 'symbolizes mankind as the connection between heaven and earth', 'ii'),
-(2000, 2016, 'WT', 'wt-ck', 'Cheonkwon', 'Cheon-gwon (천권)', 1, '7th Dan', 'Black Belt', 28, '"sky", symbolizing piety', 'ii'),
-(2000, 2017, 'WT', 'wt-hs', 'Hansoo', 'Hansu (한수)', 1, '8th Dan', 'Black Belt', 28, '"water", symbolizing adaptability', 'ii'),
-(2000, 2018, 'WT', 'wt-iy', ' Ilyeo', '(일여)', 1, '9th Dan', 'Black Belt', 28, 'symbolizing the Buddhist concept of oneness of the mind and body', 'ii');
+(2000, 2010, 'Kukkiwon', 'wt-ky', 'Koryo', 'Goryeo, Koryeo (고려)', 1, '1st Dan', 'Black Belt', 28, '"learned man", symbolizing a wise person', 'ii'),
+(2000, 2011, 'Kukkiwon', 'wt-kg', 'Keumgang', '(금강)', 1, '2nd Dan', 'Black Belt', 28, '"diamond", symbolizing hardness, unbreakable', 'ii'),
+(2000, 2012, 'Kukkiwon', 'wt-tb', 'Taebaek', '(태백)', 1, '3rd Dan', 'Black Belt', 28, '"sacred mountain", symbolizing spirituality', 'ii'),
+(2000, 2013, 'Kukkiwon', 'wt-pw', 'Pyongwon', 'Pyeong-won (평원)', 1, '4th Dan', 'Black Belt', 28, '"open plain", symbolizing peacefulness', 'ii'),
+(2000, 2014, 'Kukkiwon', 'wt-sj', 'Sipjin', 'Shipjin (싶진)', 1, '5th Dan', 'Black Belt', 28, '"eternal 10", symbolizing health and longevity', 'ii'),
+(2000, 2015, 'Kukkiwon', 'wt-jt', 'Jitae', '(지태)', 1, '6th Dan', 'Black Belt', 28, 'symbolizes mankind as the connection between heaven and earth', 'ii'),
+(2000, 2016, 'Kukkiwon', 'wt-ck', 'Cheonkwon', 'Cheon-gwon (천권)', 1, '7th Dan', 'Black Belt', 28, '"sky", symbolizing piety', 'ii'),
+(2000, 2017, 'Kukkiwon', 'wt-hs', 'Hansoo', 'Hansu (한수)', 1, '8th Dan', 'Black Belt', 28, '"water", symbolizing adaptability', 'ii'),
+(2000, 2018, 'Kukkiwon', 'wt-iy', ' Ilyeo', '(일여)', 1, '9th Dan', 'Black Belt', 28, 'symbolizing the Buddhist concept of oneness of the mind and body', 'ii');
 */
 
 UPDATE `Patterns`

@@ -1,33 +1,33 @@
 <?php
 
-//# 
-$mysql = mysql_connect('localhost', 'root', '');
-if (!$mysql) { die('Could not connect: ' . mysql_error()); }
+//#
+$mysql = mysqli_connect('localhost', 'root', '', 'fusionmartialart');
+if (!$mysql || $mysql->connect_error) { die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error); }
 
-mysql_select_db('fusionmartialarts', $mysql);
-mysql_query ("set character_set_client='utf8'"); 
-mysql_query ("set character_set_results='utf8'"); 
-mysql_query ("set collation_connection='utf8_general_ci'");
+//mysql_select_db('fusionmartialarts', $mysql);
+$mysql->query("set character_set_client='utf8'");
+$mysql->query("set character_set_results='utf8'");
+$mysql->query("set collation_connection='utf8_general_ci'");
 
-$oEncyclopediaCount = mysql_query('SELECT `PatternID`, `Count`, `Text` FROM `EncyclopediaCount` WHERE EncyclopediaID = 3 ORDER BY `PatternID`, `Count`');
-$oPatternCount = mysql_query('SELECT `PatternID`, `Count`, `CountOrder`, `Counted`, `Motion`, `BodyMovement`, `EyesTo`, `EyesDiagramDirection`, `FeetInMotion`, `LegLR`, `LegSection`, `LegTechniqueOfficial` AS `LegTechnique`, `IsLegTechniqueFlying`, `LegTo`, `LegDiagramDirection`, `LegTool`, `LegLineOfAttack`, `ArmLR`, `ArmSection`, `ArmTechniqueOfficial` AS `ArmTechnique`, `ArmTo`, `ArmDiagramDirection`, `ArmTool`, `ArmLineOfAttack`, `IsArmToolTwin`, `Facing`, `MotionID`, `BodyMovementID`, `LegTechniqueID`, `ArmTechniqueID`, `LegTechniqueType`, `ArmTechniqueType`, `OriginalTechniqueID`, `OriginalTechniqueAppendage`, `OriginalTechniqueOfficial` AS `OriginalTechnique`, `IsToFacing`, `MotionID`, `Note` FROM `viewpattern` ORDER BY `PatternID`, `Count`, `CountOrder`');
-$oPattern = mysql_query('SELECT * FROM `patterns` WHERE `GupLevel` IS NOT NULL ORDER BY `SortOrder`');
-$oTechniquesUsed = mysql_query('SELECT * FROM `viewPatternTechniqueCounts` ORDER BY SortOrder, Kind, PreviousUseCountAll, PreviousSectionUseCount, PreviousToolUseCount, PreviousUseCount');
-$oLegTechniques = mysql_query("SELECT `ID`, `OfficialName` AS `Name` FROM `Techniques` WHERE `Appendage` = 'Leg' OR `Appendage` IS NULL ORDER BY `OfficialName`");
-$oArmTechniques = mysql_query("SELECT `ID`, `OfficialName` AS `Name` FROM `Techniques` WHERE `Appendage` = 'Arm' OR `Appendage` IS NULL ORDER BY `OfficialName`");
-$oBodyMovements = mysql_query('SELECT `ID`, `Name` FROM `movements` ORDER BY `Name`');
-$oMotions = mysql_query('SELECT `ID`, `Name` FROM `motions` ORDER BY `Name`');
-$oPatternList = mysql_query('SELECT `ID`, `Key`, `Name`, `Diagram` FROM `patterns` WHERE `IsOfficial` = 1 OR `IsOfficial` IS NULL ORDER BY `SortOrder`');
-$oStances = mysql_query('SELECT * FROM `viewStances` ORDER BY `SortOrder`');
+$oEncyclopediaCount = $mysql->query('SELECT `PatternID`, `Count`, `Text` FROM `EncyclopediaCount` WHERE EncyclopediaID = 3 ORDER BY `PatternID`, `Count`');
+$oPatternCount = $mysql->query('SELECT `PatternID`, `Count`, `CountOrder`, `Counted`, `Motion`, `BodyMovement`, `EyesTo`, `EyesDiagramDirection`, `FeetInMotion`, `LegLR`, `LegSection`, `LegTechniqueOfficial` AS `LegTechnique`, `IsLegTechniqueFlying`, `LegTo`, `LegDiagramDirection`, `LegTool`, `LegLineOfAttack`, `ArmLR`, `ArmSection`, `ArmTechniqueOfficial` AS `ArmTechnique`, `ArmTo`, `ArmDiagramDirection`, `ArmTool`, `ArmLineOfAttack`, `IsArmToolTwin`, `Facing`, `MotionID`, `BodyMovementID`, `LegTechniqueID`, `ArmTechniqueID`, `LegTechniqueType`, `ArmTechniqueType`, `OriginalTechniqueID`, `OriginalTechniqueAppendage`, `OriginalTechniqueOfficial` AS `OriginalTechnique`, `IsToFacing`, `MotionID`, `Note` FROM `viewPattern` ORDER BY `PatternID`, `Count`, `CountOrder`');
+$oPattern = $mysql->query('SELECT * FROM `Patterns` WHERE `GupLevel` IS NOT NULL ORDER BY `SortOrder`');
+$oTechniquesUsed = $mysql->query('SELECT * FROM `viewPatternTechniqueCounts` ORDER BY SortOrder, Kind, PreviousUseCountAll, PreviousSectionUseCount, PreviousToolUseCount, PreviousUseCount');
+$oLegTechniques = $mysql->query("SELECT `ID`, `OfficialName` AS `Name` FROM `Techniques` WHERE `Appendage` = 'Leg' OR `Appendage` IS NULL ORDER BY `OfficialName`");
+$oArmTechniques = $mysql->query("SELECT `ID`, `OfficialName` AS `Name` FROM `Techniques` WHERE `Appendage` = 'Arm' OR `Appendage` IS NULL ORDER BY `OfficialName`");
+$oBodyMovements = $mysql->query('SELECT `ID`, `Name` FROM `Movements` ORDER BY `Name`');
+$oMotions = $mysql->query('SELECT `ID`, `Name` FROM `Motions` ORDER BY `Name`');
+$oPatternList = $mysql->query('SELECT `ID`, `Key`, `Name`, `Diagram` FROM `Patterns` WHERE `IsOfficial` = 1 OR `IsOfficial` IS NULL ORDER BY `SortOrder`');
+$oStances = $mysql->query('SELECT * FROM `viewStances` ORDER BY `SortOrder`');
 
 function SQLToJSON($oData) {
 	$aColumns = array();
 
 	$sReturn = "[\n";
 
-	if (is_resource($oData) && mysql_num_rows($oData)) {
+	if (is_resource($oData) && mysqli_num_rows($oData)) {
 		//# Traverse the passed $oData as a recordset
-		while ($row = mysql_fetch_assoc($oData)) {
+		while ($row = $oData->fetch_array(MYSQLI_NUM)) {
 			if (empty($aColumns)) {
 				$aColumns = array_keys($row);
 			}
@@ -40,7 +40,7 @@ function SQLToJSON($oData) {
 
 			$sReturn .= "},\n";
 		}
-		mysql_data_seek($oData, 0);
+		$oData->data_seek(0);
 	}
 
 	$sReturn .= "]\n";
@@ -51,12 +51,12 @@ function SQLToJSON($oData) {
 function SQL2JSON($oData) {
 	$sReturn = "[\n";
 
-	if (is_resource($oData) && mysql_num_rows($oData)) {
+	if (is_resource($oData) && mysqli_num_rows($oData)) {
 		//# Traverse the passed $oData as a recordset
-		while ($row = mysql_fetch_assoc($oData)) {
+		while ($row = $oData->fetch_array(MYSQLI_NUM)) {
 			$sReturn .= '	' + json_encode($row) + ",\n";
 		}
-		mysql_data_seek($oData, 0);
+		$oData->data_seek(0);
 	}
 
 	return $sReturn . "]\n";
@@ -64,33 +64,33 @@ function SQL2JSON($oData) {
 
 
 function SQLToFn($oData) {
-	//# 
+	//#
 	return JavaScriptDataFn('inline', SQL2JavaScriptData($oData));
 }
 
 function SQL2JavaScriptData($oData) {
 	$sReturn = '{$type:"datagrid",names:[],length:0}';
-	
-	if (is_resource($oData) && mysql_num_rows($oData)) {
+
+	if ($oData && mysqli_num_rows($oData)) {
 		$sReturn = "{";
-		
-		//# 
-		if ($row = mysql_fetch_assoc($oData)) {
-			//# 
+
+		//#
+		if ($row = $oData->fetch_array(MYSQLI_NUM)) {
+			//#
 			$sReturn .= 'names:' . strtolower(json_encode(array_keys($row))) . ',';
 			$i = 0;
-			mysql_data_seek($oData, 0);
+			$oData->data_seek(0);
 
 			//# Traverse the passed $oData as a recordset
-			while ($row = mysql_fetch_array($oData, MYSQL_NUM)) {
+			while ($row = $oData->fetch_array(MYSQLI_NUM)) {
 				$sReturn .= $i++ . ':' . json_encode($row) . ',';
 			}
-			mysql_data_seek($oData, 0);
+			$oData->data_seek(0);
 		}
 
 		$sReturn .= 'length:' . $i . '}';
 	}
-	
+
 	return $sReturn;
 }
 
@@ -112,10 +112,10 @@ function JavaScriptDataFn($type, $sJSData) {
 						'return H;' .
 					'}' .
                 ';' .
-                
+
                 'if(isNaN(r)){r=-1;}' .                 //# If the parseInt of the R(ow) number failed, set r = -1
                 'if(isNaN(c)){c=d.names.indexOf(n);}' . //# If the parseInt of the C(olumn) number failed, assume its a ColumnName and get its index
-				
+
 				'if(d&&d.length>0&&d.names){' .         //# If the {{arg}} or {{var}} d(ata) is valid
 				     'if(r>-1){' .                      //# If we have a r(ow) number
 				         'if(C===undefined){' .         //# If the caller didn't pass in a C(olumn) identifier, then return the entire row as a h(ash)
@@ -157,12 +157,12 @@ function JavaScriptDataFn($type, $sJSData) {
 						  '}' .
 				    '}' .
 				'}' .
-				
+
                 'return v;' .
             '}'
 	;
-	
-	//# 
+
+	//#
 	switch(strtolower($type)) {
 		case 'callcentral':
 			$sReturn = 'function(R,C,V){return this.$find(R,C,V,' . $sJSData . ')}';
