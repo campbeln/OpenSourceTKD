@@ -27,7 +27,7 @@ function SQLToJSON($oData) {
 
 	if (is_resource($oData) && mysqli_num_rows($oData)) {
 		//# Traverse the passed $oData as a recordset
-		while ($row = $oData->fetch_array(MYSQLI_NUM)) {
+		while ($row = $oData->fetch_array(MYSQLI_ASSOC)) {
 			if (empty($aColumns)) {
 				$aColumns = array_keys($row);
 			}
@@ -53,7 +53,7 @@ function SQL2JSON($oData) {
 
 	if (is_resource($oData) && mysqli_num_rows($oData)) {
 		//# Traverse the passed $oData as a recordset
-		while ($row = $oData->fetch_array(MYSQLI_NUM)) {
+		while ($row = $oData->fetch_array(MYSQLI_ASSOC)) {
 			$sReturn .= '	' + json_encode($row) + ",\n";
 		}
 		$oData->data_seek(0);
@@ -75,7 +75,7 @@ function SQL2JavaScriptData($oData) {
 		$sReturn = "{";
 
 		//#
-		if ($row = $oData->fetch_array(MYSQLI_NUM)) {
+		if ($row = $oData->fetch_array(MYSQLI_ASSOC)) {
 			//#
 			$sReturn .= 'names:' . strtolower(json_encode(array_keys($row))) . ',';
 			$i = 0;

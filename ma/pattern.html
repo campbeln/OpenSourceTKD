@@ -11,13 +11,13 @@
     <!-- script type="text/javascript" src="js/angular.preinit.js"></script -->
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script>
-        //# 
+        //#
         var cn = window.cn || {
                 data: {}
             },
             ngCn = angular.module("ngCn", ['ngSanitize'])
         ;
-		
+
 		//# Outputs the $scope variable to the console
 		ngCn.filter('console', function () {
 			return function (val, v) {
@@ -28,26 +28,24 @@
 				}
 				return "";
 			};
-		});		
+		});
     </script>
     <script type="text/javascript" src="js/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="js/cnNg.module.cnDirectiveFactory.js"></script>
-    <!--<script type="text/javascript" src="js/cnNg.module.cnStyler.js"></script>-->
     <script type="text/javascript" src="js/cnNg.directives.js"></script>
     <script type="text/javascript" src="js/cnNg.filters.js"></script>
     <script type="text/javascript" src="js/cn.js"></script>
     <script type="text/javascript" src="js/cn.enums.js"></script>
-    <!--<script type="text/javascript" src="js/cn.data.patterns.js"></script>-->
     <script type="text/javascript" src="js/tkddata.js.php?var=cn.patterns&version=1.1"></script>
     <script type="text/javascript" src="js/cn.format.patterns.js"></script>
     <script>
-        //# 
+        //#
         $(document).ready(function () {
             cn.ready();
         });
 
         cn.ready = function () {
-            //# 
+            //#
             $(".pictorial IMG").error(function () {
                 $(this).parents(".pictorial").hide();
             });
@@ -65,30 +63,30 @@
                 pictorial: false,
                 encyclopedia: false
             };
-            
+
             //# Initialize the controller
             $scope.init = function() {
                 $scope.refresh();
 
-                //# 
+                //#
                 $(window).on('hashchange', function () {
                     cn.ready();
                     $scope.refresh();
                 });
             };
-            
-            //# 
+
+            //#
             $scope.asHtml = function (sHtml) {
                 return $sce.trustAsHtml(sHtml);
             };
 
-            //# 
+            //#
             $scope.refresh = function() {
                 var i, current,
                     iPatternID = location.hash.substr(1)
                 ;
 
-                //# 
+                //#
                 if (!isNaN(parseFloat(iPatternID)) && isFinite(iPatternID)) {
                     $scope.Patterns = cn.patterns.patterns("?", "ID", iPatternID);
                 }
@@ -96,7 +94,7 @@
                     $scope.Patterns = cn.patterns.patterns();
                 }
 
-                //# 
+                //#
                 for (i = 0; i < $scope.Patterns.length; i++) {
                     current = $scope.Patterns[i];
                     current.GroupedCounts = cn.format.patterns.groupByCount(current.id);
@@ -109,30 +107,30 @@
                     $scope.$apply();
                 });
             };
-            
 
-            //# 
+
+            //#
             $scope.getEncyclopediaCount = function (oPattern, count) {
                 var a_sCount = $filter('filter')(oPattern.encyclopedia, { count: count }, true);
                 return (a_sCount.length > 0 ? a_sCount[0].text : "Error!");
             };
-            
-            
+
+
             //#
             $scope.getTulExercise = function(oPattern, bAsTitle) {
                 var iId = oPattern.id,
                     bIsExercise = ((iId >= 1000 && iId <= 1003) || iId == 1011 || iId == 1012)
                 ;
-                
+
                 if (bAsTitle) {
                     return (bIsExercise ? "Exercise" : "Pattern");
                 } else {
                     return (bIsExercise ? "" : "Tul");
                 }
             };
-            
 
-            //# 
+
+            //#
             $scope.getTechniques = function (oPattern, filter, isAction) {
                 var entry, i, newTech, newTool, newSection,
                     filtered = $filter('filter')(oPattern.techniquesCache, { kind: filter, isaction: (isAction === true ? 1 : 0) }, false)  //# Signal a case-insensitive comparison with false
@@ -172,7 +170,7 @@
                                 : '[' + (entry.isarmtooltwin === "1" ? 'Twin ' : '') + entry.tool + '] '
                             );
                         }
-                        
+
                         //# If the entire entry is a newTech, then <em> the whole entry
                         if (newTech) {
                             entry.text = '<em>' + entry.text + '</em>';
@@ -212,7 +210,7 @@
             </div>
             <h1 ng-hide="show.header" style="page-break-after: avoid;">{{Pattern.name}} {{getTulExercise(Pattern, false)}} ({{Pattern.guplevel}} {{Pattern.belt}})</h1>
 
-        
+
             <div ng-hide="!show.techniques" class="threeCol">
                 <div ng-hide="getTechniques(Pattern, 'leg', false).length == 0">
                     <h3>Stances & Leg Techniques</h3>
@@ -234,21 +232,21 @@
                         <li ng-repeat="entry in getTechniques(Pattern, 'motion')" ng-hide="entry.text === ''" ng-bind-html="entry.text"></li>
                     </ul>
                 </div>
-            
+
                 <div ng-hide="getTechniques(Pattern, 'arm', false).length == 0">
                     <h3>Arm Techniques</h3>
                     <ul class="techniques">
                         <li ng-repeat="entry in getTechniques(Pattern, 'arm', false)" ng-hide="entry.text === ''" ng-bind-html="entry.text"></li>
                     </ul>
                 </div>
-            
+
                 <div ng-hide="getTechniques(Pattern, 'arm', true).length == 0">
                     <h3>Arm Placements</h3>
                     <ul class="techniques">
                         <li ng-repeat="entry in getTechniques(Pattern, 'arm', true)" ng-hide="entry.text === ''" ng-bind-html="entry.text"></li>
                     </ul>
                 </div>
-            
+
                 <div ng-hide="getTechniques(Pattern, 'body').length == 0">
                     <h3>Body Movements</h3>
                     <ul class="techniques">
@@ -256,8 +254,8 @@
                     </ul>
                 </div>
             </div>
-        
-        
+
+
             <table ng-hide="!show.patterns" class="patterns">
                 <!-- caption class="rotate270" style="display: none;">
                     <div>
@@ -332,7 +330,7 @@
 								{{row.eyesto}}{{cn.is.string(row.eyesto) && cn.is.string(row.eyesdiagramdirection) ? "; " : ""}}
 								{{row.eyesdiagramdirection}}
 								<br ng-if="!$last" />
-							</div>						
+							</div>
 						</td>
 						<td>
 							<div style="color: gray;" ng-repeat="row in count" ng-if="cn.is.string(row.feetinmotion)">
@@ -347,7 +345,7 @@
 									<u style="color: gray;" ng-switch-when="action">{{cn.eq.num(row.islegtechniqueflying, 1) ? "Flying" : ""}} <tech ng-bind-html="cn.format.patterns.tech(row.legtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'leg')"> {{row.original.ref}}</sup></u>
 									<b style="color: black; font-style: normal;" ng-switch-default>{{cn.eq.num(row.islegtechniqueflying, 1) ? "Flying" : ""}} <tech ng-bind-html="cn.format.patterns.tech(row.legtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'leg')"> {{row.original.ref}}</sup></b>
 								</switch>
-								
+
 								<i style="color: gray;" ng-if="cn.is.string(row.legtool) || cn.is.string(row.leglineofattack)">
 									[{{row.legtool}}{{cn.is.string(row.legtool) && cn.is.string(row.leglineofattack) ? "; " : ""}}
 									{{row.leglineofattack}}]
@@ -366,7 +364,7 @@
 									<u style="color: gray;" ng-switch-when="action"><tech ng-bind-html="cn.format.patterns.tech(row.armtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'arm')"> {{row.original.ref}}</sup></u>
 									<b style="color: black; font-style: normal;" ng-switch-default><tech ng-bind-html="cn.format.patterns.tech(row.armtechnique, asHtml)"></tech><sup ng-if="cn.cp.str(row.original.appendage, 'arm')"> {{row.original.ref}}</sup></b>
 								</switch>
-								
+
 								<i style="color: gray;" ng-if="cn.is.string(row.armtool) || cn.is.string(row.armlineofattack)">
 									[{{cn.is.string(row.armtool) ?
 										(cn.eq.num(row.isarmtooltwin, 1) ? "Twin " : "") + row.armtool :
@@ -378,7 +376,7 @@
 								</i>
 								<br/>
 							</div>
-						</td>						
+						</td>
 						<td class='facing'>
 							<div style="color: gray;" ng-repeat="row in count" ng-if="cn.is.string(row.facing)">
 								{{row.facing}}
@@ -397,7 +395,7 @@
                     </tr>
                 </tbody>
             </table>
-						
+
 			<section id="orgtech" ng-if="cn.is.arr(Pattern.GroupedCounts.originals, true) || cn.is.true(Pattern.GroupedCounts.connecting)">
 				<!--h2>Original Techniques</h2-->
 				<ul>
@@ -416,12 +414,12 @@
                 <div class="description">By: Dale Copeland</div>
                 <div ng-bind-html="Pattern.longmeaning | htmlify"></div>
             </div>
-    
-        
+
+
             <div ng-hide="!show.pictorial" class="pictorial">
                 <h2>Pattern Pictorial</h2>
                 <div class="description">By: Master Curell</div>
-            
+
                 <p>
                     Terminology on this diagram may differ from the descriptions above. This is something that happens often in Taekwon-do which is why the descriptions above were carefully sourced from the Encyclopaedia to ensure the greatest consistency possible.
                 </p>

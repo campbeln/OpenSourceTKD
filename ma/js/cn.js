@@ -2,14 +2,14 @@
 (function (core, sName) {
     'use strict';
 
-	//# 
-	//for (var sKey in window){ 
+	//#
+	//for (var sKey in window){
 	//   if (window[sKey] === core){
 	//	  core.$name = sKey;
 	//   }
 	//}
 	core.$name = sName;
-	
+
     //# Returns the referenced namespace (creating it if it did not already exist)
     //#     Examples:
     //#         core.$namespace("Renderer.Form");
@@ -57,7 +57,7 @@
         var a_sPath, i,
             oReturnVal = (core.is.obj(oObject) ? oObject : undefined)
         ;
-        
+
         //# If the passed oObject .is.obj and sPath .is.str, .split sPath into a_sPath
         if (oReturnVal && core.is.str(sPath)) {
             a_sPath = sPath.split(".");
@@ -75,7 +75,7 @@
 
         return oReturnVal;
     }; //# core.resolve
-	
+
 
 	//####################################################################################################
     //# is
@@ -140,7 +140,7 @@
 		},
 		prop: function (o, sProp, bPropIsPath) {
 			var oObj = (core.is.arr(o, true) ? o[0] : o);
-			
+
 			return (bPropIsPath === true ?
 				core.resolve(oObj, sProp) !== undefined :
 				core.is.obj(oObj) && sProp in oObj
@@ -157,7 +157,7 @@
 		}
 	}; //# is
 
-	
+
     //####################################################################################################
     //# make
     //####################################################################################################
@@ -257,7 +257,7 @@
 			//dCalDate.getHours() + ':' + core.make.str(dCalDate.getMinutes()).lPad("0", 2) + ':' + core.make.str(dCalDate.getSeconds()).lPad("0", 2)
 		},
 		dateOnly: function (x, dDefault) {
-			return mrs.make.date(mrs.make.yyyymmdd(x, dDefault));
+			return core.make.date(core.make.yyyymmdd(x, dDefault));
 		},
 		json: function (s, vDefault) {
 			var oJson = (arguments.length > 1 ? vDefault : s);
@@ -304,7 +304,7 @@
                 core.make.str(x).trim().toLowerCase() === core.make.str(y).trim().toLowerCase()
             );
         },
-		
+
 		//#
 		contains: function(x, y) {
 			var sCurrent, i,
@@ -312,16 +312,16 @@
 				a_vValues = (core.is.arr(y, true) ? y : [y]),
 				sValue = core.make.str(x).trim().toLowerCase()
 			;
-			
+
 			for (i = 0; i < a_vValues.length; i++) {
 				sCurrent = core.make.str(a_vValues[i]).trim().toLowerCase();
-				
+
 				if (sValue.indexOf(sCurrent) > -1) {
 					bReturnVal = true;
 					break;
 				}
 			}
-			
+
 			return bReturnVal;
 		},
 
@@ -347,7 +347,7 @@
             return iReturnVal;
         } //# num
     }; // cp
-	
+
 
     //####################################################################################################
     //# eq (equal)
@@ -358,7 +358,7 @@
 			var dDateY = core.make.date(y, null);
 
 			//#     NOTE: `new Date("1970/01/01") === new Date("1970/01/01")` is always false as they are 2 different objects, while <= && >= will give the expected result
-			//#     SEE: Comment from Jason Sebring @ http://stackoverflow.com/a/493018/235704 
+			//#     SEE: Comment from Jason Sebring @ http://stackoverflow.com/a/493018/235704
 			return (core.is.date(dDateX) && core.is.date(dDateY) && dDateX <= dDateY && dDateX >= dDateY);
 		},
 
@@ -387,8 +387,8 @@
 		str: function (s, t, bCaseInsenstive, bTrim) {
 			s = core.make.str(s, "");
 			t = core.make.str(t, "");
-			
-			//# 
+
+			//#
 			if (bTrim) {
 				s = s.trim();
 				t = t.trim();
@@ -430,8 +430,8 @@
 		//	}
 		//}
 	}; //# eq
-	
-	
+
+
     //####################################################################################################
     //# fn (function)
     //####################################################################################################
@@ -445,7 +445,7 @@
 				);
 			}
 		},
-		
+
 		//# Returns a function, that, as long as it continues to be invoked, will not be triggered. The function will be called after it stops being called for N milliseconds. If `immediate` is passed, trigger the function on the leading edge, instead of the trailing.
 		//#     From: http://davidwalsh.name/essential-javascript-functions
 		//#     Usage:
@@ -467,15 +467,15 @@
 				if (callNow) func.apply(context, args);
 			};
 		},
-		
-		//# 
+
+		//#
 		//#     From: http://davidwalsh.name/essential-javascript-functions
 		poll: function (fn, callback, errback, timeout, interval) {
 			var endTime = Number(new Date()) + (timeout || 2000);
 			interval = interval || 100;
 
 			(function p() {
-				// If the condition is met, we're done! 
+				// If the condition is met, we're done!
 				if (fn()) {
 					callback();
 				}
@@ -489,7 +489,7 @@
 				}
 			})();
 		},
-		
+
 		//# Ensure a function is called only .once (optionally within a specific context)
 		//#     From: http://davidwalsh.name/essential-javascript-functions
 		//#     Usage:
@@ -509,7 +509,7 @@
 			};
 		}
 	}; //# fn
-	
+
 
 	//##################################################
 	//# Polyfill & extend standard JavaScript objects
@@ -608,8 +608,8 @@
 			var sReturnVal = this;
 
 			//# If the arguments are of the proper types and values
-			if (mrs.is.str(character) && character.length === 1 &&
-				mrs.is.num(len) && len > -1
+			if (core.is.str(character) && character.length === 1 &&
+				core.is.num(len) && len > -1
 			) {
 				//# Left pad out this [string] while it's .length is less than the passed len
 				while (sReturnVal.length < len) {
@@ -620,9 +620,11 @@
 			else {
 				throw "String.prototype.lPad: `character` must represent a single character and `len` must be an integer greater than 0.";
 			}
-			
+
 			return sReturnVal;
 		};
 	}
-	
+
+console.log(core);
+
 })(window.cn);
