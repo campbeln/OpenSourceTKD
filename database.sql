@@ -114,13 +114,14 @@ CREATE TABLE IF NOT EXISTS `Patterns` (
   `Key` varchar(20) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `AKA` varchar(100) DEFAULT NULL,
+  `PatternSet` enum('Chang-Hon', 'WT', 'Other') NOT NULL,
   `IsOfficial` tinyint(1) DEFAULT '0',
   `GupLevel` enum('10th Gup','9th Gup','8th Gup','7th Gup','6th Gup','5th Gup','4th Gup','3rd Gup','2nd Gup','1st Gup','1st Dan','2nd Dan','3rd Dan','4th Dan','5th Dan','6th Dan','7th Dan','8th Dan','9th Dan') DEFAULT NULL,
   `Belt` enum('White Belt','White Belt Yellow Tip','Yellow Belt','Yellow Belt Green Tip','Green Belt','Green Belt Blue Tip','Blue Belt','Blue Belt Red Tip','Red Belt','Red Belt Black Tip','Black Belt') DEFAULT NULL,
   `MovementCount` tinyint(4) NOT NULL,
   `Meaning` text,
-  `Diagram` enum('x','i','s','x-v','x-','l','l2','-','t','t2','t-','ltl','ivv','z','ii') DEFAULT NULL,
-	-- '+','I','S','士v','士','|','_','iT','i山','T','Ivv','Z','王'
+  `Diagram` enum('x','i','s','x-v','x-','l','l2','-', 't',  't2','t-','ltl','ivv','z','ii') DEFAULT NULL,
+	          -- '+','I','S','士v', '士','|','_', 'iT','i山','T', 'Ivv','Z','王'
 	`LongMeaning` text,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1118 ;
@@ -129,60 +130,83 @@ CREATE TABLE IF NOT EXISTS `Patterns` (
 -- Dumping data for table `Patterns`
 --
 
-INSERT INTO `Patterns` (`ID`, `SortOrder`, `Key`, `Name`, `AKA`, `IsOfficial`, `GupLevel`, `Belt`, `MovementCount`, `Meaning`, `Diagram`) VALUES
-(1000, 1, 'j', 'Saju-Jirugi', 'Right 4-Directional Punch', 1, '10th Gup', 'White Belt', 7, '4-Directional Punch', 'x'),
-(1001, 2, 'j', 'Saju-Jirugi', 'Left 4-Directional Punch', 1, '10th Gup', 'White Belt', 7, '4-Directional Punch', 'x'),
-(1002, 5, 'm', 'Saju-Makgi', 'Right 4-Directional Block', 1, '10th Gup', 'White Belt', 8, '4-Directional Block', 'x'),
-(1003, 6, 'm', 'Saju-Makgi', 'Left 4-Directional Block', 1, '10th Gup', 'White Belt', 8, '4-Directional Block', 'x'),
-(1004, 10, 'cj', 'Chon-Ji', 'Cheon-Ji, Chong-Ji', 1, '9th Gup', 'White Belt Yellow Tip', 19, 'Cheon-Ji means literally "the Heaven - the Earth." In the Orient, it is interpreted as the creation of the world or the beginning of human history, therefore, it is the initial pattern played by the beginner. This pattern consists of two similar parts: one representing Heaven and the other representing Earth.', 'x'),
-(1005, 20, 'dg', 'Dan-Gun', NULL, 1, '8th Gup', 'Yellow Belt', 21, 'Dan-Gun is named after the holy Dangun, the legendary founder of Korea in the year of 2,333 B.C.', 'i'),
-(1006, 30, 'ds', 'Do-San', 'To-San', 1, '7th Gup', 'Yellow Belt Green Tip', 24, 'Do-San is the pseudonym of the patriot An Chang-Ho (1876-1938). The 24 movements represent his entire life, which he devoted to furthering the education of Korea and its independence movement.', 's'),
-(1007, 40, 'wh', 'Won-Hyo', 'Weon-Hyo', 1, '6th Gup', 'Green Belt', 28, 'Won-Hyo was the noted monk who introduced Buddhism to the Silla Dynasty in the year 686 A.D. ', 'i'),
-(1008, 50, 'yg', 'Yul-Gok', NULL, 1, '5th Gup', 'Green Belt Blue Tip', 38, 'Yul-Gok is the pseudonym of a great philosopher and scholar Yi l (1536-1584) nicknamed the "Confucius of Korea." The 38 movements of this pattern refer to his birthplace on 38th latitude, and the diagram represents the Chinese character (士) for "scholar."', 'x-v'),
-(1009, 60, 'jg', 'Joong-Gun', 'Jung-Geun, Joon-Gun', 1, '4th Gup', 'Blue Belt', 32, 'Joong-Gun is named after the patriot An Jung-Geun who assassinated Hirobumi Ito, the first Japanese governor-general of Korea.  Ito was known as the man who played the leading part in the Korea-Japan merger. There are 32 movements in this pattern to represent Mr. An''s age when he was executed in Lui-Shung prison (1910). ', 'i'),
-(1010, 70, 'tg', 'Toi-Gye', 'Toe-Gye', 1, '3rd Gup', 'Blue Belt Red Tip', 37, 'Toi-Gye is the pen name of the noted 16th century scholar Yi Hwang, an authority on neo Confucianism. The 37 movements of this pattern refer to his birthplace on the 37th latitude, and the diagram represents the Chinese character (士) for "scholar."', 'x-'),
-(1011, 80, 't', 'Saju-Tulgi', 'Right 4-Directional Thrust', 1, '2nd Gup', 'Red Belt', 4, '4-Directional Thrust', 'x'),
-(1012, 81, 't', 'Saju-Tulgi', 'Left 4-Directional Thrust', 1, '2nd Gup', 'Red Belt', 4, '4-Directional Thrust', 'x'),
-(1013, 82, 'hr', 'Hwa-Rang', NULL, 1, '2nd Gup', 'Red Belt', 29, 'Hwa-Rang is named after the Hwarang youth group, which originated in the Silla Dynasty in the early 7th century. The 29 movements refer to the 29th Infantry Division, where Taekwon-Do developed into maturity.', 'i'),
-(1014, 90, 'cm', 'Choong-Moo', 'Chung-Mu', 1, '1st Gup', 'Red Belt Black Tip', 30, 'Choong-Moo was the name given to the great Admiral Yi Sun-Sin of the Yi Dynasty. He was reputed to have invented the first armored battleship (geobukseon) in 1592, which is said to be the precursor of the present day submarine. The reason why this pattern ends with a left-hand attack is to symbolize his regrettable death, having no chance to show his unrestrained potentiality, checked by the forced reservation of his loyalty to the king.', 'i'),
-(1015, 100, 'kg', 'Kwang-Gae', 'Gwang-Gae', 1, '1st Dan', 'Black Belt', 39, 'Kwang-Gae is named after the famous Gwang-Gae To-Wang, the 19th King of the Goguryeo Dynasty, who regained all the lost territories including the greater part of Manchuria. The diagram is in the shape of the Chinese character for land (土), representing the expansion and recovery of the lost territory. The 39 movements refer to the first two figures of 391 A.D., the year he came to the throne.', 't-'),
-(1016, 110, 'pe', 'Po-Eun', NULL, 1, '1st Dan', 'Black Belt', 36, 'Po-Eun is the pseudonym of a loyal subject Chong Mong-Chu (1400), who was a famous poet and whose poem, "I would not serve a second master though I might be crucified a hundred times," is known to every Korean. He was also a pioneer in the field of physics. The diagram (一) represents his unerring loyalty to the king and country towards the end of the Goryeo Dynasty.', '-'),
-(1017, 120, 'gb', 'Gae-Baek', 'Gye-Baek', 1, '1st Dan', 'Black Belt', 44, 'Gae-Baek is named after Gye-Baek, a great general in the Baekje Dynasty (660 A.D.). The diagram (|) represents his severe and strict military discipline.', 'l'),
-(1018, 200, 'ea', 'Eui-Am', NULL, 1, '2nd Dan', 'Black Belt', 45, 'Eui-Am is the pseudonym of Son Byong-Hi, leader of the Korean independence movement on March 1, 1919. The 45 movements refer to his age when he changed the name of Donghak (Oriental culture) to Cheondogyo (Heavenly Way Religion) in 1905. The diagram (|) represents his Indomitable Spirit, displayed while dedicating himself to the prosperity of his nation.', 'l'),
-(1019, 210, 'cj2', 'Choong-Jang', 'Chung-Jang', 1, '2nd Dan', 'Black Belt', 52, 'Chung-Jang is the pseudonym given to General Kim Deok-Ryeong who lived during the Yi Dynasty, in the 14th century. This pattern ends with a left-hand attack to symbolize the tragedy of his death at 27, in prison before he was able to reach full maturity.', 't'),
-(1020, 220, 'jc', 'Juche', 'Ju-Che', 1, '2nd Dan', 'Black Belt', 45, 'Juche is a philosophical idea that man is the master of everything and decides everything. In other words, the idea that man is the master of the world and his own destiny. It is said that this idea was rooted in Baek-Du Mountain, which symbolizes the spirit of the Korean people. The diagram is in the shape of the Chinese character (山) for mountain, representing Baekdu Mountain.', 'ltl'),
-(1021, 240, 'kd', 'Ko-Dang', 'Go-Dang', NULL, '2nd Dan', 'Black Belt', 39, 'Ko-Dang is the pseudonym of the patriot Cho Man-Sik, who dedicated his life to the Independence Movement and education of his people. The 39 movements in this pattern signify his times of imprisonment and his birthplace on the 39th parallel.\r\nKo-Dang was one of the original 24 patterns created by General Choi. In the early 1980s, however, Ko-Dang was removed from the official syllabus by General Choi and replaced by a new pattern which he named Juche. Ko-Dang was a famous South Korean anti-communist, and when Choi began to spread his art throughout the world, and to North Korea in particular, he removed this pattern so as not to offend anyone. Although no longer part of official ITF Taekwondo, Ko-Dang is still included in the syllabi of many Taekwondo organisations. In those organisations where it is still taught, it is generally taught to students at the level of 2nd Dan black belt. Although some sources lead to the deduction that Ko-Dang is exactly the same pattern as Juche, they are in fact two completely different patterns. The confusion arose when one of the ITF Taekwondo groups changed the name of the pattern Juche to Ko-Dang in 2008, because the word "Juche" is associated with North Korea''s communist ideology.', 't2'),
-(1022, 300, 'si', 'Sam-Il', NULL, 1, '3rd Dan', 'Black Belt', 33, 'Sam-Il denotes the historical date of the independence movement of Korea, which began throughout the country on March 1, 1919. The 33 movements in the pattern stand for the 33 patriots who planned the movement.', 'x'),
-(1023, 310, 'ys', 'Yoo-Sin', 'Yu-Sin', 1, '3rd Dan', 'Black Belt', 68, 'Yoo-Sin is named after General Kim Yoo-Sin, a commanding general during the Silla Dynasty. The 68 movements refer to the last two figures of 668 A.D., the year Korea was united. The ready posture signifies a sword drawn on the right rather than left side, symbolizing Yoo-Sin’s mistake of following his King''s orders to fight with foreign forces against his own nation.', 'ivv'),
-(1024, 320, 'cy', 'Choi-Yong', 'Choi-Yeong, Choe-Yeong', 1, '3rd Dan', 'Black Belt', 46, 'Choi-Yeong is named after General Choi-Yeong, premier and commander in chief of the armed forces during the 14th century Goryeo Dynasty. Choi-Yong was greatly respected for his loyalty, patriotism, and humility. He was executed by his subordinate commanders headed by general Yi Seong-Gye, who later became the first King of the Yi Dynasty.', 'x'),
-(1025, 400, 'yg4', 'Yon-Gae', 'Yeon-Gae', 1, '4th Dan', 'Black Belt', 49, 'Yeon-Gae is named after a famous general during the Goguryeo Dynasty, Yeon-Gae So-Mun. The 49 movements refer to the last two figures of 649 A.D., the year he forced the Tang Dynasty to quit Korea after destroying nearly 300,000 of their troops at Ansiseong.', 'x'),
-(1026, 410, 'ej', 'Ul-Ji', 'Eul-Ji', 1, '4th Dan', 'Black Belt', 42, 'Ul-Ji is named after general Ul-Ji Mun-Dok who successfully defended Korea against the Tang''s invasion force of nearly one million soldiers led by Yang Je in 612 A.D.  Ul-Ji, employing hit and run guerilla tactics, was able to decimate a large percentage of the force. The diagram is in the shape of the Chinese character (乙) represents his surname. The 42 movements represent age the of General Choi Hong-Hi when he designed the pattern.', 'z'),
-(1027, 420, 'mm', 'Moon-Moo', 'Mun-Mu', 1, '4th Dan', 'Black Belt', 61, 'Moon-Moo honors the 30th King of the Silla Dynasty. His body was buried near Daewangam (Great King''s Rock). According to his will, the body was placed in the sea "where my soul shall forever defend my land against the Japanese." It is said that the Seokgulam (Stone Cave) was built to guard his tomb. The Seokgulam is a fine example of the culture of the Silla Dynasty. The 61 movements in this pattern symbolize the last two figures of 661 A.D. when Mun-Mu came to the throne.', 'x'),
-(1028, 500, 'ss', 'Seo-San', 'So-San', 1, '5th Dan', 'Black Belt', 72, 'Seo-San is the pseudonym of the great monk Choi Hyeong-Eung (1520-1604) during the Yi Dynasty. The 72 movements refer to his age when he organized a corps of monk soldiers with the assistance of his pupil, Sa Myeong-Dang. The monk soldiers helped repulse the Japanese pirates who overran most of the Korean peninsula in 1592.', 'x'),
-(1029, 510, 'sj', 'Se-Jong', NULL, 1, '5th Dan', 'Black Belt', 24, 'Se-Jong is named after the greatest Korean King, Se-Jong, who invented the Korean alphabet (han-geul) in 1443, and he was also a noted meteorologist. The pattern diagram is in the shape of the Chinese character (王) for king, representing King Se-Jong, while the 24 movements refer to the 24 letters of the Korean alphabet.', 'ii'),
-(1031, 520, 'un', 'U-Nam', 'Woo-Nam', NULL, '5th Dan', 'Black Belt', 42, 'U-Nam is the pseudonym of the first President of Korea, Dr. Syngman Rhee. U-Nam was removed from the curriculum due to nationwide protests in 1960 which forced President Rhee’s resignation and exile.', 't'), -- U-Nam was researched by Dr. George Vitale, VIII Degree from NYC, USA. During his many years of extensive research he was advised of its creation by Grandmaster C.K. Choi, a Founding Member of the ITF. "U-Nam was one of the patterns used in the early developmental stages. At that time Syngman Rhee was the first President of South Korea and as Taekwon-do was in this early developmental phase, our Founder General Choi Hong Hi wanted to gain the support of the South Korean President. U Nam was the pen name of Syngman Rhee and as such, General Choi created pattern U Nam. The pattern was replaced by Choong Jang tul after the President’s resignation in 1960. Choong Jang tul contains many similar and also upgraded movements from pattern U Nam." -FGMR
-(1032, 521, 'un_lit', 'U-Nam (Lost In Translation)', 'Woo-Nam', NULL, '5th Dan', 'Black Belt', 42, 'This version of U-Nam stems from the original incorrect English translation which was demonstrated from rediscovery in 2013 through early 2016 when an accurate translation was made widely available. This ''Lost In Translation'' version of U-Nam as written and preformed did not return to the starting position due to the footwork in movement #39. As this version of U-Nam has little resemblance to the accurate translation, artistic license was taken to add a single step so practitoners may return to the starting position. As such, in movement #39 the right foot now steps forward into a parallel stance before moving the left foot into position. To practice this pattern as origionally (incorrectly) translated, omit this right foot movement from movement #39.', 't'), -- U-Nam was researched by Dr. George Vitale, VIII Degree from NYC, USA. During his many years of extensive research he was advised of its creation by Grandmaster C.K. Choi, a Founding Member of the ITF. "U-Nam was one of the patterns used in the early developmental stages. At that time Syngman Rhee was the first President of South Korea and as Taekwon-do was in this early developmental phase, our Founder General Choi Hong Hi wanted to gain the support of the South Korean President. U Nam was the pen name of Syngman Rhee and as such, General Choi created pattern U Nam. The pattern was replaced by Choong Jang tul after the President’s resignation in 1960. Choong Jang tul contains many similar and also upgraded movements from pattern U Nam." -FGMR
-(1030, 600, 'ti', 'Tong-Il', NULL, 1, '6th Dan', 'Black Belt', 56, 'Tong-Il denotes the resolution of the unification of Korea, which has been divided since 1945. The diagram (ㅣ) symbolizes the homogenous race.', 'l2'),
+INSERT INTO `Patterns` (`ID`, `SortOrder`, `PatternSet`, `Key`, `Name`, `AKA`, `IsOfficial`, `GupLevel`, `Belt`, `MovementCount`, `Meaning`, `Diagram`) VALUES
+(1000, 1, 'Chang-Hon', 'j', 'Saju-Jirugi', 'Right 4-Directional Punch', 1, '10th Gup', 'White Belt', 7, '4-Directional Punch', 'x'),
+(1001, 2, 'Chang-Hon', 'j', 'Saju-Jirugi', 'Left 4-Directional Punch', 1, '10th Gup', 'White Belt', 7, '4-Directional Punch', 'x'),
+(1002, 5, 'Chang-Hon', 'm', 'Saju-Makgi', 'Right 4-Directional Block', 1, '10th Gup', 'White Belt', 8, '4-Directional Block', 'x'),
+(1003, 6, 'Chang-Hon', 'm', 'Saju-Makgi', 'Left 4-Directional Block', 1, '10th Gup', 'White Belt', 8, '4-Directional Block', 'x'),
+(1004, 10, 'Chang-Hon', 'cj', 'Chon-Ji', 'Cheon-Ji, Chong-Ji', 1, '9th Gup', 'White Belt Yellow Tip', 19, 'Cheon-Ji means literally "the Heaven - the Earth." In the Orient, it is interpreted as the creation of the world or the beginning of human history, therefore, it is the initial pattern played by the beginner. This pattern consists of two similar parts: one representing Heaven and the other representing Earth.', 'x'),
+(1005, 20, 'Chang-Hon', 'dg', 'Dan-Gun', NULL, 1, '8th Gup', 'Yellow Belt', 21, 'Dan-Gun is named after the holy Dangun, the legendary founder of Korea in the year of 2,333 B.C.', 'i'),
+(1006, 30, 'Chang-Hon', 'ds', 'Do-San', 'To-San', 1, '7th Gup', 'Yellow Belt Green Tip', 24, 'Do-San is the pseudonym of the patriot An Chang-Ho (1876-1938). The 24 movements represent his entire life, which he devoted to furthering the education of Korea and its independence movement.', 's'),
+(1007, 40, 'Chang-Hon', 'wh', 'Won-Hyo', 'Weon-Hyo', 1, '6th Gup', 'Green Belt', 28, 'Won-Hyo was the noted monk who introduced Buddhism to the Silla Dynasty in the year 686 A.D. ', 'i'),
+(1008, 50, 'Chang-Hon', 'yg', 'Yul-Gok', NULL, 1, '5th Gup', 'Green Belt Blue Tip', 38, 'Yul-Gok is the pseudonym of a great philosopher and scholar Yi l (1536-1584) nicknamed the "Confucius of Korea." The 38 movements of this pattern refer to his birthplace on 38th latitude, and the diagram represents the Chinese character (士) for "scholar."', 'x-v'),
+(1009, 60, 'Chang-Hon', 'jg', 'Joong-Gun', 'Jung-Geun, Joon-Gun', 1, '4th Gup', 'Blue Belt', 32, 'Joong-Gun is named after the patriot An Jung-Geun who assassinated Hirobumi Ito, the first Japanese governor-general of Korea.  Ito was known as the man who played the leading part in the Korea-Japan merger. There are 32 movements in this pattern to represent Mr. An''s age when he was executed in Lui-Shung prison (1910). ', 'i'),
+(1010, 70, 'Chang-Hon', 'tg', 'Toi-Gye', 'Toe-Gye', 1, '3rd Gup', 'Blue Belt Red Tip', 37, 'Toi-Gye is the pen name of the noted 16th century scholar Yi Hwang, an authority on neo Confucianism. The 37 movements of this pattern refer to his birthplace on the 37th latitude, and the diagram represents the Chinese character (士) for "scholar."', 'x-'),
+(1011, 80, 'Chang-Hon', 't', 'Saju-Tulgi', 'Right 4-Directional Thrust', 1, '2nd Gup', 'Red Belt', 4, '4-Directional Thrust', 'x'),
+(1012, 81, 'Chang-Hon', 't', 'Saju-Tulgi', 'Left 4-Directional Thrust', 1, '2nd Gup', 'Red Belt', 4, '4-Directional Thrust', 'x'),
+(1013, 82, 'Chang-Hon', 'hr', 'Hwa-Rang', NULL, 1, '2nd Gup', 'Red Belt', 29, 'Hwa-Rang is named after the Hwarang youth group, which originated in the Silla Dynasty in the early 7th century. The 29 movements refer to the 29th Infantry Division, where Taekwon-Do developed into maturity.', 'i'),
+(1014, 90, 'Chang-Hon', 'cm', 'Choong-Moo', 'Chung-Mu', 1, '1st Gup', 'Red Belt Black Tip', 30, 'Choong-Moo was the name given to the great Admiral Yi Sun-Sin of the Yi Dynasty. He was reputed to have invented the first armored battleship (geobukseon) in 1592, which is said to be the precursor of the present day submarine. The reason why this pattern ends with a left-hand attack is to symbolize his regrettable death, having no chance to show his unrestrained potentiality, checked by the forced reservation of his loyalty to the king.', 'i'),
+(1015, 100, 'Chang-Hon', 'kg', 'Kwang-Gae', 'Gwang-Gae', 1, '1st Dan', 'Black Belt', 39, 'Kwang-Gae is named after the famous Gwang-Gae To-Wang, the 19th King of the Goguryeo Dynasty, who regained all the lost territories including the greater part of Manchuria. The diagram is in the shape of the Chinese character for land (土), representing the expansion and recovery of the lost territory. The 39 movements refer to the first two figures of 391 A.D., the year he came to the throne.', 't-'),
+(1016, 110, 'Chang-Hon', 'pe', 'Po-Eun', NULL, 1, '1st Dan', 'Black Belt', 36, 'Po-Eun is the pseudonym of a loyal subject Chong Mong-Chu (1400), who was a famous poet and whose poem, "I would not serve a second master though I might be crucified a hundred times," is known to every Korean. He was also a pioneer in the field of physics. The diagram (一) represents his unerring loyalty to the king and country towards the end of the Goryeo Dynasty.', '-'),
+(1017, 120, 'Chang-Hon', 'gb', 'Gae-Baek', 'Gye-Baek', 1, '1st Dan', 'Black Belt', 44, 'Gae-Baek is named after Gye-Baek, a great general in the Baekje Dynasty (660 A.D.). The diagram (|) represents his severe and strict military discipline.', 'l'),
+(1018, 200, 'Chang-Hon', 'ea', 'Eui-Am', NULL, 1, '2nd Dan', 'Black Belt', 45, 'Eui-Am is the pseudonym of Son Byong-Hi, leader of the Korean independence movement on March 1, 1919. The 45 movements refer to his age when he changed the name of Donghak (Oriental culture) to Cheondogyo (Heavenly Way Religion) in 1905. The diagram (|) represents his Indomitable Spirit, displayed while dedicating himself to the prosperity of his nation.', 'l'),
+(1019, 210, 'Chang-Hon', 'cj2', 'Choong-Jang', 'Chung-Jang', 1, '2nd Dan', 'Black Belt', 52, 'Chung-Jang is the pseudonym given to General Kim Deok-Ryeong who lived during the Yi Dynasty, in the 14th century. This pattern ends with a left-hand attack to symbolize the tragedy of his death at 27, in prison before he was able to reach full maturity.', 't'),
+(1020, 220, 'Chang-Hon', 'jc', 'Juche', 'Ju-Che', 1, '2nd Dan', 'Black Belt', 45, 'Juche is a philosophical idea that man is the master of everything and decides everything. In other words, the idea that man is the master of the world and his own destiny. It is said that this idea was rooted in Baek-Du Mountain, which symbolizes the spirit of the Korean people. The diagram is in the shape of the Chinese character (山) for mountain, representing Baekdu Mountain.', 'ltl'),
+(1021, 240, 'Chang-Hon', 'kd', 'Ko-Dang', 'Go-Dang', NULL, '2nd Dan', 'Black Belt', 39, 'Ko-Dang is the pseudonym of the patriot Cho Man-Sik, who dedicated his life to the Independence Movement and education of his people. The 39 movements in this pattern signify his times of imprisonment and his birthplace on the 39th parallel.\r\nKo-Dang was one of the original 24 patterns created by General Choi. In the early 1980s, however, Ko-Dang was removed from the official syllabus by General Choi and replaced by a new pattern which he named Juche. Ko-Dang was a famous South Korean anti-communist, and when Choi began to spread his art throughout the world, and to North Korea in particular, he removed this pattern so as not to offend anyone. Although no longer part of official ITF Taekwondo, Ko-Dang is still included in the syllabi of many Taekwondo organisations. In those organisations where it is still taught, it is generally taught to students at the level of 2nd Dan black belt. Although some sources lead to the deduction that Ko-Dang is exactly the same pattern as Juche, they are in fact two completely different patterns. The confusion arose when one of the ITF Taekwondo groups changed the name of the pattern Juche to Ko-Dang in 2008, because the word "Juche" is associated with North Korea''s communist ideology.', 't2'),
+(1022, 300, 'Chang-Hon', 'si', 'Sam-Il', NULL, 1, '3rd Dan', 'Black Belt', 33, 'Sam-Il denotes the historical date of the independence movement of Korea, which began throughout the country on March 1, 1919. The 33 movements in the pattern stand for the 33 patriots who planned the movement.', 'x'),
+(1023, 310, 'Chang-Hon', 'ys', 'Yoo-Sin', 'Yu-Sin', 1, '3rd Dan', 'Black Belt', 68, 'Yoo-Sin is named after General Kim Yoo-Sin, a commanding general during the Silla Dynasty. The 68 movements refer to the last two figures of 668 A.D., the year Korea was united. The ready posture signifies a sword drawn on the right rather than left side, symbolizing Yoo-Sin’s mistake of following his King''s orders to fight with foreign forces against his own nation.', 'ivv'),
+(1024, 320, 'Chang-Hon', 'cy', 'Choi-Yong', 'Choi-Yeong, Choe-Yeong', 1, '3rd Dan', 'Black Belt', 46, 'Choi-Yeong is named after General Choi-Yeong, premier and commander in chief of the armed forces during the 14th century Goryeo Dynasty. Choi-Yong was greatly respected for his loyalty, patriotism, and humility. He was executed by his subordinate commanders headed by general Yi Seong-Gye, who later became the first King of the Yi Dynasty.', 'x'),
+(1025, 400, 'Chang-Hon', 'yg4', 'Yon-Gae', 'Yeon-Gae', 1, '4th Dan', 'Black Belt', 49, 'Yeon-Gae is named after a famous general during the Goguryeo Dynasty, Yeon-Gae So-Mun. The 49 movements refer to the last two figures of 649 A.D., the year he forced the Tang Dynasty to quit Korea after destroying nearly 300,000 of their troops at Ansiseong.', 'x'),
+(1026, 410, 'Chang-Hon', 'ej', 'Ul-Ji', 'Eul-Ji', 1, '4th Dan', 'Black Belt', 42, 'Ul-Ji is named after general Ul-Ji Mun-Dok who successfully defended Korea against the Tang''s invasion force of nearly one million soldiers led by Yang Je in 612 A.D.  Ul-Ji, employing hit and run guerilla tactics, was able to decimate a large percentage of the force. The diagram is in the shape of the Chinese character (乙) represents his surname. The 42 movements represent age the of General Choi Hong-Hi when he designed the pattern.', 'z'),
+(1027, 420, 'Chang-Hon', 'mm', 'Moon-Moo', 'Mun-Mu', 1, '4th Dan', 'Black Belt', 61, 'Moon-Moo honors the 30th King of the Silla Dynasty. His body was buried near Daewangam (Great King''s Rock). According to his will, the body was placed in the sea "where my soul shall forever defend my land against the Japanese." It is said that the Seokgulam (Stone Cave) was built to guard his tomb. The Seokgulam is a fine example of the culture of the Silla Dynasty. The 61 movements in this pattern symbolize the last two figures of 661 A.D. when Mun-Mu came to the throne.', 'x'),
+(1028, 500, 'Chang-Hon', 'ss', 'Seo-San', 'So-San', 1, '5th Dan', 'Black Belt', 72, 'Seo-San is the pseudonym of the great monk Choi Hyeong-Eung (1520-1604) during the Yi Dynasty. The 72 movements refer to his age when he organized a corps of monk soldiers with the assistance of his pupil, Sa Myeong-Dang. The monk soldiers helped repulse the Japanese pirates who overran most of the Korean peninsula in 1592.', 'x'),
+(1029, 510, 'Chang-Hon', 'sj', 'Se-Jong', NULL, 1, '5th Dan', 'Black Belt', 24, 'Se-Jong is named after the greatest Korean King, Se-Jong, who invented the Korean alphabet (han-geul) in 1443, and he was also a noted meteorologist. The pattern diagram is in the shape of the Chinese character (王) for king, representing King Se-Jong, while the 24 movements refer to the 24 letters of the Korean alphabet.', 'ii'),
+(1031, 520, 'Chang-Hon', 'un', 'Woo-Nam', 'U-Nam', NULL, '5th Dan', 'Black Belt', 42, 'Woo-Nam is the pseudonym of the first President of Korea, Dr. Syngman Rhee. Woo-Nam was removed from the curriculum due to nationwide protests in 1960 which forced President Rhee’s resignation and exile.', 't'), -- Woo-Nam was researched by Dr. George Vitale, VIII Degree from NYC, USA. During his many years of extensive research he was advised of its creation by Grandmaster C.K. Choi, a Founding Member of the ITF. "Woo-Nam was one of the patterns used in the early developmental stages. At that time Syngman Rhee was the first President of South Korea and as Taekwon-do was in this early developmental phase, our Founder General Choi Hong Hi wanted to gain the support of the South Korean President. U Nam was the pen name of Syngman Rhee and as such, General Choi created pattern U Nam. The pattern was replaced by Choong Jang tul after the President’s resignation in 1960. Choong Jang tul contains many similar and also upgraded movements from pattern U Nam." -FGMR
+(1032, 521, 'Chang-Hon', 'un-lit', 'Woo-Nam (2014 Lost In Translation)', 'U-Nam', NULL, '5th Dan', 'Black Belt', 42, 'This version of Woo-Nam stems from the original incorrect English translation which was demonstrated from rediscovery in 2013 through early 2016 when an accurate translation was made widely available. This ''Lost In Translation'' version of Woo-Nam as written and preformed did not return to the starting position due to the footwork in movement #39. As this version of Woo-Nam has little resemblance to the accurate translation, artistic license was taken to add a single step so practitoners may return to the starting position. As such, in movement #39 the right foot now steps forward into a parallel stance before moving the left foot into position. To practice this pattern as origionally (incorrectly) translated, omit this right foot movement from movement #39.', 't'), -- Woo-Nam was researched by Dr. George Vitale, VIII Degree from NYC, USA. During his many years of extensive research he was advised of its creation by Grandmaster C.K. Choi, a Founding Member of the ITF. "Woo-Nam was one of the patterns used in the early developmental stages. At that time Syngman Rhee was the first President of South Korea and as Taekwon-do was in this early developmental phase, our Founder General Choi Hong Hi wanted to gain the support of the South Korean President. U Nam was the pen name of Syngman Rhee and as such, General Choi created pattern U Nam. The pattern was replaced by Choong Jang tul after the President’s resignation in 1960. Choong Jang tul contains many similar and also upgraded movements from pattern U Nam." -FGMR
+(1032, 522, 'Chang-Hon', 'un-2016', 'Woo-Nam (2016 Modernized)', 'U-Nam', NULL, '5th Dan', 'Black Belt', 42, 'Updated version by Grandmaster C. K. Choi', 't'),
+(1030, 600, 'Chang-Hon', 'ti', 'Tong-Il', NULL, 1, '6th Dan', 'Black Belt', 56, 'Tong-Il denotes the resolution of the unification of Korea, which has been divided since 1945. The diagram (ㅣ) symbolizes the homogenous race.', 'l2'),
 
 
-(1100, 1000, '~sp', 'Right Punch Sparing Pattern', NULL, 0, NULL, NULL, 28, NULL, NULL),
-(1101, 1001, '~sp', 'Left Punch Sparing Pattern', NULL, 0, NULL, NULL, 28, NULL, NULL),
-(1102, 1002, '~sp', 'Right Front/Side Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1103, 1003, '~sp', 'Left Front/Side Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1104, 1004, '~sp', 'Right Hooking/Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1105, 1005, '~sp', 'Left Hooking/Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1106, 1006, '~sp', 'Right Back Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1107, 1007, '~sp', 'Left Back Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1108, 1008, '~sp', 'Right Reverse Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1109, 1009, '~sp', 'Left Reverse Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1110, 1010, '~sp', 'Right Knee Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1111, 1011, '~sp', 'Left Knee Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1112, 1012, '~sp', 'Right Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1113, 1013, '~sp', 'Left Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1114, 1014, '~sp', 'Right Palm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1115, 1015, '~sp', 'Left Palm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1116, 1016, '~sp', 'Right Forearm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
-(1117, 1017, '~sp', 'Left Forearm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL);
+(1100, 1000, 'Other', 'o-sp', 'Right Punch Sparing Pattern', NULL, 0, NULL, NULL, 28, NULL, NULL),
+(1101, 1001, 'Other', 'o-sp', 'Left Punch Sparing Pattern', NULL, 0, NULL, NULL, 28, NULL, NULL),
+(1102, 1002, 'Other', 'o-sp', 'Right Front/Side Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1103, 1003, 'Other', 'o-sp', 'Left Front/Side Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1104, 1004, 'Other', 'o-sp', 'Right Hooking/Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1105, 1005, 'Other', 'o-sp', 'Left Hooking/Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1106, 1006, 'Other', 'o-sp', 'Right Back Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1107, 1007, 'Other', 'o-sp', 'Left Back Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1108, 1008, 'Other', 'o-sp', 'Right Reverse Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1109, 1009, 'Other', 'o-sp', 'Left Reverse Turning Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1110, 1010, 'Other', 'o-sp', 'Right Knee Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1111, 1011, 'Other', 'o-sp', 'Left Knee Kick Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1112, 1012, 'Other', 'o-sp', 'Right Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1113, 1013, 'Other', 'o-sp', 'Left Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1114, 1014, 'Other', 'o-sp', 'Right Palm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1115, 1015, 'Other', 'o-sp', 'Left Palm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1116, 1016, 'Other', 'o-sp', 'Right Forearm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL),
+(1117, 1017, 'Other', 'o-sp', 'Left Forearm Block Sparing Pattern', NULL, 0, NULL, NULL, 0, NULL, NULL);
+
+/*
+INSERT INTO `Patterns` (`ID`, `SortOrder`, `PatternSet`, `Key`, `Name`, `AKA`, `IsOfficial`, `GupLevel`, `Belt`, `MovementCount`, `Meaning`, `Diagram`) VALUES
+(2000, 2001, 'WT', 'wt-tg1', 'Taegeuk Il Jang', NULL, 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+(2001, 2002, 'WT', 'wt-tg2', 'Taegeuk Yi Jang', 'Taegeuk Ee Jang', 1, '9th Gup', 'White Belt Yellow Tip', 28, NULL, 'ii'),
+(2002, 2003, 'WT', 'wt-tg3', 'Taegeuk Sam Jang', 'Taegeuk Sahm Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+(2003, 2004, 'WT', 'wt-tg4', 'Taegeuk Sa Jang', 'Taegeuk Sah Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+(2004, 2005, 'WT', 'wt-tg5', 'Taegeuk Oh Jang', 'Taegeuk O Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+(2005, 2006, 'WT', 'wt-tg6', 'Taegeuk Yook Jang', 'Taegeuk Yuk Jang, 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+(2006, 2007, 'WT', 'wt-tg7', 'Taegeuk Chil Jang', NULL, 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+(2007, 2008, 'WT', 'wt-tg8', 'Taegeuk Pal Jang', 'Taegeuk Phal Jang', 1, '10th Gup', 'White Belt', 28, NULL, 'ii'),
+
+(2000, 2010, 'WT', 'wt-ky', 'Koryo', 'Goryeo, Koryeo (고려)', 1, '1st Dan', 'Black Belt', 28, '"learned man", symbolizing a wise person', 'ii'),
+(2000, 2011, 'WT', 'wt-kg', 'Keumgang', '(금강)', 1, '2nd Dan', 'Black Belt', 28, '"diamond", symbolizing hardness, unbreakable', 'ii'),
+(2000, 2012, 'WT', 'wt-tb', 'Taebaek', '(태백)', 1, '3rd Dan', 'Black Belt', 28, '"sacred mountain", symbolizing spirituality', 'ii'),
+(2000, 2013, 'WT', 'wt-pw', 'Pyongwon', 'Pyeong-won (평원)', 1, '4th Dan', 'Black Belt', 28, '"open plain", symbolizing peacefulness', 'ii'),
+(2000, 2014, 'WT', 'wt-sj', 'Sipjin', 'Shipjin (싶진)', 1, '5th Dan', 'Black Belt', 28, '"eternal 10", symbolizing health and longevity', 'ii'),
+(2000, 2015, 'WT', 'wt-jt', 'Jitae', '(지태)', 1, '6th Dan', 'Black Belt', 28, 'symbolizes mankind as the connection between heaven and earth', 'ii'),
+(2000, 2016, 'WT', 'wt-ck', 'Cheonkwon', 'Cheon-gwon (천권)', 1, '7th Dan', 'Black Belt', 28, '"sky", symbolizing piety', 'ii'),
+(2000, 2017, 'WT', 'wt-hs', 'Hansoo', 'Hansu (한수)', 1, '8th Dan', 'Black Belt', 28, '"water", symbolizing adaptability', 'ii'),
+(2000, 2018, 'WT', 'wt-iy', ' Ilyeo', '(일여)', 1, '9th Dan', 'Black Belt', 28, 'symbolizing the Buddhist concept of oneness of the mind and body', 'ii');
+*/
 
 UPDATE `Patterns`
 SET LongMeaning = 'Literal meaning of Chon-Ji is "Heaven and Earth," which in the Orient symbolizes the creation of the world and the beginning of human history. Chon-Ji was named after Lake Chon-Ji, a lake that fills the crater on top of the extinct volcano Paektu-San on the border of North Korea and China. It is 2,749 metres above sea level, covers 14.4 square metres and is 384 metres deep at its deepest point, making it possibly the deepest volcanic lake on earth. It is said that General Choi, Hong-Hi named the pattern after the lake because the water is so clear and calm that you can literally see the Heaven meeting the Earth.\nChon-Ji is appropriately named because creation is the starting point of all things and this pattern establishes a foundation for the remaining patterns. The pattern consists of two similar parts: one part representing heaven and the other earth. Stances and techniques in this pattern comprise the basic movements required for mastery of all 24 patterns.'
@@ -245,7 +269,7 @@ SET LongMeaning = 'The Juche Idea was improvised in the 1950s by Kim, Il-Sung, a
 WHERE ID = 1020;
 
 -- UPDATE `Patterns`
--- SET LongMeaning = 'U-Nam'
+-- SET LongMeaning = 'Woo-Nam'
 -- WHERE ID = 1031;
 
 -- UPDATE `Patterns`
@@ -595,7 +619,7 @@ INSERT INTO `Techniques` (`ID`, `Type`, `Appendage`, `IsSectionInferred`, `Offic
 (10213, 'Attack', 'Arm', 1, 'Horizontal Thrust', NULL, 'Fl', 1, 1, 0, 0, 0),				-- - v3p96 Mid; (Twin) 'Elbow'
 (10214, 'Attack', 'Arm', 1, 'Horizontal Strike', NULL, 'Fl', 1, 1, 0, 0, 0),				-- - v3p134 Mid; Twin 'Knife-Hand', Twin 'Side Fist', 'Back Fist',+twin back fist or twin back hand
 (10215, 'Attack', 'Arm', 0, 'Inward Strike', NULL, 'Bl', 1, 0, 1, 0, 0),					-- v3p116 Mid,High; 'Knife-Hand'+twin knife-hand, twin reverse knife-hand, under fist, palm, twin palm and bear hand
-(10216, 'Attack', 'Arm', 1, 'Upper Strike', NULL, 'Sl', 1, 0, 0, 0, 0),						-- - v3p109 High (U-Nam has Mid); 'Elbow'
+(10216, 'Attack', 'Arm', 1, 'Upper Strike', NULL, 'Sl', 1, 0, 0, 0, 0),						-- - v3p109 High (Woo-Nam has Mid); 'Elbow'
 (10217, 'Attack', 'Arm', 1, 'Upward Punch', NULL, 'Cl', 1, 0, 1, 0, 0),						-- - v3p46 High; 'Forefist'
 -- elbow = ~Sl
 (10221, 'Attack', 'Arm', 0, 'Downward Thrust', NULL, 'Cl', 1, 0, 1, 0, 0),					-- - v3p89 Low; 'Flat Fingertip','Straight Elbow'
@@ -2630,7 +2654,7 @@ INSERT INTO `EncyclopediaCount` (`EncyclopediaID`, `PatternID`, `Count`, `Text`)
 (6, 1006,   8, 'Lower R. foot to ''C'' forming R.B. stance toward ''D'' while executing M.S. guarding block with knife-hand.');
 
 
--- 1959 U-NAM
+-- 1959 Woo-Nam
 -- M.S. block=mid·section block.
 -- NOTE: The diagram is numbered differently than subsiquent publications.
 -- http://taekwondo.wikia.com/wiki/Pyung_Ahn_Sa-Dan
@@ -3350,7 +3374,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1017, 28, NULL, 1, NULL, NULL, 'R;L', 'R', NULL, '0', '10:00', 'BD', NULL, 'R', 'High', NULL, NULL, 'Forearm', 1, 'H', NULL, 3019, 10109, 10400, NULL, NULL),
 (1017, 29, NULL, 1, '10:30', 'BD', 'L', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Low>Mid', NULL, NULL, 'Palm', '0', 'F', NULL, 3100, 10106, 10424, NULL, 'was: 10107, desc differently than #9/#10'),
 (1017, 30, NULL, '0', NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2003, NULL, NULL, 10200, NULL, NULL),
-(1017, 31, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, NULL, NULL, 10201, 10291, 'app shows 2 strikes and is U-Nam esque'),
+(1017, 31, 'a', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, NULL, NULL, 10201, 10291, 'app shows 2 strikes and is Woo-Nam esque'),
 (1017, 31, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633, NULL, 'not desc'),
 (1017, 32, 'a', 1, '6:00', 'C', 'L>R;L', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Reverse Knife-Hand', '0', 'F', NULL, 3102, 10100, 10201, 10291, NULL),
 (1017, 32, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10615, NULL, NULL),
@@ -3990,7 +4014,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1026, 30, NULL, 1, NULL, NULL, 'L', 'L', 'Mid', '0', NULL, NULL, 'Foot', NULL, 'Mid', NULL, NULL, 'Inner Forearm', 1, 'F', NULL, NULL, 10390, 10404, NULL, 'ERROR not actually a side front snap kick as we\'re full facing'),
 (1026, 31, NULL, 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, 'High', NULL, NULL, 'Forefist', 1, 'F', NULL, 3000, 10100, 10224, NULL, NULL),
 (1026, 32, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3000, 10105, 10425, NULL, NULL),
-(1026, 32, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', NULL, NULL, NULL, NULL, 10418, NULL, 'akin to U-Nam'),
+(1026, 32, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', NULL, NULL, NULL, NULL, 10418, NULL, 'akin to Woo-Nam'),
 (1026, 33, 'a', 1, NULL, NULL, 'L', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, NULL, NULL, NULL, NULL),
 (1026, 33, 'b', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'H', NULL, 3022, 10104, 10200, NULL, NULL),
 (1026, 34, 'a', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3003, 10702, 10999, NULL, NULL),
@@ -4078,7 +4102,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1027, 44, 'a', '0', NULL, NULL, 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', '6:00', 'C', 'Backfist', '0', 'H', NULL, 3003, 10100, 10207, NULL, NULL),
 (1027, 44, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Low', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10631, NULL, 'Fist extended toward front'),
 (1027, 45, 'a', 1, NULL, NULL, 'L+R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3026, 10100, 10201, 10291, 'L not described'),
-(1027, 45, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633, NULL, 'akin to U-Nam'),
+(1027, 45, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10633, NULL, 'akin to Woo-Nam'),
 (1027, 46, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3000, 10705, NULL, NULL, NULL),
 (1027, 46, 'b', 1, NULL, NULL, 'L', 'L', 'High', '0', '10:00', 'BD', 'Foot', NULL, NULL, NULL, NULL, NULL, '0', 'RH', NULL, NULL, 10308, NULL, NULL, NULL),
 (1027, 47, 'a', '0', NULL, NULL, 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'High', '6:00', 'C', 'Backfist', '0', 'H', NULL, 3003, 10100, 10207, NULL, NULL),
@@ -4255,7 +4279,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1029, 999, NULL, 1, '12:00', 'D', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3002, 10004, NULL, NULL, NULL);
 
 
--- U-Nam (fully reviewed)
+-- Woo-Nam (fully reviewed)
 INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `islegtechniqueflying`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `originaltechniqueid`, `note`) VALUES
 (1031, '0', NULL, 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10003, NULL, NULL, NULL),
 (1031, 1, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Inner Forearm', '0', 'F', NULL, 3031, 10106, 10420, NULL, NULL),
@@ -4327,7 +4351,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (1031, 999, NULL, 1, '12:00', 'D', 'L>R', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3001, 10003, NULL, NULL, NULL);
 
 
--- U-Nam (Lost In Translation)
+-- Woo-Nam (Lost In Translation)
 INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `islegtechniqueflying`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `originaltechniqueid`, `note`) VALUES
 (1032, '0', NULL, 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10012, NULL, NULL, NULL),
 (1032, 1, 'a', 1, NULL, NULL, 'R', NULL, NULL, '0', NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Inner Forearm', '0', 'F', NULL, 3031, 10106, 10420, NULL, NULL),
