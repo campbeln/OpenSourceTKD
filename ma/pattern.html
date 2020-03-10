@@ -321,7 +321,7 @@
                         <td>
 							<div style="color: gray;" ng-repeat="row in count">
 								{{row.motion}}
-								<b style="color: black; font-style: normal;" ng-if="cn.is.string(row.bodymovement)" ng-bind-html="cn.format.patterns.tech(row.bodymovement, asHtml)"></b>
+                                <b style="color: black; font-style: normal;" ng-if="cn.is.string(row.bodymovement)" ng-bind-html="cn.format.patterns.tech(row.bodymovement, asHtml)"></b>
 								<br ng-if="!$last" />
 							</div>
 						</td>
@@ -333,8 +333,8 @@
 							</div>
 						</td>
 						<td>
-							<div style="color: gray;" ng-repeat="row in count" ng-if="cn.is.string(row.feetinmotion)">
-								{{row.feetinmotion}}
+                            <div style="color: gray;" ng-repeat="row in count" ng-if="cn.is.string(row.feetinmotion)">
+                                <span ng-bind-html="cn.format.patterns.tech(row.feetinmotion, asHtml)"></span>
 								<br ng-if="!$last" />
 							</div>
 						</td>
@@ -374,6 +374,7 @@
 								<i style="color: gray;" ng-if="cn.is.string(row.armto) || cn.is.string(row.armdiagramdirection)">
 									({{row.armto}}{{cn.is.string(row.armto) && cn.is.string(row.armdiagramdirection) ? "; " : ""}}{{row.armdiagramdirection}})
 								</i>
+                                <b style="color: red; font-style: normal;" ng-if="row.iskihap">Kihap!</b>
 								<br/>
 							</div>
 						</td>
