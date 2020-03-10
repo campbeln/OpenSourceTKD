@@ -79,7 +79,7 @@
 				$scope.AllTechniques = $scope.LegTechniques.concat($scope.ArmTechniques);
                 $scope.BodyMovements = cn.patterns.bodymovements();
                 $scope.Motions = cn.patterns.motions();
-                
+
                 //# Prunes the passed counts of unused properties (optionally resetting the boolean properties)
                 function pruneCounts(counts, resetBools) {
                     //# Traverse the passed counts, deleting the unused properties
@@ -92,6 +92,9 @@
                         delete counts[i].armlineofattack;
                         delete counts[i].legtechniquetype;
                         delete counts[i].armtechniquetype;
+                        delete counts[i].originaltechniqueappendage;
+                        delete counts[i].originaltechnique;
+                        delete counts[i].istofacing;
 
                         //# If we are supposed to resetBools, do so now
                         if (resetBools) {
@@ -430,6 +433,7 @@
                         <!-- FACING -->
                         <td class="facing">
                             <select name='Facing' ng-model="a.facing" title="Shoulder Facing" ng-options="item as item for item in enums.a_sFacing"></select>
+                            <br/>Ki?<input type='checkbox' name='IsKihap' ng-model="a.iskihap" ng-true-value="1" ng-false-value="0" title="Kihap?">
                         </td>
                     </tr>
                     <tr>
