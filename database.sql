@@ -4612,7 +4612,7 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (2003, '0', NULL, 1, '12:00', 'D', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10000, NULL, NULL, '0', NULL),
 (2003, 1, NULL, 1, '9:00', 'B', 'L', 'R', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', 1, 'H', NULL, 3001, 10104, 10403, 10173, '0', 'Outward Block'),
 (2003, 2, 'a', 1, NULL, NULL, 'R', 'R', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Fingertip', '0', 'F', NULL, 3000, 10100, 10202, 10172, '0', NULL),
-(2003, 2, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', NULL, NULL, NULL, NULL, 10407, 10999, '0', NULL),
+(2003, 2, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Palm', '0', NULL, NULL, NULL, NULL, 10407, NULL, '0', NULL),
 (2003, 3, NULL, 1, '3:00', 'A', 'R', 'L', NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', 1, 'H', NULL, 3004, 10104, 10403, 10173, '0', 'Outward Block'),
 (2003, 4, 'a', 1, NULL, NULL, 'L', 'L', NULL, '0', NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Fingertip', '0', 'F', NULL, 3000, 10100, 10202, 10172, '0', NULL),
 (2003, 4, 'b', 1, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Palm', '0', NULL, NULL, NULL, NULL, 10407, NULL, '0', NULL),
@@ -4635,7 +4635,48 @@ INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto
 (2003, 13, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Knife-Hand', '0', NULL, NULL, NULL, NULL, 10400, 10670, NULL, NULL),
 (2003, 14, 'a', 1, NULL, NULL, 'R', 'R', 'High', NULL, NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, NULL, NULL, NULL, NULL),
 (2003, 14, 'b', 1, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, NULL, 10100, 10201, 10172, NULL, NULL),
-(2003, 15, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(2003, 15, NULL, 1, '9:00', 'B', 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', NULL, 3001, 10103, 10409, 10100, NULL, NULL),
+(2003, 16, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2001, NULL, NULL, 10200, NULL, NULL, NULL),
+(2003, 17, NULL, 1, NULL, NULL, 'Lh+Rh,R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', NULL, 3115, 10103, 10409, 10100, NULL, NULL),
+(2003, 18, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2001, NULL, NULL, 10200, NULL, NULL, NULL),
+(2003, 19, 'a', 1, '6:00', 'C', 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', NULL, 3001, 10100, 10409, 10172, NULL, NULL),
+(2003, 19, 'b', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200, NULL, NULL, NULL),
+(2003, 19, 'c', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200, NULL, NULL, NULL),
+(2003, 20, 'a', 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', NULL, 3000, 10100, 10409, 10172, NULL, NULL),
+(2003, 20, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200, NULL, NULL, NULL),
+(2003, 20, 'c', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Forefist', '0', 'F', 2002, NULL, NULL, 10200, NULL, 1, NULL),
+(2003, 999, NULL, 1, '12:00', 'D', 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, 3012, 10000, NULL, NULL, NULL, NULL);
+
+
+-- Taeguk Oh Jang
+INSERT INTO PatternCount (`patternid`, `count`, `countorder`, `counted`, `eyesto`, `eyesdiagramdirection`, `feetinmotion`, `leglr`, `legsection`, `islegtechniqueflying`, `legto`, `legdiagramdirection`, `legtool`, `armlr`, `armsection`, `armto`, `armdiagramdirection`, `armtool`, `isarmtooltwin`, `facing`, `motionid`, `bodymovementid`, `legtechniqueid`, `armtechniqueid`, `originaltechniqueid`, `iskihap`, `note`) VALUES
+(2004, '0', NULL, 1, '12:00', 'D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10000, NULL, NULL, NULL, NULL),
+(2004, 1, NULL, 1, '9:00', 'B', 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Outer Forearm', '0', 'H', NULL, 3001, 10100, 10400, 10172, NULL, NULL),
+(2004, 2, NULL, 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3018, 10103, 10210, 10100, NULL, NULL),
+(2004, 3, NULL, 1, '3:00', 'A', 'R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Outer Forearm', '0', 'H', NULL, 3004, 10100, 10400, 10172, NULL, NULL),
+(2004, 4, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Side Fist', '0', 'S', NULL, 3018, 10103, 10210, 10100, NULL, NULL),
+(2004, 5, 'a', 1, '12:00', 'D', 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', NULL, 3001, 10100, 10409, 10172, NULL, NULL),
+(2004, 5, 'b', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'RH', 2002, NULL, NULL, 10409, NULL, NULL, NULL),
+(2004, 6, 'a', 1, NULL, NULL, 'R', 'R', 'High', NULL, NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, NULL, NULL, NULL, NULL),
+(2004, 6, 'b', 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3000, 10100, 10201, 10172, NULL, NULL),
+(2004, 6, 'c', 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', 2001, NULL, NULL, 10409, NULL, NULL, NULL),
+(2004, 7, 'a', 1, NULL, NULL, 'L', 'L', 'High', NULL, NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, NULL, NULL, NULL, NULL),
+(2004, 7, 'b', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3000, 10100, 10201, 10172, NULL, NULL),
+(2004, 7, 'c', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'H', 2001, NULL, NULL, 10409, NULL, NULL, NULL),
+(2004, 8, NULL, 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'High', NULL, NULL, 'Backfist', '0', 'F', NULL, 3000, 10100, 10201, 10172, NULL, NULL),
+(2004, 9, 'a', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, 3031, 10711, NULL, NULL, NULL, '???'),
+(2004, 9, 'b', 1, '3:00', 'A', 'Lh+Rh', 'R', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3005, 10104, 10425, 10173, NULL, NULL),
+(2004, 10, 'a', 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3000, 10100, 10201, 10172, NULL, NULL),
+(2004, 10, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'L', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10622, NULL, NULL, NULL),
+(2004, 11, NULL, 1, '9:00', 'B', 'R', 'L', NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Knife-Hand', '0', 'H', NULL, 3004, 10104, 10425, 10173, NULL, NULL),
+(2004, 12, 'a', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'Mid', NULL, NULL, 'Elbow', '0', 'H', NULL, 3000, 10100, 10201, 10172, NULL, NULL),
+(2004, 12, 'b', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, 10622, NULL, NULL, NULL),
+(2004, 13, 'a', 1, NULL, NULL, 'L', 'L', NULL, NULL, NULL, NULL, NULL, 'L', 'Low', NULL, NULL, 'Outer Forearm', '0', 'H', NULL, 3001, 10100, 10400, 10172, NULL, NULL),
+(2004, 13, 'b', 1, NULL, NULL, 'Rh', NULL, NULL, NULL, NULL, NULL, NULL, 'R', 'Mid', NULL, NULL, 'Inner Forearm', '0', 'RH', 2001, NULL, NULL, 10409, NULL, NULL, NULL),
+(2004, 14, 'a', 1, NULL, NULL, 'R', 'R', 'High', NULL, NULL, NULL, 'Ball of Foot', NULL, NULL, NULL, NULL, NULL, '0', 'F', NULL, NULL, 10300, NULL, NULL, NULL, NULL),
+(2004, 14, 'b', 1, NULL, NULL, 'R', 'R', NULL, NULL, NULL, NULL, NULL, 'R', 'Low', NULL, NULL, 'Outer Forearm', '0', 'H', NULL, 3000, 10100, 10400, 10172, NULL, NULL),
+(2004, 14, 'c', 1, NULL, NULL, 'Lh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, 2001, NULL, NULL, NULL, NULL, NULL, NULL);
+
 
 
 
